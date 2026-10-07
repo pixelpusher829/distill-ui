@@ -1,0 +1,10 @@
+/*
+ * distill-ui design tokens.
+ *
+ * Every color, spacing, radius, shadow, font, motion and z-index value used by
+ * the components comes from a custom property defined here. The full scale is
+ * written in Phase 1b of PLAN-svelte.md; this file only proves the wiring.
+ */
+:root {
+	--font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
