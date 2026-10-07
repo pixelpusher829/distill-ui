@@ -48,7 +48,9 @@
 	},
 	"dependencies": {
 		"@distill-ui/tokens": "workspace:*",
-		"bits-ui": "^2.19.5"
+		"@floating-ui/dom": "^1.8.0",
+		"bits-ui": "^2.19.5",
+		"melt": "0.44.0"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^8.0.0",
