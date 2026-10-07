@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '@distill-ui/tokens/tokens.css';
+	import '../app.css';
 	import favicon from '#lib/assets/favicon.svg';
 	import type { LayoutProps } from './$types';
 

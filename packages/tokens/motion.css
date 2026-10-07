@@ -1,1 +1,75 @@
-/* Shared keyframes and easing. Filled in during Phase 1f of PLAN-svelte.md. */
+/*
+ * Shared keyframes. Components pick them with `animation-name` and set
+ * duration and easing from the motion tokens. Plain CSS, so the Vue version
+ * can reuse this file unchanged.
+ */
+@keyframes distill-fade-in {
+	from {
+		opacity: 0;
+	}
+}
+
+@keyframes distill-fade-out {
+	to {
+		opacity: 0;
+	}
+}
+
+/* Fade + scale from 95%, the standard dialog / popover entrance. */
+@keyframes distill-zoom-in {
+	from {
+		opacity: 0;
+		scale: 0.95;
+	}
+}
+
+@keyframes distill-zoom-out {
+	to {
+		opacity: 0;
+		scale: 0.95;
+	}
+}
+
+/* Slide in a short distance from a side. Uses `translate` so it composes with transforms. */
+@keyframes distill-slide-in-from-top {
+	from {
+		translate: 0 calc(var(--space-2) * -1);
+	}
+}
+
+@keyframes distill-slide-in-from-bottom {
+	from {
+		translate: 0 var(--space-2);
+	}
+}
+
+@keyframes distill-slide-in-from-left {
+	from {
+		translate: calc(var(--space-2) * -1) 0;
+	}
+}
+
+@keyframes distill-slide-in-from-right {
+	from {
+		translate: var(--space-2) 0;
+	}
+}
+
+:root {
+	/* Motion */
+	--duration-fast: 100ms;
+	--duration-normal: 150ms;
+	--duration-slow: 200ms;
+	--ease-out: cubic-bezier(0, 0, 0.2, 1);
+	--ease-in: cubic-bezier(0.4, 0, 1, 1);
+	--ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Defined in this file, after the durations above, so it wins the cascade. */
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--duration-fast: 0ms;
+		--duration-normal: 0ms;
+		--duration-slow: 0ms;
+	}
+}

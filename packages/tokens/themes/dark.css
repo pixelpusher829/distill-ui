@@ -1,1 +1,60 @@
-/* Dark theme color values. Filled in during Phase 1b of PLAN-svelte.md. */
+/*
+ * Dark theme. Applies when:
+ *   - <html> has class="dark" or data-theme="dark", or
+ *   - the OS prefers dark and the page hasn't opted into light
+ *     (class="light" or data-theme="light").
+ * The values are listed twice because a media query can't share a rule
+ * with a plain selector. Keep both blocks identical.
+ */
+.dark,
+[data-theme='dark'] {
+	color-scheme: dark;
+
+	--color-background: oklch(0.145 0 0);
+	--color-foreground: oklch(0.985 0 0);
+	--color-card: oklch(0.205 0 0);
+	--color-card-foreground: oklch(0.985 0 0);
+	--color-popover: oklch(0.205 0 0);
+	--color-popover-foreground: oklch(0.985 0 0);
+	--color-primary: oklch(0.922 0 0);
+	--color-primary-foreground: oklch(0.205 0 0);
+	--color-secondary: oklch(0.269 0 0);
+	--color-secondary-foreground: oklch(0.985 0 0);
+	--color-muted: oklch(0.269 0 0);
+	--color-muted-foreground: oklch(0.708 0 0);
+	--color-accent: oklch(0.371 0 0);
+	--color-accent-foreground: oklch(0.985 0 0);
+	--color-destructive: oklch(0.704 0.191 22.216);
+	--color-destructive-foreground: oklch(0.985 0 0);
+	--color-border: oklch(1 0 0 / 10%);
+	--color-input: oklch(1 0 0 / 15%);
+	--color-ring: oklch(0.556 0 0);
+	--color-overlay: oklch(0 0 0 / 50%);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not(.light):not([data-theme='light']) {
+		color-scheme: dark;
+
+		--color-background: oklch(0.145 0 0);
+		--color-foreground: oklch(0.985 0 0);
+		--color-card: oklch(0.205 0 0);
+		--color-card-foreground: oklch(0.985 0 0);
+		--color-popover: oklch(0.205 0 0);
+		--color-popover-foreground: oklch(0.985 0 0);
+		--color-primary: oklch(0.922 0 0);
+		--color-primary-foreground: oklch(0.205 0 0);
+		--color-secondary: oklch(0.269 0 0);
+		--color-secondary-foreground: oklch(0.985 0 0);
+		--color-muted: oklch(0.269 0 0);
+		--color-muted-foreground: oklch(0.708 0 0);
+		--color-accent: oklch(0.371 0 0);
+		--color-accent-foreground: oklch(0.985 0 0);
+		--color-destructive: oklch(0.704 0.191 22.216);
+		--color-destructive-foreground: oklch(0.985 0 0);
+		--color-border: oklch(1 0 0 / 10%);
+		--color-input: oklch(1 0 0 / 15%);
+		--color-ring: oklch(0.556 0 0);
+		--color-overlay: oklch(0 0 0 / 50%);
+	}
+}
