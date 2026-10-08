@@ -1,16 +1,21 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import type { HTMLDialogAttributes } from 'svelte/elements';
-	import { getDialogContext } from './context.js';
+	import { getSheetContext } from './context.js';
 
 	let {
 		class: className,
 		children,
 		showCloseButton = true,
+		side = 'right',
 		...restProps
-	}: HTMLDialogAttributes & { children: Snippet; showCloseButton?: boolean } = $props();
+	}: HTMLDialogAttributes & {
+		children: Snippet;
+		showCloseButton?: boolean;
+		side?: 'top' | 'right' | 'bottom' | 'left';
+	} = $props();
 
-	const { dialog, titleId, descriptionId } = getDialogContext();
+	const { dialog, titleId, descriptionId } = getSheetContext();
 </script>
 
 <!-- Melt uses a native <dialog> in the top layer, so no portal is needed. -->
@@ -19,6 +24,7 @@
 	{...restProps}
 	{...dialog.content}
 	class={['content', className]}
+	data-side={side}
 	aria-labelledby={titleId}
 	aria-describedby={descriptionId}
 >
@@ -45,7 +51,7 @@
 		margin: 0;
 		padding: 0;
 		border: 0;
-		background: var(--dialog-overlay-bg, var(--color-overlay));
+		background: var(--sheet-overlay-bg, var(--color-overlay));
 		backdrop-filter: blur(4px);
 		opacity: 0;
 		transition: opacity var(--duration-fast) var(--ease-out);
@@ -56,37 +62,64 @@
 	}
 
 	.content {
-		display: grid;
-		gap: var(--space-6);
-		width: 100%;
-		max-width: min(var(--dialog-max-width, 28rem), calc(100% - var(--space-8)));
-		padding: var(--dialog-padding, var(--space-6));
+		--_size: var(--sheet-size, 24rem);
+
+		position: fixed;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-4);
+		width: auto;
+		max-width: none;
+		height: auto;
+		max-height: none;
+		margin: 0;
+		padding: var(--sheet-padding, var(--space-6));
 		border: 0;
-		border-radius: var(--dialog-radius, var(--radius-xl));
-		background: var(--dialog-bg, var(--color-popover));
-		color: var(--dialog-fg, var(--color-popover-foreground));
-		box-shadow: 0 0 0 1px color-mix(in oklch, var(--color-foreground) 10%, transparent);
+		background: var(--sheet-bg, var(--color-background));
+		color: var(--sheet-fg, var(--color-foreground));
+		box-shadow:
+			0 0 0 1px color-mix(in oklch, var(--color-foreground) 10%, transparent),
+			var(--shadow-lg);
 		font-size: var(--text-sm);
 		line-height: var(--text-sm-line-height);
 		outline: none;
-		opacity: 0;
-		scale: 0.95;
-		transition:
-			opacity var(--duration-fast) var(--ease-out),
-			scale var(--duration-fast) var(--ease-out);
+		transition: translate var(--duration-slow) var(--ease-in-out);
 
 		&:not([open]) {
 			display: none;
 		}
 
-		&[data-open] {
-			opacity: 1;
-			scale: 1;
-		}
-
 		&::backdrop {
 			background: transparent;
 		}
+	}
+
+	/* Each side pins the sheet to that edge and slides it in from off-screen. */
+	.content[data-side='right'] {
+		inset: 0 0 0 auto;
+		width: min(var(--_size), 75%);
+		translate: 100% 0;
+	}
+
+	.content[data-side='left'] {
+		inset: 0 auto 0 0;
+		width: min(var(--_size), 75%);
+		translate: -100% 0;
+	}
+
+	.content[data-side='top'] {
+		inset: 0 0 auto 0;
+		translate: 0 -100%;
+	}
+
+	.content[data-side='bottom'] {
+		inset: auto 0 0 0;
+		translate: 0 100%;
+	}
+
+	/* After the side rules, so it wins when open. */
+	.content[data-open] {
+		translate: 0 0;
 	}
 
 	.close {

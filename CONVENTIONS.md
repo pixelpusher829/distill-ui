@@ -185,7 +185,9 @@ When Melt lacks a feature, add it in our component file, in the same spread-attr
 - **Avatar image after server rendering.** The image sets its `src` during setup as well as in an effect, because effects don't run on the server and the browser keeps the server's `src`. Once mounted, it checks whether the image already finished loading or failed before Melt's listeners attached.
 - **Select label.** `Select.Label` uses Melt's label props, and the content points `aria-labelledby` at it.
 
-Components Melt has no builder for (Checkbox, Switch, Dropdown Menu, Calendar and others) get a small builder of our own that returns spreadable props in the same shape, following the WAI-ARIA Authoring Practices pattern for that component.
+Components Melt has no builder for get a small builder of our own that returns spreadable props in the same shape, following the WAI-ARIA Authoring Practices pattern for that component. The first one is `dropdown-menu/menu.svelte.ts`: it extends Melt's `BasePopover` (positioning, Escape, outside click, focus return) and adds the menu button pattern (roles, arrow keys, Home/End, typeahead, disabled items skipped). It lives in the component's folder so it gets copied along with it.
+
+Alert Dialog and Sheet are their own copies of the Dialog files rather than variants of Dialog, so each folder can be copied on its own. Alert Dialog turns off closing on outside click and uses `role="alertdialog"`. Sheet adds a `side` prop.
 
 ### Checks
 
