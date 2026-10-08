@@ -45,6 +45,8 @@ Consumers override from the element or any ancestor:
 <div style="--button-bg: oklch(0.55 0.2 260); --button-radius: 9999px">…</div>
 ```
 
+Parts of a compound component can share a private variable through inheritance: the root sets it and the parts read it (Card sets `--_card-spacing` and Header, Content and Footer pad with it; Avatar.Group sets `--_avatar-overlap` for each Avatar). Prefix these with the component name so they can't collide with a nested component's own `--_` variables.
+
 Naming: `--<component>-<property>`, or `--<component>-<part>-<property>` for parts (`--select-trigger-width`, `--dialog-overlay-bg`). Variants re-point the private variables and keep the public override first, so `--button-bg` still wins on every variant.
 
 ### Variants and sizes
@@ -79,7 +81,7 @@ Component styles are **unlayered** and kept at **one class plus attribute select
 ### Animations
 
 - Entrance and exit use transitions on the open state where the behavior layer closes on `transitionend` (Melt's Dialog does this), and `@starting-style` for elements that appear from `display: none` (popovers).
-- Keyframes for anything else live in `motion.css` (`distill-fade-in`, `distill-zoom-in`, `distill-slide-in-from-*` and the matching outs) so both frameworks share them.
+- Keyframes for anything else live in `motion.css` (`distill-fade-in`, `distill-zoom-in`, `distill-slide-in-from-*`, the matching outs, and `distill-pulse` for Skeleton) so both frameworks share them.
 - Always use the duration and easing tokens. Under `prefers-reduced-motion: reduce` every duration becomes `0ms`, which also makes Melt close dialogs immediately.
 
 ```css
@@ -180,6 +182,7 @@ When Melt lacks a feature, add it in our component file, in the same spread-attr
 - **Disabled options and tabs.** Melt finds options and tabs by their `data-melt-*` marker attribute. A disabled item drops that marker (and its click and hover handlers), which takes it out of keyboard navigation and typeahead. It also gets `data-disabled` and `aria-disabled="true"`.
 - **Dialog title and description.** The root creates ids, and Title, Description and Content use them for `aria-labelledby` and `aria-describedby`.
 - **Select option ids.** Melt points `aria-activedescendant` at `getOptionId(value)` without putting that id on the option, so the item adds it.
+- **Avatar image after server rendering.** The image sets its `src` during setup as well as in an effect, because effects don't run on the server and the browser keeps the server's `src`. Once mounted, it checks whether the image already finished loading or failed before Melt's listeners attached.
 - **Select label.** `Select.Label` uses Melt's label props, and the content points `aria-labelledby` at it.
 
 Components Melt has no builder for (Checkbox, Switch, Dropdown Menu, Calendar and others) get a small builder of our own that returns spreadable props in the same shape, following the WAI-ARIA Authoring Practices pattern for that component.

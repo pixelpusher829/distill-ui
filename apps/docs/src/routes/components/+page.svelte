@@ -1,12 +1,17 @@
 <script lang="ts">
 	import {
+		Avatar,
+		Badge,
 		Button,
+		Card,
 		Checkbox,
 		Dialog,
 		Input,
 		Label,
 		RadioGroup,
 		Select,
+		Separator,
+		Skeleton,
 		Switch,
 		Tabs,
 		Textarea
@@ -134,6 +139,95 @@
 		</div>
 	</section>
 
+	<section data-testid="card">
+		<h2>Card</h2>
+		<div class="cards">
+			<Card.Root>
+				<Card.Header>
+					<Card.Title>Login to your account</Card.Title>
+					<Card.Description>Enter your email below to login.</Card.Description>
+					<Card.Action><Button variant="link">Sign up</Button></Card.Action>
+				</Card.Header>
+				<Card.Content>
+					<div class="field">
+						<Label for="card-email">Email</Label>
+						<Input id="card-email" type="email" placeholder="you@example.com" />
+					</div>
+				</Card.Content>
+				<Card.Footer>
+					<Button>Login</Button>
+					<Button variant="outline">Cancel</Button>
+				</Card.Footer>
+			</Card.Root>
+			<Card.Root size="sm" style="--card-radius: 0">
+				<Card.Header>
+					<Card.Title>Small card</Card.Title>
+					<Card.Description>Tighter spacing, and square corners set from outside.</Card.Description>
+				</Card.Header>
+				<Card.Content>Content goes here.</Card.Content>
+			</Card.Root>
+		</div>
+	</section>
+
+	<section data-testid="badge">
+		<h2>Badge</h2>
+		<div class="row">
+			{#each variants as variant (variant)}
+				<Badge {variant}>{variant}</Badge>
+			{/each}
+			<Badge href="#badge" variant="outline">A link</Badge>
+		</div>
+	</section>
+
+	<section data-testid="separator">
+		<h2>Separator</h2>
+		<p class="hint">An open-source UI library.</p>
+		<Separator style="margin-block: var(--space-4)" />
+		<div class="row" style="height: 1.25rem">
+			<span>Blog</span>
+			<Separator orientation="vertical" />
+			<span>Docs</span>
+			<Separator orientation="vertical" />
+			<span>Source</span>
+		</div>
+	</section>
+
+	<section data-testid="skeleton">
+		<h2>Skeleton</h2>
+		<div class="row">
+			<Skeleton style="width: 3rem; height: 3rem; border-radius: 9999px" />
+			<div class="stack-sm">
+				<Skeleton style="width: 15rem; height: 1rem" />
+				<Skeleton style="width: 12rem; height: 1rem" />
+			</div>
+		</div>
+	</section>
+
+	<section data-testid="avatar">
+		<h2>Avatar</h2>
+		<div class="row">
+			<Avatar.Root>
+				<Avatar.Image src="/avatar.svg" alt="Profile picture" />
+				<Avatar.Fallback>JB</Avatar.Fallback>
+			</Avatar.Root>
+			<Avatar.Root>
+				<Avatar.Image src="/missing.png" alt="Missing picture" />
+				<Avatar.Fallback>CN</Avatar.Fallback>
+			</Avatar.Root>
+			<Avatar.Root size="sm"><Avatar.Fallback>SM</Avatar.Fallback></Avatar.Root>
+			<Avatar.Root size="lg"><Avatar.Fallback>LG</Avatar.Fallback></Avatar.Root>
+		</div>
+		<h3>Group</h3>
+		<Avatar.Group>
+			<Avatar.Root
+				><Avatar.Image src="/avatar.svg" alt="Ada" /><Avatar.Fallback>AD</Avatar.Fallback
+				></Avatar.Root
+			>
+			<Avatar.Root><Avatar.Fallback>BO</Avatar.Fallback></Avatar.Root>
+			<Avatar.Root><Avatar.Fallback>CY</Avatar.Fallback></Avatar.Root>
+		</Avatar.Group>
+	</section>
+
 	<section data-testid="dialog">
 		<h2>Dialog</h2>
 		<Dialog.Root>
@@ -258,6 +352,13 @@
 	.stack-sm {
 		display: grid;
 		gap: var(--space-3);
+	}
+
+	.cards {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+		align-items: start;
+		gap: var(--space-4);
 	}
 
 	.stack {
