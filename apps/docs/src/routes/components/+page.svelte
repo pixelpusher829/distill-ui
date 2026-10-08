@@ -1,20 +1,25 @@
 <script lang="ts">
 	import {
+		AlertDialog,
 		Avatar,
 		Badge,
 		Button,
 		Card,
 		Checkbox,
 		Dialog,
+		DropdownMenu,
 		Input,
 		Label,
+		Popover,
 		RadioGroup,
 		Select,
 		Separator,
+		Sheet,
 		Skeleton,
 		Switch,
 		Tabs,
-		Textarea
+		Textarea,
+		Tooltip
 	} from '@distill-ui/svelte';
 
 	let dark = $state(false);
@@ -34,6 +39,10 @@
 	let plan = $state('comfortable');
 	let terms = $state(false);
 	let airplane = $state(false);
+
+	let showStatusBar = $state(true);
+	let lastAction = $state('none');
+	const sides = ['top', 'right', 'bottom', 'left'] as const;
 
 	const variants = ['default', 'secondary', 'outline', 'ghost', 'destructive', 'link'] as const;
 </script>
@@ -246,6 +255,103 @@
 				</Dialog.Footer>
 			</Dialog.Content>
 		</Dialog.Root>
+	</section>
+
+	<section data-testid="alert-dialog">
+		<h2>Alert Dialog</h2>
+		<AlertDialog.Root>
+			<AlertDialog.Trigger variant="outline">Delete account</AlertDialog.Trigger>
+			<AlertDialog.Content>
+				<AlertDialog.Header>
+					<AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
+					<AlertDialog.Description>
+						This action cannot be undone. This will permanently delete your account.
+					</AlertDialog.Description>
+				</AlertDialog.Header>
+				<AlertDialog.Footer>
+					<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+					<AlertDialog.Action>Continue</AlertDialog.Action>
+				</AlertDialog.Footer>
+			</AlertDialog.Content>
+		</AlertDialog.Root>
+	</section>
+
+	<section data-testid="sheet">
+		<h2>Sheet</h2>
+		<div class="row">
+			{#each sides as side (side)}
+				<Sheet.Root>
+					<Sheet.Trigger variant="outline">Open {side}</Sheet.Trigger>
+					<Sheet.Content {side}>
+						<Sheet.Header>
+							<Sheet.Title>Edit profile</Sheet.Title>
+							<Sheet.Description>Make changes to your profile here.</Sheet.Description>
+						</Sheet.Header>
+						<div class="field">
+							<Label for="sheet-name-{side}">Name</Label>
+							<Input id="sheet-name-{side}" value="James" />
+						</div>
+						<Sheet.Footer>
+							<Button>Save changes</Button>
+							<Sheet.Close>Close</Sheet.Close>
+						</Sheet.Footer>
+					</Sheet.Content>
+				</Sheet.Root>
+			{/each}
+		</div>
+	</section>
+
+	<section data-testid="dropdown-menu">
+		<h2>Dropdown Menu</h2>
+		<DropdownMenu.Root>
+			<DropdownMenu.Trigger>Open menu</DropdownMenu.Trigger>
+			<DropdownMenu.Content style="--dropdown-menu-min-width: 14rem">
+				<DropdownMenu.Label>My account</DropdownMenu.Label>
+				<DropdownMenu.Group>
+					<DropdownMenu.Item onSelect={() => (lastAction = 'profile')}>
+						Profile <DropdownMenu.Shortcut>⇧⌘P</DropdownMenu.Shortcut>
+					</DropdownMenu.Item>
+					<DropdownMenu.Item onSelect={() => (lastAction = 'billing')}>Billing</DropdownMenu.Item>
+					<DropdownMenu.Item disabled>Team</DropdownMenu.Item>
+					<DropdownMenu.Item onSelect={() => (lastAction = 'settings')}>Settings</DropdownMenu.Item>
+				</DropdownMenu.Group>
+				<DropdownMenu.Separator />
+				<DropdownMenu.CheckboxItem bind:checked={showStatusBar}
+					>Status bar</DropdownMenu.CheckboxItem
+				>
+				<DropdownMenu.Separator />
+				<DropdownMenu.Item variant="destructive" onSelect={() => (lastAction = 'logout')}>
+					Log out
+				</DropdownMenu.Item>
+			</DropdownMenu.Content>
+		</DropdownMenu.Root>
+		<p class="hint spaced">
+			Last action: {lastAction}. Status bar: {showStatusBar ? 'on' : 'off'}.
+		</p>
+	</section>
+
+	<section data-testid="popover">
+		<h2>Popover</h2>
+		<Popover.Root>
+			<Popover.Trigger>Open popover</Popover.Trigger>
+			<Popover.Content>
+				<div class="stack-sm">
+					<strong>Dimensions</strong>
+					<div class="field">
+						<Label for="popover-width">Width</Label>
+						<Input id="popover-width" value="100%" />
+					</div>
+				</div>
+			</Popover.Content>
+		</Popover.Root>
+	</section>
+
+	<section data-testid="tooltip">
+		<h2>Tooltip</h2>
+		<Tooltip.Root>
+			<Tooltip.Trigger>Hover me</Tooltip.Trigger>
+			<Tooltip.Content>Add to library</Tooltip.Content>
+		</Tooltip.Root>
 	</section>
 
 	<section data-testid="select">
