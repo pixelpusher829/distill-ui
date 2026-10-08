@@ -31,6 +31,7 @@
 
 <style>
 	.switch {
+		/* Reused below to work out how far the thumb slides, so they are set once here. */
 		--width: var(--dui-switch-width, 2rem);
 		--height: var(--dui-switch-height, 1.15rem);
 		--thumb-size: var(--dui-switch-thumb-size, 1rem);
