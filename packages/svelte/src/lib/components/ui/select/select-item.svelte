@@ -50,6 +50,11 @@
 	{/if}
 </div>
 
+<!--
+	Options you can set from a parent or on the select item itself:
+	--dui-select-item-highlight-bg, --dui-select-item-highlight-fg
+-->
+
 <style>
 	.item {
 		position: relative;

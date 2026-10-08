@@ -22,17 +22,20 @@
 	<div {...tooltip.arrow} class="arrow"></div>
 </div>
 
+<!--
+	Options you can set from a parent or on the tooltip content itself:
+	--dui-tooltip-max-width, --dui-tooltip-radius, --dui-tooltip-bg, --dui-tooltip-fg
+-->
+
 <style>
 	.content {
-		--bg: var(--dui-tooltip-bg, var(--dui-color-primary));
-
 		width: fit-content;
 		max-width: var(--dui-tooltip-max-width, 20rem);
 		margin: 0;
 		padding: var(--dui-space-1-5) var(--dui-space-3);
 		border: 0;
 		border-radius: var(--dui-tooltip-radius, var(--dui-radius-md));
-		background: var(--bg);
+		background: var(--dui-tooltip-bg, var(--dui-color-primary));
 		color: var(--dui-tooltip-fg, var(--dui-color-primary-foreground));
 		font-size: var(--dui-text-xs);
 		line-height: var(--dui-text-xs-line-height);
@@ -53,6 +56,6 @@
 		width: 0.5rem;
 		height: 0.5rem;
 		border-radius: 2px;
-		background: var(--bg);
+		background: var(--dui-tooltip-bg, var(--dui-color-primary));
 	}
 </style>

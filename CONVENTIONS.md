@@ -28,18 +28,27 @@ Dark applies when `<html>` has `class="dark"` or `data-theme="dark"`, or when th
 
 ### Component custom properties
 
-Every component exposes public custom properties (its customization options), falling back to global tokens. Inside the component, each one is resolved into a plain-named internal variable (`--bg`, `--height`) that the rest of the component's CSS reads. The rule of thumb: a variable starting with `--dui-` is meant to be set, anything else is internal.
-
-The internal step exists because a variable can't fall back to itself (`--dui-button-bg: var(--dui-button-bg, …)` is invalid), and it lets hover colors and variants be written once against `--bg`:
+Every component exposes public custom properties (its customization options), falling back to global tokens. Write them straight into real properties, so each rule reads as plain CSS, and give every variant and hover state its own real properties too:
 
 ```css
 .button {
-	--bg: var(--dui-button-bg, var(--dui-color-primary));
-	--fg: var(--dui-button-fg, var(--dui-color-primary-foreground));
-	background: var(--bg);
-	color: var(--fg);
+	background: var(--dui-button-bg, var(--dui-color-primary));
+	color: var(--dui-button-fg, var(--dui-color-primary-foreground));
+
+	&:hover {
+		background: var(--dui-button-hover-bg, var(--dui-color-primary-hover));
+	}
+}
+
+.button[data-variant='secondary'] {
+	background: var(--dui-button-bg, var(--dui-color-secondary));
+	color: var(--dui-button-fg, var(--dui-color-secondary-foreground));
 }
 ```
+
+List the options in a comment just above the `<style>` block. The rule of thumb: a variable starting with `--dui-` is meant to be set, anything else is internal.
+
+Use an internal, plain-named variable only when one value feeds a calculation in several places (Switch's `--width` and `--thumb-size`, Checkbox's `--size`). Mixed colors that several components need, like hover and subtle shades, are tokens in `tokens.css` (`--dui-color-primary-hover`, `--dui-color-destructive-subtle`), not `color-mix()` repeated in each component.
 
 Consumers override from the element or any ancestor:
 
@@ -49,7 +58,7 @@ Consumers override from the element or any ancestor:
 
 Parts of a compound component can share an internal variable through inheritance: the root sets it and the parts read it (Card sets `--card-spacing` and Header, Content and Footer pad with it; Avatar.Group sets `--avatar-overlap` for each Avatar). Name these after the component so they can't collide with a nested component's own internal variables.
 
-Naming: `--dui-<component>-<property>`, or `--dui-<component>-<part>-<property>` for parts (`--dui-select-trigger-width`, `--dui-dialog-overlay-bg`). Variants re-point the internal variables and keep the public override first, so `--dui-button-bg` still wins on every variant.
+Naming: `--dui-<component>-<property>`, or `--dui-<component>-<part>-<property>` for parts (`--dui-select-trigger-width`, `--dui-dialog-overlay-bg`). Every variant keeps the public override first, so `--dui-button-bg` still wins on every variant.
 
 ### Variants and sizes
 

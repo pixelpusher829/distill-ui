@@ -25,6 +25,11 @@
 	{@render children()}
 </dialog>
 
+<!--
+	Options you can set from a parent or on the alert dialog content itself:
+	--dui-alert-dialog-overlay-bg, --dui-alert-dialog-max-width, --dui-alert-dialog-padding, --dui-alert-dialog-radius, --dui-alert-dialog-bg, --dui-alert-dialog-fg
+-->
+
 <style>
 	/* Melt closes the dialog on transitionend, so this animates with
 	   transitions on [data-open] rather than the shared keyframes. */

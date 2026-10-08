@@ -34,6 +34,11 @@
 	{/if}
 </dialog>
 
+<!--
+	Options you can set from a parent or on the dialog content itself:
+	--dui-dialog-overlay-bg, --dui-dialog-max-width, --dui-dialog-padding, --dui-dialog-radius, --dui-dialog-bg, --dui-dialog-fg
+-->
+
 <style>
 	/* Melt closes the dialog on transitionend, so this animates with
 	   transitions on [data-open] rather than the shared keyframes. */

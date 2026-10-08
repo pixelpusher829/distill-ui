@@ -23,6 +23,11 @@
 	{@render children?.()}
 </div>
 
+<!--
+	Options you can set from a parent or on the alert itself:
+	--dui-alert-border, --dui-alert-radius, --dui-alert-bg, --dui-alert-fg
+-->
+
 <style>
 	.alert {
 		position: relative;

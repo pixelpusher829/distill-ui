@@ -35,6 +35,11 @@
 	{/each}
 </section>
 
+<!--
+	Options you can set from a parent or on the toaster itself:
+	--dui-toast-width, --dui-toast-radius, --dui-toast-bg, --dui-toast-fg
+-->
+
 <style>
 	.toaster {
 		position: fixed;

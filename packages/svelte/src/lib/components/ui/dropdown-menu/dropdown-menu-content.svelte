@@ -22,6 +22,11 @@
 	{@render children?.()}
 </div>
 
+<!--
+	Options you can set from a parent or on the dropdown menu content itself:
+	--dui-dropdown-menu-min-width, --dui-dropdown-menu-radius, --dui-dropdown-menu-bg, --dui-dropdown-menu-fg
+-->
+
 <style>
 	.content {
 		min-width: var(--dui-dropdown-menu-min-width, 8rem);

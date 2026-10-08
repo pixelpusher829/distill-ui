@@ -24,6 +24,11 @@
 	data-orientation={orientation}
 ></div>
 
+<!--
+	Options you can set from a parent or on the separator itself:
+	--dui-separator-color
+-->
+
 <style>
 	.separator {
 		flex-shrink: 0;

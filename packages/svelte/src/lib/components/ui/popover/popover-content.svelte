@@ -23,6 +23,11 @@
 	{@render children?.()}
 </div>
 
+<!--
+	Options you can set from a parent or on the popover content itself:
+	--dui-popover-width, --dui-popover-padding, --dui-popover-radius, --dui-popover-bg, --dui-popover-fg
+-->
+
 <style>
 	.content {
 		width: var(--dui-popover-width, 18rem);

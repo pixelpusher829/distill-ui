@@ -26,15 +26,18 @@
 	{@render children?.()}
 </span>
 
+<!--
+	Options you can set from a parent or on the avatar itself:
+	--dui-avatar-size, --dui-avatar-radius
+-->
+
 <style>
 	.avatar {
-		--size: var(--dui-avatar-size, 2rem);
-
 		position: relative;
 		display: flex;
 		flex-shrink: 0;
-		width: var(--size);
-		height: var(--size);
+		width: var(--dui-avatar-size, 2rem);
+		height: var(--dui-avatar-size, 2rem);
 		/* Set by Avatar.Group so stacked avatars overlap with a gap ring. */
 		margin-inline-start: var(--avatar-overlap, 0);
 		border-radius: var(--dui-avatar-radius, var(--dui-radius-full));
@@ -58,11 +61,13 @@
 	}
 
 	.avatar[data-size='sm'] {
-		--size: var(--dui-avatar-size, 1.5rem);
+		width: var(--dui-avatar-size, 1.5rem);
+		height: var(--dui-avatar-size, 1.5rem);
 		font-size: var(--dui-text-xs);
 	}
 
 	.avatar[data-size='lg'] {
-		--size: var(--dui-avatar-size, 2.5rem);
+		width: var(--dui-avatar-size, 2.5rem);
+		height: var(--dui-avatar-size, 2.5rem);
 	}
 </style>

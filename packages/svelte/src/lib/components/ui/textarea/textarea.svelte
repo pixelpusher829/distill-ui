@@ -11,22 +11,22 @@
 
 <textarea {...restProps} bind:this={ref} bind:value class={['textarea', className]}></textarea>
 
+<!--
+	Options you can set from a parent or on the textarea itself:
+	--dui-textarea-min-height, --dui-textarea-border, --dui-textarea-radius, --dui-textarea-bg
+-->
+
 <style>
 	.textarea {
-		--bg: var(--dui-textarea-bg, var(--dui-color-control));
-		--border: var(--dui-textarea-border, var(--dui-color-input));
-		--min-height: var(--dui-textarea-min-height, 4rem);
-		--radius: var(--dui-textarea-radius, var(--dui-radius-md));
-
 		display: flex;
 		width: 100%;
-		min-height: var(--min-height);
+		min-height: var(--dui-textarea-min-height, 4rem);
 		/* Grows with its content in browsers that support it. */
 		field-sizing: content;
 		padding: var(--dui-space-2) var(--dui-space-2-5);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-		background: var(--bg);
+		border: 1px solid var(--dui-textarea-border, var(--dui-color-input));
+		border-radius: var(--dui-textarea-radius, var(--dui-radius-md));
+		background: var(--dui-textarea-bg, var(--dui-color-control));
 		color: var(--dui-color-foreground);
 		font: inherit;
 		font-size: var(--dui-text-sm);

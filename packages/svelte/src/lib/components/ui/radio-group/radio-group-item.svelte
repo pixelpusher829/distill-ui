@@ -28,13 +28,15 @@
 	class={['item', className]}
 />
 
+<!--
+	Options you can set from a parent or on the radio group item itself:
+	--dui-radio-size, --dui-radio-border, --dui-radio-bg, --dui-radio-checked-fg, --dui-radio-checked-bg
+-->
+
 <style>
 	.item {
+		/* The size is reused below for the mark, so it is set once here. */
 		--size: var(--dui-radio-size, 1rem);
-		--bg: var(--dui-radio-bg, var(--dui-color-control));
-		--border: var(--dui-radio-border, var(--dui-color-input));
-		--checked-bg: var(--dui-radio-checked-bg, var(--dui-color-primary));
-		--checked-fg: var(--dui-radio-checked-fg, var(--dui-color-primary-foreground));
 
 		appearance: none;
 		display: inline-grid;
@@ -43,9 +45,9 @@
 		width: var(--size);
 		height: var(--size);
 		margin: 0;
-		border: 1px solid var(--border);
+		border: 1px solid var(--dui-radio-border, var(--dui-color-input));
 		border-radius: var(--dui-radius-full);
-		background: var(--bg);
+		background: var(--dui-radio-bg, var(--dui-color-control));
 		box-shadow: var(--dui-shadow-xs);
 		cursor: pointer;
 		outline: none;
@@ -57,13 +59,13 @@
 			width: calc(var(--size) / 2);
 			height: calc(var(--size) / 2);
 			border-radius: var(--dui-radius-full);
-			background: var(--checked-fg);
+			background: var(--dui-radio-checked-fg, var(--dui-color-primary-foreground));
 			scale: 0;
 		}
 
 		&:checked {
-			border-color: var(--checked-bg);
-			background: var(--checked-bg);
+			border-color: var(--dui-radio-checked-bg, var(--dui-color-primary));
+			background: var(--dui-radio-checked-bg, var(--dui-color-primary));
 
 			&::before {
 				scale: 1;

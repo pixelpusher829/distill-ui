@@ -32,6 +32,11 @@
 	{@render children?.()}
 </button>
 
+<!--
+	Options you can set from a parent or on the tabs trigger itself:
+	--dui-tabs-trigger-active-bg
+-->
+
 <style>
 	.trigger {
 		position: relative;

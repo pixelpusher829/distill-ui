@@ -40,6 +40,11 @@
 	{/if}
 </dialog>
 
+<!--
+	Options you can set from a parent or on the sheet content itself:
+	--dui-sheet-overlay-bg, --dui-sheet-padding, --dui-sheet-bg, --dui-sheet-fg, --dui-sheet-size
+-->
+
 <style>
 	/* Melt closes the dialog on transitionend, so this animates with
 	   transitions on [data-open] rather than the shared keyframes. */
@@ -62,8 +67,6 @@
 	}
 
 	.content {
-		--size: var(--dui-sheet-size, 24rem);
-
 		position: fixed;
 		display: flex;
 		flex-direction: column;
@@ -97,13 +100,13 @@
 	/* Each side pins the sheet to that edge and slides it in from off-screen. */
 	.content[data-side='right'] {
 		inset: 0 0 0 auto;
-		width: min(var(--size), 75%);
+		width: min(var(--dui-sheet-size, 24rem), 75%);
 		translate: 100% 0;
 	}
 
 	.content[data-side='left'] {
 		inset: 0 auto 0 0;
-		width: min(var(--size), 75%);
+		width: min(var(--dui-sheet-size, 24rem), 75%);
 		translate: -100% 0;
 	}
 

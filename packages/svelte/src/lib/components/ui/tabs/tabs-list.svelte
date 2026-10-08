@@ -19,6 +19,11 @@
 	{@render children?.()}
 </div>
 
+<!--
+	Options you can set from a parent or on the tabs list itself:
+	--dui-tabs-list-height, --dui-tabs-list-radius, --dui-tabs-list-bg
+-->
+
 <style>
 	.list {
 		display: inline-flex;

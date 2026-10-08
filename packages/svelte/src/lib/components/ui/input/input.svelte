@@ -17,21 +17,20 @@
 	<input {...restProps} {type} bind:this={ref} bind:value class={['input', className]} />
 {/if}
 
+<!--
+	Options you can set from a parent or on the input itself:
+	--dui-input-height, --dui-input-padding-x, --dui-input-border, --dui-input-radius, --dui-input-bg
+-->
+
 <style>
 	.input {
-		--bg: var(--dui-input-bg, var(--dui-color-control));
-		--border: var(--dui-input-border, var(--dui-color-input));
-		--height: var(--dui-input-height, 2.25rem);
-		--padding-x: var(--dui-input-padding-x, var(--dui-space-2-5));
-		--radius: var(--dui-input-radius, var(--dui-radius-md));
-
 		width: 100%;
 		min-width: 0;
-		height: var(--height);
-		padding: var(--dui-space-1) var(--padding-x);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-		background: var(--bg);
+		height: var(--dui-input-height, 2.25rem);
+		padding: var(--dui-space-1) var(--dui-input-padding-x, var(--dui-space-2-5));
+		border: 1px solid var(--dui-input-border, var(--dui-color-input));
+		border-radius: var(--dui-input-radius, var(--dui-radius-md));
+		background: var(--dui-input-bg, var(--dui-color-control));
 		color: var(--dui-color-foreground);
 		font: inherit;
 		font-size: var(--dui-text-sm);

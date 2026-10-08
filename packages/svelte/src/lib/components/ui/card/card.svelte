@@ -17,6 +17,11 @@
 	{@render children?.()}
 </div>
 
+<!--
+	Options you can set from a parent or on the card itself:
+	--dui-card-spacing, --dui-card-radius, --dui-card-bg, --dui-card-fg, --dui-card-border
+-->
+
 <style>
 	.card {
 		/* Inherited by the card's parts (header, content, footer) for their padding. */
