@@ -27,7 +27,7 @@
 <style>
 	.separator {
 		flex-shrink: 0;
-		background: var(--separator-color, var(--color-border));
+		background: var(--dui-separator-color, var(--dui-color-border));
 
 		&[data-orientation='horizontal'] {
 			width: 100%;

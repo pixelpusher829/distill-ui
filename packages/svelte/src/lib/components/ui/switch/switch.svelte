@@ -26,58 +26,59 @@
 
 <style>
 	.switch {
-		--_width: var(--switch-width, 2rem);
-		--_height: var(--switch-height, 1.15rem);
-		--_thumb-size: var(--switch-thumb-size, 1rem);
-		--_track: var(--switch-track, var(--color-switch-track));
-		--_checked-track: var(--switch-checked-track, var(--color-primary));
-		--_thumb: var(--switch-thumb, var(--color-switch-thumb));
-		--_checked-thumb: var(--switch-checked-thumb, var(--color-switch-thumb-checked));
+		--width: var(--dui-switch-width, 2rem);
+		--height: var(--dui-switch-height, 1.15rem);
+		--thumb-size: var(--dui-switch-thumb-size, 1rem);
+		--track: var(--dui-switch-track, var(--dui-color-switch-track));
+		--checked-track: var(--dui-switch-checked-track, var(--dui-color-primary));
+		--thumb: var(--dui-switch-thumb, var(--dui-color-switch-thumb));
+		--checked-thumb: var(--dui-switch-checked-thumb, var(--dui-color-switch-thumb-checked));
 
 		appearance: none;
 		display: inline-flex;
 		align-items: center;
 		flex-shrink: 0;
-		width: var(--_width);
-		height: var(--_height);
+		width: var(--width);
+		height: var(--height);
 		margin: 0;
 		border: 1px solid transparent;
-		border-radius: var(--radius-full);
-		background: var(--_track);
-		box-shadow: var(--shadow-xs);
+		border-radius: var(--dui-radius-full);
+		background: var(--track);
+		box-shadow: var(--dui-shadow-xs);
 		cursor: pointer;
 		outline: none;
 		transition:
-			background-color var(--duration-fast) var(--ease-out),
-			box-shadow var(--duration-fast) var(--ease-out);
+			background-color var(--dui-duration-fast) var(--dui-ease-out),
+			box-shadow var(--dui-duration-fast) var(--dui-ease-out);
 
 		/* The thumb. */
 		&::before {
 			content: '';
-			width: var(--_thumb-size);
-			height: var(--_thumb-size);
-			border-radius: var(--radius-full);
-			background: var(--_thumb);
+			width: var(--thumb-size);
+			height: var(--thumb-size);
+			border-radius: var(--dui-radius-full);
+			background: var(--thumb);
 			pointer-events: none;
-			transition: translate var(--duration-fast) var(--ease-out);
+			transition: translate var(--dui-duration-fast) var(--dui-ease-out);
 		}
 
 		&:checked {
-			background: var(--_checked-track);
+			background: var(--checked-track);
 
 			&::before {
-				background: var(--_checked-thumb);
-				translate: calc(var(--_width) - var(--_thumb-size) - 2px) 0;
+				background: var(--checked-thumb);
+				translate: calc(var(--width) - var(--thumb-size) - 2px) 0;
 			}
 		}
 
 		&:dir(rtl):checked::before {
-			translate: calc((var(--_width) - var(--_thumb-size) - 2px) * -1) 0;
+			translate: calc((var(--width) - var(--thumb-size) - 2px) * -1) 0;
 		}
 
 		&:focus-visible {
-			border-color: var(--color-ring);
-			box-shadow: 0 0 0 var(--ring-width) color-mix(in oklch, var(--color-ring) 50%, transparent);
+			border-color: var(--dui-color-ring);
+			box-shadow: 0 0 0 var(--dui-ring-width)
+				color-mix(in oklch, var(--dui-color-ring) 50%, transparent);
 		}
 
 		&:disabled {
@@ -87,8 +88,8 @@
 	}
 
 	.switch[data-size='sm'] {
-		--_width: var(--switch-width, 1.5rem);
-		--_height: var(--switch-height, 0.875rem);
-		--_thumb-size: var(--switch-thumb-size, 0.75rem);
+		--width: var(--dui-switch-width, 1.5rem);
+		--height: var(--dui-switch-height, 0.875rem);
+		--thumb-size: var(--dui-switch-thumb-size, 0.75rem);
 	}
 </style>

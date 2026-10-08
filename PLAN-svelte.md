@@ -16,7 +16,7 @@ Behavior and accessibility come from **Melt UI** builders (`melt`), with our own
 2. **Tokens are the public API.** All colors, spacing, radii, shadows, fonts and motion values come from CSS custom properties defined in one tokens file.
 3. **Variants via data attributes.** `data-variant="outline"`, `data-size="sm"`. No class-merging helpers (`cn`, `tailwind-variants`, `clsx`).
 4. **State via data attributes.** Style the attributes Melt sets (`[data-open]`, `[data-active]`, `[data-highlighted]`, `[data-orientation]`) plus `[data-disabled]` where we add it. Don't invent a second vocabulary on top.
-5. **Consumers must be able to override easily.** Every component exposes component-level custom properties (e.g. `--button-bg`) that fall back to global tokens. Selectors stay low-specificity.
+5. **Consumers must be able to override easily.** Every component exposes component-level custom properties (e.g. `--dui-button-bg`) that fall back to global tokens. Selectors stay low-specificity.
 6. **Accessibility is not negotiable.** Never remove behavior Melt provides, and where we add behavior Melt lacks (disabled items, ARIA links), test it. Visible focus styles on every interactive element.
 7. **Modern CSS is fine.** Native nesting, `:where()`, `@layer`, `color-mix()`, `oklch()`, container queries. Target evergreen browsers.
 8. **Open the file, see the CSS, edit it.** This library exists because styling headless Svelte libraries with scoped CSS is painful: Bits UI renders parts inside its own components, so Svelte strips your scoped selectors as unused, and the usual escapes are Tailwind or wrapping every part in a `child` snippet. Users of this library must never hit that. Every styled element should be reachable by a plain scoped selector in the component's own file, with no `:global()` and no extra work from the consumer.
@@ -106,14 +106,14 @@ Pattern:
 
 ```css
 .button {
-  --_bg: var(--button-bg, var(--color-primary));
-  --_fg: var(--button-fg, var(--color-primary-foreground));
-  background: var(--_bg);
-  color: var(--_fg);
+  --bg: var(--dui-button-bg, var(--dui-color-primary));
+  --fg: var(--dui-button-fg, var(--dui-color-primary-foreground));
+  background: var(--bg);
+  color: var(--fg);
 }
 ```
 
-Consumers override with `--button-bg` on the element or any ancestor. Private `--_` vars are internal.
+Consumers override with `--dui-button-bg` on the element or any ancestor. Internal vars (`--bg`) have no prefix and aren't meant to be set. Decision (Oct 2026): every public variable, tokens included, is prefixed `--dui-` to avoid clashes with app or Tailwind variables.
 
 ### 1d. Variants and sizes
 
@@ -192,7 +192,7 @@ Same per-component checklist and quality bar as Phase 2. Prioritize by what user
 
 - [ ] Add an `--unstyled` flag to `add` (or a separate unstyled registry item per component): copies the same component with an empty `<style>` block plus a comment listing every class name and data attribute available to style.
 - [ ] Generate unstyled versions automatically from the styled ones in the registry build script, so there is no second copy to maintain.
-- [ ] Do **not** add hardcoded fallbacks to make components work without `tokens.css` (e.g. `var(--color-primary, #111)`); unstyled is the supported way to opt out of the tokens.
+- [ ] Do **not** add hardcoded fallbacks to make components work without `tokens.css` (e.g. `var(--dui-color-primary, #111)`); unstyled is the supported way to opt out of the tokens.
 - [ ] Structural-only versions (layout and positioning kept, visual styles removed) only if users ask for them.
 
 Once the shared conventions have been stable for a while, start `PLAN-vue.md` (it can run in parallel with the tail end of this phase).

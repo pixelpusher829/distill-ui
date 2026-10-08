@@ -12,8 +12,8 @@
 
 <style>
 	.skeleton {
-		border-radius: var(--skeleton-radius, var(--radius-md));
-		background: var(--skeleton-bg, var(--color-muted));
-		animation: distill-pulse var(--duration-pulse) var(--ease-in-out) infinite;
+		border-radius: var(--dui-skeleton-radius, var(--dui-radius-md));
+		background: var(--dui-skeleton-bg, var(--dui-color-muted));
+		animation: distill-pulse var(--dui-duration-pulse) var(--dui-ease-in-out) infinite;
 	}
 </style>

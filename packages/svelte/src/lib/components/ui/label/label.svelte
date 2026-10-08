@@ -17,11 +17,11 @@
 	.label {
 		display: flex;
 		align-items: center;
-		gap: var(--space-2);
-		color: var(--label-fg, var(--color-foreground));
-		font-size: var(--text-sm);
+		gap: var(--dui-space-2);
+		color: var(--dui-label-fg, var(--dui-color-foreground));
+		font-size: var(--dui-text-sm);
 		line-height: 1;
-		font-weight: var(--font-weight-medium);
+		font-weight: var(--dui-font-weight-medium);
 		user-select: none;
 	}
 </style>

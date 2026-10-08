@@ -37,18 +37,18 @@
 		position: relative;
 		display: flex;
 		align-items: center;
-		gap: var(--space-2);
-		padding: var(--space-1-5) var(--space-2);
-		border-radius: var(--radius-sm);
-		font-size: var(--text-sm);
-		line-height: var(--text-sm-line-height);
+		gap: var(--dui-space-2);
+		padding: var(--dui-space-1-5) var(--dui-space-2);
+		border-radius: var(--dui-radius-sm);
+		font-size: var(--dui-text-sm);
+		line-height: var(--dui-text-sm-line-height);
 		cursor: default;
 		outline: none;
 		user-select: none;
 
 		&:focus {
-			background: var(--color-accent);
-			color: var(--color-accent-foreground);
+			background: var(--dui-color-accent);
+			color: var(--dui-color-accent-foreground);
 		}
 
 		&[data-disabled] {
@@ -57,7 +57,7 @@
 		}
 
 		&[data-inset] {
-			padding-inline-start: var(--space-8);
+			padding-inline-start: var(--dui-space-8);
 		}
 
 		& :global(svg) {
@@ -69,11 +69,11 @@
 	}
 
 	.item[data-variant='destructive'] {
-		color: color-mix(in oklch, var(--color-destructive) 80%, var(--color-foreground));
+		color: color-mix(in oklch, var(--dui-color-destructive) 80%, var(--dui-color-foreground));
 
 		&:focus {
-			background: color-mix(in oklch, var(--color-destructive) 10%, transparent);
-			color: color-mix(in oklch, var(--color-destructive) 80%, var(--color-foreground));
+			background: color-mix(in oklch, var(--dui-color-destructive) 10%, transparent);
+			color: color-mix(in oklch, var(--dui-color-destructive) 80%, var(--dui-color-foreground));
 		}
 	}
 </style>

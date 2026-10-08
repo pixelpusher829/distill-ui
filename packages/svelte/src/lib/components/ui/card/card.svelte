@@ -20,25 +20,26 @@
 <style>
 	.card {
 		/* Inherited by the card's parts (header, content, footer) for their padding. */
-		--_card-spacing: var(--card-spacing, var(--space-6));
-		--_card-title-size: var(--text-base);
+		--card-spacing: var(--dui-card-spacing, var(--dui-space-6));
+		--card-title-size: var(--dui-text-base);
 
 		display: flex;
 		flex-direction: column;
-		gap: var(--_card-spacing);
-		padding-block: var(--_card-spacing);
+		gap: var(--card-spacing);
+		padding-block: var(--card-spacing);
 		overflow: hidden;
-		border-radius: var(--card-radius, var(--radius-xl));
-		background: var(--card-bg, var(--color-card));
-		color: var(--card-fg, var(--color-card-foreground));
-		font-size: var(--text-sm);
+		border-radius: var(--dui-card-radius, var(--dui-radius-xl));
+		background: var(--dui-card-bg, var(--dui-color-card));
+		color: var(--dui-card-fg, var(--dui-color-card-foreground));
+		font-size: var(--dui-text-sm);
 		box-shadow:
-			0 0 0 1px var(--card-border, color-mix(in oklch, var(--color-foreground) 10%, transparent)),
-			var(--shadow-xs);
+			0 0 0 1px
+				var(--dui-card-border, color-mix(in oklch, var(--dui-color-foreground) 10%, transparent)),
+			var(--dui-shadow-xs);
 	}
 
 	.card[data-size='sm'] {
-		--_card-spacing: var(--card-spacing, var(--space-4));
-		--_card-title-size: var(--text-sm);
+		--card-spacing: var(--dui-card-spacing, var(--dui-space-4));
+		--card-title-size: var(--dui-text-sm);
 	}
 </style>

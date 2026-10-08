@@ -22,34 +22,34 @@
 
 <style>
 	.checkbox {
-		--_size: var(--checkbox-size, 1rem);
-		--_bg: var(--checkbox-bg, var(--color-control));
-		--_border: var(--checkbox-border, var(--color-input));
-		--_checked-bg: var(--checkbox-checked-bg, var(--color-primary));
-		--_checked-fg: var(--checkbox-checked-fg, var(--color-primary-foreground));
-		--_radius: var(--checkbox-radius, 4px);
+		--size: var(--dui-checkbox-size, 1rem);
+		--bg: var(--dui-checkbox-bg, var(--dui-color-control));
+		--border: var(--dui-checkbox-border, var(--dui-color-input));
+		--checked-bg: var(--dui-checkbox-checked-bg, var(--dui-color-primary));
+		--checked-fg: var(--dui-checkbox-checked-fg, var(--dui-color-primary-foreground));
+		--radius: var(--dui-checkbox-radius, 4px);
 
 		appearance: none;
 		display: inline-grid;
 		place-content: center;
 		flex-shrink: 0;
-		width: var(--_size);
-		height: var(--_size);
+		width: var(--size);
+		height: var(--size);
 		margin: 0;
-		border: 1px solid var(--_border);
-		border-radius: var(--_radius);
-		background: var(--_bg);
-		color: var(--_checked-fg);
-		box-shadow: var(--shadow-xs);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background: var(--bg);
+		color: var(--checked-fg);
+		box-shadow: var(--dui-shadow-xs);
 		cursor: pointer;
 		outline: none;
-		transition: box-shadow var(--duration-fast) var(--ease-out);
+		transition: box-shadow var(--dui-duration-fast) var(--dui-ease-out);
 
 		/* The check mark: an SVG used as a mask, so it takes the text color. */
 		&::before {
 			content: '';
-			width: calc(var(--_size) * 0.875);
-			height: calc(var(--_size) * 0.875);
+			width: calc(var(--size) * 0.875);
+			height: calc(var(--size) * 0.875);
 			background: currentColor;
 			mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")
 				center / contain no-repeat;
@@ -58,8 +58,8 @@
 
 		&:checked,
 		&:indeterminate {
-			border-color: var(--_checked-bg);
-			background: var(--_checked-bg);
+			border-color: var(--checked-bg);
+			background: var(--checked-bg);
 
 			&::before {
 				scale: 1;
@@ -71,14 +71,15 @@
 		}
 
 		&:focus-visible {
-			border-color: var(--color-ring);
-			box-shadow: 0 0 0 var(--ring-width) color-mix(in oklch, var(--color-ring) 50%, transparent);
+			border-color: var(--dui-color-ring);
+			box-shadow: 0 0 0 var(--dui-ring-width)
+				color-mix(in oklch, var(--dui-color-ring) 50%, transparent);
 		}
 
 		&[aria-invalid='true'] {
-			border-color: var(--color-destructive);
-			box-shadow: 0 0 0 var(--ring-width)
-				color-mix(in oklch, var(--color-destructive) 20%, transparent);
+			border-color: var(--dui-color-destructive);
+			box-shadow: 0 0 0 var(--dui-ring-width)
+				color-mix(in oklch, var(--dui-color-destructive) 20%, transparent);
 		}
 
 		&:disabled {

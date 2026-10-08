@@ -17,7 +17,7 @@
 	.footer {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-2);
+		gap: var(--dui-space-2);
 		/* Sits at the bottom of the sheet. */
 		margin-top: auto;
 	}

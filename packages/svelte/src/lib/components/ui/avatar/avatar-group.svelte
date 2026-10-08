@@ -16,8 +16,8 @@
 <style>
 	.group {
 		/* Read by each Avatar inside: overlap them and ring each one in the page color. */
-		--_avatar-overlap: calc(var(--space-2) * -1);
-		--_avatar-ring-width: 2px;
+		--avatar-overlap: calc(var(--dui-space-2) * -1);
+		--avatar-ring-width: 2px;
 
 		display: flex;
 	}

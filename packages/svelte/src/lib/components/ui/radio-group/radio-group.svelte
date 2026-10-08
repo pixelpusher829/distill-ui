@@ -48,7 +48,7 @@
 <style>
 	.radio-group {
 		display: grid;
-		gap: var(--radio-group-gap, var(--space-3));
+		gap: var(--dui-radio-group-gap, var(--dui-space-3));
 
 		&[data-orientation='horizontal'] {
 			display: flex;

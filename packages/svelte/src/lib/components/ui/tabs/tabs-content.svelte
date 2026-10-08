@@ -25,13 +25,14 @@
 <style>
 	.content {
 		flex: 1;
-		font-size: var(--text-sm);
-		line-height: var(--text-sm-line-height);
+		font-size: var(--dui-text-sm);
+		line-height: var(--dui-text-sm-line-height);
 		outline: none;
 
 		&:focus-visible {
-			border-radius: var(--radius-md);
-			box-shadow: 0 0 0 var(--ring-width) color-mix(in oklch, var(--color-ring) 50%, transparent);
+			border-radius: var(--dui-radius-md);
+			box-shadow: 0 0 0 var(--dui-ring-width)
+				color-mix(in oklch, var(--dui-color-ring) 50%, transparent);
 		}
 	}
 </style>

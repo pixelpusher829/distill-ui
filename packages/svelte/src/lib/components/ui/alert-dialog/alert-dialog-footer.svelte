@@ -17,7 +17,7 @@
 	.footer {
 		display: flex;
 		flex-direction: column-reverse;
-		gap: var(--space-2);
+		gap: var(--dui-space-2);
 
 		@media (width >= 40rem) {
 			flex-direction: row;

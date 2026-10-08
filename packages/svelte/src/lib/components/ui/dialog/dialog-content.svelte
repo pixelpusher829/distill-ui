@@ -45,10 +45,10 @@
 		margin: 0;
 		padding: 0;
 		border: 0;
-		background: var(--dialog-overlay-bg, var(--color-overlay));
+		background: var(--dui-dialog-overlay-bg, var(--dui-color-overlay));
 		backdrop-filter: blur(4px);
 		opacity: 0;
-		transition: opacity var(--duration-fast) var(--ease-out);
+		transition: opacity var(--dui-duration-fast) var(--dui-ease-out);
 
 		&[data-open] {
 			opacity: 1;
@@ -57,23 +57,23 @@
 
 	.content {
 		display: grid;
-		gap: var(--space-6);
+		gap: var(--dui-space-6);
 		width: 100%;
-		max-width: min(var(--dialog-max-width, 28rem), calc(100% - var(--space-8)));
-		padding: var(--dialog-padding, var(--space-6));
+		max-width: min(var(--dui-dialog-max-width, 28rem), calc(100% - var(--dui-space-8)));
+		padding: var(--dui-dialog-padding, var(--dui-space-6));
 		border: 0;
-		border-radius: var(--dialog-radius, var(--radius-xl));
-		background: var(--dialog-bg, var(--color-popover));
-		color: var(--dialog-fg, var(--color-popover-foreground));
-		box-shadow: 0 0 0 1px color-mix(in oklch, var(--color-foreground) 10%, transparent);
-		font-size: var(--text-sm);
-		line-height: var(--text-sm-line-height);
+		border-radius: var(--dui-dialog-radius, var(--dui-radius-xl));
+		background: var(--dui-dialog-bg, var(--dui-color-popover));
+		color: var(--dui-dialog-fg, var(--dui-color-popover-foreground));
+		box-shadow: 0 0 0 1px color-mix(in oklch, var(--dui-color-foreground) 10%, transparent);
+		font-size: var(--dui-text-sm);
+		line-height: var(--dui-text-sm-line-height);
 		outline: none;
 		opacity: 0;
 		scale: 0.95;
 		transition:
-			opacity var(--duration-fast) var(--ease-out),
-			scale var(--duration-fast) var(--ease-out);
+			opacity var(--dui-duration-fast) var(--dui-ease-out),
+			scale var(--dui-duration-fast) var(--dui-ease-out);
 
 		&:not([open]) {
 			display: none;
@@ -91,29 +91,30 @@
 
 	.close {
 		position: absolute;
-		top: var(--space-4);
-		right: var(--space-4);
+		top: var(--dui-space-4);
+		right: var(--dui-space-4);
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		width: 1.75rem;
 		height: 1.75rem;
 		border: none;
-		border-radius: var(--radius-md);
+		border-radius: var(--dui-radius-md);
 		background: transparent;
-		color: var(--color-foreground);
+		color: var(--dui-color-foreground);
 		cursor: pointer;
 		opacity: 0.7;
-		transition: opacity var(--duration-fast) var(--ease-out);
+		transition: opacity var(--dui-duration-fast) var(--dui-ease-out);
 
 		&:hover {
 			opacity: 1;
-			background: var(--color-muted);
+			background: var(--dui-color-muted);
 		}
 
 		&:focus-visible {
 			outline: none;
-			box-shadow: 0 0 0 var(--ring-width) color-mix(in oklch, var(--color-ring) 50%, transparent);
+			box-shadow: 0 0 0 var(--dui-ring-width)
+				color-mix(in oklch, var(--dui-color-ring) 50%, transparent);
 		}
 
 		svg {

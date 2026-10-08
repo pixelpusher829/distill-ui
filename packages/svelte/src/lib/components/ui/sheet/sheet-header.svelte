@@ -17,6 +17,6 @@
 	.header {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-1-5);
+		gap: var(--dui-space-1-5);
 	}
 </style>

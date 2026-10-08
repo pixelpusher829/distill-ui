@@ -55,20 +55,20 @@
 		position: relative;
 		display: flex;
 		align-items: center;
-		gap: var(--space-2);
+		gap: var(--dui-space-2);
 		width: 100%;
-		padding-block: var(--space-1-5);
-		padding-inline: var(--space-2) var(--space-8);
-		border-radius: var(--radius-sm);
-		font-size: var(--text-sm);
-		line-height: var(--text-sm-line-height);
+		padding-block: var(--dui-space-1-5);
+		padding-inline: var(--dui-space-2) var(--dui-space-8);
+		border-radius: var(--dui-radius-sm);
+		font-size: var(--dui-text-sm);
+		line-height: var(--dui-text-sm-line-height);
 		cursor: default;
 		user-select: none;
 		outline: none;
 
 		&[data-highlighted] {
-			background: var(--select-item-highlight-bg, var(--color-accent));
-			color: var(--select-item-highlight-fg, var(--color-accent-foreground));
+			background: var(--dui-select-item-highlight-bg, var(--dui-color-accent));
+			color: var(--dui-select-item-highlight-fg, var(--dui-color-accent-foreground));
 		}
 
 		&[data-disabled] {
@@ -81,13 +81,13 @@
 		display: flex;
 		flex: 1;
 		align-items: center;
-		gap: var(--space-2);
+		gap: var(--dui-space-2);
 		white-space: nowrap;
 	}
 
 	.indicator {
 		position: absolute;
-		right: var(--space-2);
+		right: var(--dui-space-2);
 		width: 1rem;
 		height: 1rem;
 		fill: none;

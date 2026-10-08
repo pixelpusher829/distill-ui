@@ -19,7 +19,7 @@
 		display: flex;
 		flex: 1;
 		align-items: center;
-		gap: var(--space-1-5);
+		gap: var(--dui-space-1-5);
 		text-align: left;
 		overflow: hidden;
 		text-overflow: ellipsis;

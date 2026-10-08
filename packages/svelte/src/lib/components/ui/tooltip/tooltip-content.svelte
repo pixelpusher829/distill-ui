@@ -24,23 +24,23 @@
 
 <style>
 	.content {
-		--_bg: var(--tooltip-bg, var(--color-primary));
+		--bg: var(--dui-tooltip-bg, var(--dui-color-primary));
 
 		width: fit-content;
-		max-width: var(--tooltip-max-width, 20rem);
+		max-width: var(--dui-tooltip-max-width, 20rem);
 		margin: 0;
-		padding: var(--space-1-5) var(--space-3);
+		padding: var(--dui-space-1-5) var(--dui-space-3);
 		border: 0;
-		border-radius: var(--tooltip-radius, var(--radius-md));
-		background: var(--_bg);
-		color: var(--tooltip-fg, var(--color-primary-foreground));
-		font-size: var(--text-xs);
-		line-height: var(--text-xs-line-height);
+		border-radius: var(--dui-tooltip-radius, var(--dui-radius-md));
+		background: var(--bg);
+		color: var(--dui-tooltip-fg, var(--dui-color-primary-foreground));
+		font-size: var(--dui-text-xs);
+		line-height: var(--dui-text-xs-line-height);
 		text-wrap: balance;
 		overflow: visible;
 		transition:
-			opacity var(--duration-fast) var(--ease-out),
-			scale var(--duration-fast) var(--ease-out);
+			opacity var(--dui-duration-fast) var(--dui-ease-out),
+			scale var(--dui-duration-fast) var(--dui-ease-out);
 
 		@starting-style {
 			opacity: 0;
@@ -53,6 +53,6 @@
 		width: 0.5rem;
 		height: 0.5rem;
 		border-radius: 2px;
-		background: var(--_bg);
+		background: var(--bg);
 	}
 </style>

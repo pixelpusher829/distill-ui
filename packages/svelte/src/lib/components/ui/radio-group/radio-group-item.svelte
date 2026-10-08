@@ -30,40 +30,40 @@
 
 <style>
 	.item {
-		--_size: var(--radio-size, 1rem);
-		--_bg: var(--radio-bg, var(--color-control));
-		--_border: var(--radio-border, var(--color-input));
-		--_checked-bg: var(--radio-checked-bg, var(--color-primary));
-		--_checked-fg: var(--radio-checked-fg, var(--color-primary-foreground));
+		--size: var(--dui-radio-size, 1rem);
+		--bg: var(--dui-radio-bg, var(--dui-color-control));
+		--border: var(--dui-radio-border, var(--dui-color-input));
+		--checked-bg: var(--dui-radio-checked-bg, var(--dui-color-primary));
+		--checked-fg: var(--dui-radio-checked-fg, var(--dui-color-primary-foreground));
 
 		appearance: none;
 		display: inline-grid;
 		place-content: center;
 		flex-shrink: 0;
-		width: var(--_size);
-		height: var(--_size);
+		width: var(--size);
+		height: var(--size);
 		margin: 0;
-		border: 1px solid var(--_border);
-		border-radius: var(--radius-full);
-		background: var(--_bg);
-		box-shadow: var(--shadow-xs);
+		border: 1px solid var(--border);
+		border-radius: var(--dui-radius-full);
+		background: var(--bg);
+		box-shadow: var(--dui-shadow-xs);
 		cursor: pointer;
 		outline: none;
-		transition: box-shadow var(--duration-fast) var(--ease-out);
+		transition: box-shadow var(--dui-duration-fast) var(--dui-ease-out);
 
 		/* The dot. */
 		&::before {
 			content: '';
-			width: calc(var(--_size) / 2);
-			height: calc(var(--_size) / 2);
-			border-radius: var(--radius-full);
-			background: var(--_checked-fg);
+			width: calc(var(--size) / 2);
+			height: calc(var(--size) / 2);
+			border-radius: var(--dui-radius-full);
+			background: var(--checked-fg);
 			scale: 0;
 		}
 
 		&:checked {
-			border-color: var(--_checked-bg);
-			background: var(--_checked-bg);
+			border-color: var(--checked-bg);
+			background: var(--checked-bg);
 
 			&::before {
 				scale: 1;
@@ -71,14 +71,15 @@
 		}
 
 		&:focus-visible {
-			border-color: var(--color-ring);
-			box-shadow: 0 0 0 var(--ring-width) color-mix(in oklch, var(--color-ring) 50%, transparent);
+			border-color: var(--dui-color-ring);
+			box-shadow: 0 0 0 var(--dui-ring-width)
+				color-mix(in oklch, var(--dui-color-ring) 50%, transparent);
 		}
 
 		&[aria-invalid='true'] {
-			border-color: var(--color-destructive);
-			box-shadow: 0 0 0 var(--ring-width)
-				color-mix(in oklch, var(--color-destructive) 20%, transparent);
+			border-color: var(--dui-color-destructive);
+			box-shadow: 0 0 0 var(--dui-ring-width)
+				color-mix(in oklch, var(--dui-color-destructive) 20%, transparent);
 		}
 
 		&:disabled {

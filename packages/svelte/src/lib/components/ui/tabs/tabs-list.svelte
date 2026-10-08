@@ -25,16 +25,16 @@
 		align-items: center;
 		justify-content: center;
 		width: fit-content;
-		height: var(--tabs-list-height, 2.25rem);
+		height: var(--dui-tabs-list-height, 2.25rem);
 		padding: 3px;
-		border-radius: var(--tabs-list-radius, var(--radius-lg));
-		background: var(--tabs-list-bg, var(--color-muted));
-		color: var(--color-muted-foreground);
+		border-radius: var(--dui-tabs-list-radius, var(--dui-radius-lg));
+		background: var(--dui-tabs-list-bg, var(--dui-color-muted));
+		color: var(--dui-color-muted-foreground);
 
 		&[data-variant='line'] {
-			gap: var(--space-1);
+			gap: var(--dui-space-1);
 			border-radius: 0;
-			background: var(--tabs-list-bg, transparent);
+			background: var(--dui-tabs-list-bg, transparent);
 		}
 
 		&[data-orientation='vertical'] {

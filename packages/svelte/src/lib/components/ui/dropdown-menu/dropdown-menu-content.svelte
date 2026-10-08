@@ -24,23 +24,23 @@
 
 <style>
 	.content {
-		min-width: var(--dropdown-menu-min-width, 8rem);
+		min-width: var(--dui-dropdown-menu-min-width, 8rem);
 		max-height: var(--melt-popover-available-height);
 		margin: 0;
-		padding: var(--space-1);
+		padding: var(--dui-space-1);
 		overflow-x: hidden;
 		overflow-y: auto;
 		border: 0;
-		border-radius: var(--dropdown-menu-radius, var(--radius-md));
-		background: var(--dropdown-menu-bg, var(--color-popover));
-		color: var(--dropdown-menu-fg, var(--color-popover-foreground));
+		border-radius: var(--dui-dropdown-menu-radius, var(--dui-radius-md));
+		background: var(--dui-dropdown-menu-bg, var(--dui-color-popover));
+		color: var(--dui-dropdown-menu-fg, var(--dui-color-popover-foreground));
 		box-shadow:
-			0 0 0 1px color-mix(in oklch, var(--color-foreground) 10%, transparent),
-			var(--shadow-md);
+			0 0 0 1px color-mix(in oklch, var(--dui-color-foreground) 10%, transparent),
+			var(--dui-shadow-md);
 		outline: none;
 		transition:
-			opacity var(--duration-fast) var(--ease-out),
-			scale var(--duration-fast) var(--ease-out);
+			opacity var(--dui-duration-fast) var(--dui-ease-out),
+			scale var(--dui-duration-fast) var(--dui-ease-out);
 
 		@starting-style {
 			opacity: 0;

@@ -15,9 +15,9 @@
 <style>
 	.label {
 		display: block;
-		margin-bottom: var(--space-2);
-		font-size: var(--text-sm);
-		line-height: var(--text-sm-line-height);
-		font-weight: var(--font-weight-medium);
+		margin-bottom: var(--dui-space-2);
+		font-size: var(--dui-text-sm);
+		line-height: var(--dui-text-sm-line-height);
+		font-weight: var(--dui-font-weight-medium);
 	}
 </style>

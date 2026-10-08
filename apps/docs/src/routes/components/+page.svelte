@@ -80,7 +80,7 @@
 		<h3>Customizing</h3>
 		<div
 			class="row"
-			style="--button-bg: oklch(0.55 0.2 260); --button-fg: white; --button-radius: 9999px"
+			style="--dui-button-bg: oklch(0.55 0.2 260); --dui-button-fg: white; --dui-button-radius: 9999px"
 		>
 			<Button>Overridden from a parent</Button>
 		</div>
@@ -110,7 +110,7 @@
 			<Textarea id="message" placeholder="Type your message here." />
 		</div>
 		<h3>Customizing</h3>
-		<div class="field" style="--input-radius: 9999px; --input-height: 2.75rem">
+		<div class="field" style="--dui-input-radius: 9999px; --dui-input-height: 2.75rem">
 			<Label for="pill">Pill input</Label>
 			<Input id="pill" placeholder="Rounded from a parent" />
 		</div>
@@ -143,7 +143,7 @@
 			<Label><Switch disabled /> Disabled</Label>
 		</div>
 		<h3>Customizing</h3>
-		<div style="--switch-checked-track: oklch(0.6 0.17 150)">
+		<div style="--dui-switch-checked-track: oklch(0.6 0.17 150)">
 			<Label><Switch checked /> Green from a parent</Label>
 		</div>
 	</section>
@@ -168,7 +168,7 @@
 					<Button variant="outline">Cancel</Button>
 				</Card.Footer>
 			</Card.Root>
-			<Card.Root size="sm" style="--card-radius: 0">
+			<Card.Root size="sm" style="--dui-card-radius: 0">
 				<Card.Header>
 					<Card.Title>Small card</Card.Title>
 					<Card.Description>Tighter spacing, and square corners set from outside.</Card.Description>
@@ -191,7 +191,7 @@
 	<section data-testid="separator">
 		<h2>Separator</h2>
 		<p class="hint">An open-source UI library.</p>
-		<Separator style="margin-block: var(--space-4)" />
+		<Separator style="margin-block: var(--dui-space-4)" />
 		<div class="row" style="height: 1.25rem">
 			<span>Blog</span>
 			<Separator orientation="vertical" />
@@ -305,7 +305,7 @@
 		<h2>Dropdown Menu</h2>
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger>Open menu</DropdownMenu.Trigger>
-			<DropdownMenu.Content style="--dropdown-menu-min-width: 14rem">
+			<DropdownMenu.Content style="--dui-dropdown-menu-min-width: 14rem">
 				<DropdownMenu.Label>My account</DropdownMenu.Label>
 				<DropdownMenu.Group>
 					<DropdownMenu.Item onSelect={() => (lastAction = 'profile')}>
@@ -358,7 +358,7 @@
 		<h2>Select</h2>
 		<Select.Root bind:value={fruit}>
 			<Select.Label>Favorite fruit</Select.Label>
-			<Select.Trigger style="--select-trigger-width: 11rem">
+			<Select.Trigger style="--dui-select-trigger-width: 11rem">
 				<Select.Value placeholder="Select a fruit" />
 			</Select.Trigger>
 			<Select.Content>
@@ -403,7 +403,7 @@
 	main {
 		max-width: 48rem;
 		margin: 0 auto;
-		padding: var(--space-10) var(--space-4);
+		padding: var(--dui-space-10) var(--dui-space-4);
 	}
 
 	header {
@@ -413,62 +413,62 @@
 	}
 
 	section {
-		padding-block: var(--space-6);
-		border-top: 1px solid var(--color-border);
+		padding-block: var(--dui-space-6);
+		border-top: 1px solid var(--dui-color-border);
 	}
 
 	h2,
 	h3 {
-		margin: 0 0 var(--space-4);
-		font-size: var(--text-base);
-		font-weight: var(--font-weight-medium);
+		margin: 0 0 var(--dui-space-4);
+		font-size: var(--dui-text-base);
+		font-weight: var(--dui-font-weight-medium);
 	}
 
 	h3 {
-		margin-top: var(--space-6);
-		color: var(--color-muted-foreground);
-		font-size: var(--text-sm);
+		margin-top: var(--dui-space-6);
+		color: var(--dui-color-muted-foreground);
+		font-size: var(--dui-text-sm);
 	}
 
 	.row {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		gap: var(--space-2);
-		margin-bottom: var(--space-3);
+		gap: var(--dui-space-2);
+		margin-bottom: var(--dui-space-3);
 	}
 
 	.field {
 		display: grid;
-		gap: var(--space-2);
+		gap: var(--dui-space-2);
 		max-width: 20rem;
-		margin-bottom: var(--space-4);
+		margin-bottom: var(--dui-space-4);
 	}
 
 	.hint {
 		margin: 0;
-		color: var(--color-muted-foreground);
-		font-size: var(--text-sm);
+		color: var(--dui-color-muted-foreground);
+		font-size: var(--dui-text-sm);
 	}
 
 	.spaced {
-		margin-top: var(--space-3);
+		margin-top: var(--dui-space-3);
 	}
 
 	.stack-sm {
 		display: grid;
-		gap: var(--space-3);
+		gap: var(--dui-space-3);
 	}
 
 	.cards {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
 		align-items: start;
-		gap: var(--space-4);
+		gap: var(--dui-space-4);
 	}
 
 	.stack {
 		display: grid;
-		gap: var(--space-8);
+		gap: var(--dui-space-8);
 	}
 </style>

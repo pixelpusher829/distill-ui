@@ -19,54 +19,55 @@
 
 <style>
 	.input {
-		--_bg: var(--input-bg, var(--color-control));
-		--_border: var(--input-border, var(--color-input));
-		--_height: var(--input-height, 2.25rem);
-		--_padding-x: var(--input-padding-x, var(--space-2-5));
-		--_radius: var(--input-radius, var(--radius-md));
+		--bg: var(--dui-input-bg, var(--dui-color-control));
+		--border: var(--dui-input-border, var(--dui-color-input));
+		--height: var(--dui-input-height, 2.25rem);
+		--padding-x: var(--dui-input-padding-x, var(--dui-space-2-5));
+		--radius: var(--dui-input-radius, var(--dui-radius-md));
 
 		width: 100%;
 		min-width: 0;
-		height: var(--_height);
-		padding: var(--space-1) var(--_padding-x);
-		border: 1px solid var(--_border);
-		border-radius: var(--_radius);
-		background: var(--_bg);
-		color: var(--color-foreground);
+		height: var(--height);
+		padding: var(--dui-space-1) var(--padding-x);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background: var(--bg);
+		color: var(--dui-color-foreground);
 		font: inherit;
-		font-size: var(--text-sm);
-		line-height: var(--text-sm-line-height);
-		box-shadow: var(--shadow-xs);
+		font-size: var(--dui-text-sm);
+		line-height: var(--dui-text-sm-line-height);
+		box-shadow: var(--dui-shadow-xs);
 		outline: none;
 		transition:
-			border-color var(--duration-fast) var(--ease-out),
-			box-shadow var(--duration-fast) var(--ease-out);
+			border-color var(--dui-duration-fast) var(--dui-ease-out),
+			box-shadow var(--dui-duration-fast) var(--dui-ease-out);
 
 		&::placeholder {
-			color: var(--color-muted-foreground);
+			color: var(--dui-color-muted-foreground);
 		}
 
 		&::file-selector-button {
 			height: 1.75rem;
-			margin-inline-end: var(--space-2);
+			margin-inline-end: var(--dui-space-2);
 			padding: 0;
 			border: 0;
 			background: transparent;
-			color: var(--color-foreground);
+			color: var(--dui-color-foreground);
 			font: inherit;
-			font-size: var(--text-sm);
-			font-weight: var(--font-weight-medium);
+			font-size: var(--dui-text-sm);
+			font-weight: var(--dui-font-weight-medium);
 		}
 
 		&:focus-visible {
-			border-color: var(--color-ring);
-			box-shadow: 0 0 0 var(--ring-width) color-mix(in oklch, var(--color-ring) 50%, transparent);
+			border-color: var(--dui-color-ring);
+			box-shadow: 0 0 0 var(--dui-ring-width)
+				color-mix(in oklch, var(--dui-color-ring) 50%, transparent);
 		}
 
 		&[aria-invalid='true'] {
-			border-color: var(--color-destructive);
-			box-shadow: 0 0 0 var(--ring-width)
-				color-mix(in oklch, var(--color-destructive) 20%, transparent);
+			border-color: var(--dui-color-destructive);
+			box-shadow: 0 0 0 var(--dui-ring-width)
+				color-mix(in oklch, var(--dui-color-destructive) 20%, transparent);
 		}
 
 		&:disabled {

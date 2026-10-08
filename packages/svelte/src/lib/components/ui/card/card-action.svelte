@@ -19,6 +19,6 @@
 		grid-row: 1 / span 2;
 		align-self: start;
 		justify-self: end;
-		margin-inline-start: var(--space-4);
+		margin-inline-start: var(--dui-space-4);
 	}
 </style>

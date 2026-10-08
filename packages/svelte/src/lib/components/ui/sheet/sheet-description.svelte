@@ -11,8 +11,8 @@
 <style>
 	.description {
 		margin: 0;
-		color: var(--color-muted-foreground);
-		font-size: var(--text-sm);
-		line-height: var(--text-sm-line-height);
+		color: var(--dui-color-muted-foreground);
+		font-size: var(--dui-text-sm);
+		line-height: var(--dui-text-sm-line-height);
 	}
 </style>

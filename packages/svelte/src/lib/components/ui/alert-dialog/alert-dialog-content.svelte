@@ -36,10 +36,10 @@
 		margin: 0;
 		padding: 0;
 		border: 0;
-		background: var(--alert-dialog-overlay-bg, var(--color-overlay));
+		background: var(--dui-alert-dialog-overlay-bg, var(--dui-color-overlay));
 		backdrop-filter: blur(4px);
 		opacity: 0;
-		transition: opacity var(--duration-fast) var(--ease-out);
+		transition: opacity var(--dui-duration-fast) var(--dui-ease-out);
 
 		&[data-open] {
 			opacity: 1;
@@ -48,23 +48,23 @@
 
 	.content {
 		display: grid;
-		gap: var(--space-6);
+		gap: var(--dui-space-6);
 		width: 100%;
-		max-width: min(var(--alert-dialog-max-width, 32rem), calc(100% - var(--space-8)));
-		padding: var(--alert-dialog-padding, var(--space-6));
+		max-width: min(var(--dui-alert-dialog-max-width, 32rem), calc(100% - var(--dui-space-8)));
+		padding: var(--dui-alert-dialog-padding, var(--dui-space-6));
 		border: 0;
-		border-radius: var(--alert-dialog-radius, var(--radius-xl));
-		background: var(--alert-dialog-bg, var(--color-popover));
-		color: var(--alert-dialog-fg, var(--color-popover-foreground));
-		box-shadow: 0 0 0 1px color-mix(in oklch, var(--color-foreground) 10%, transparent);
-		font-size: var(--text-sm);
-		line-height: var(--text-sm-line-height);
+		border-radius: var(--dui-alert-dialog-radius, var(--dui-radius-xl));
+		background: var(--dui-alert-dialog-bg, var(--dui-color-popover));
+		color: var(--dui-alert-dialog-fg, var(--dui-color-popover-foreground));
+		box-shadow: 0 0 0 1px color-mix(in oklch, var(--dui-color-foreground) 10%, transparent);
+		font-size: var(--dui-text-sm);
+		line-height: var(--dui-text-sm-line-height);
 		outline: none;
 		opacity: 0;
 		scale: 0.95;
 		transition:
-			opacity var(--duration-fast) var(--ease-out),
-			scale var(--duration-fast) var(--ease-out);
+			opacity var(--dui-duration-fast) var(--dui-ease-out),
+			scale var(--dui-duration-fast) var(--dui-ease-out);
 
 		&:not([open]) {
 			display: none;
