@@ -67,3 +67,34 @@
 	--dui-z-popover: 50;
 	--dui-z-toast: 100;
 }
+
+/*
+ * Colors derived from the theme colors, so components can use one short name for
+ * hover states and tints. Listed on every theme selector so they follow the theme
+ * wherever it's applied.
+ */
+:root,
+.light,
+.dark,
+[data-theme] {
+	--dui-color-primary-hover: color-mix(in oklch, var(--dui-color-primary) 80%, transparent);
+	--dui-color-secondary-hover: color-mix(in oklch, var(--dui-color-secondary) 80%, transparent);
+
+	/* Destructive as a soft tint with readable text, for buttons, badges and alerts. */
+	--dui-color-destructive-subtle: color-mix(
+		in oklch,
+		var(--dui-color-destructive) 10%,
+		transparent
+	);
+	--dui-color-destructive-subtle-hover: color-mix(
+		in oklch,
+		var(--dui-color-destructive) 20%,
+		transparent
+	);
+	/* Pulled toward the foreground so text passes AA contrast on the tint. */
+	--dui-color-destructive-text: color-mix(
+		in oklch,
+		var(--dui-color-destructive) 80%,
+		var(--dui-color-foreground)
+	);
+}

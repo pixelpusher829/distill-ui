@@ -55,29 +55,26 @@
 	</button>
 {/if}
 
+<!--
+	Options you can set from a parent or on the button itself:
+	--dui-button-bg, --dui-button-fg, --dui-button-hover-bg, --dui-button-border,
+	--dui-button-radius, --dui-button-height
+-->
+
 <style>
 	.button {
-		--bg: var(--dui-button-bg, var(--dui-color-primary));
-		--fg: var(--dui-button-fg, var(--dui-color-primary-foreground));
-		--border: var(--dui-button-border, transparent);
-		--hover-bg: var(--dui-button-hover-bg, color-mix(in oklch, var(--bg) 80%, transparent));
-		--hover-fg: var(--dui-button-hover-fg, var(--fg));
-		--height: var(--dui-button-height, 2.25rem);
-		--padding-x: var(--dui-button-padding-x, var(--dui-space-2-5));
-		--radius: var(--dui-button-radius, var(--dui-radius-md));
-
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		gap: var(--dui-space-1-5);
 		flex-shrink: 0;
-		height: var(--height);
-		padding-inline: var(--padding-x);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-		background: var(--bg);
+		height: var(--dui-button-height, 2.25rem);
+		padding-inline: var(--dui-space-2-5);
+		border: 1px solid var(--dui-button-border, transparent);
+		border-radius: var(--dui-button-radius, var(--dui-radius-md));
+		background: var(--dui-button-bg, var(--dui-color-primary));
 		background-clip: padding-box;
-		color: var(--fg);
+		color: var(--dui-button-fg, var(--dui-color-primary-foreground));
 		font: inherit;
 		font-size: var(--dui-text-sm);
 		line-height: var(--dui-text-sm-line-height);
@@ -93,8 +90,7 @@
 			box-shadow var(--dui-duration-fast) var(--dui-ease-out);
 
 		&:hover {
-			background: var(--hover-bg);
-			color: var(--hover-fg);
+			background: var(--dui-button-hover-bg, var(--dui-color-primary-hover));
 		}
 
 		&:focus-visible {
@@ -113,6 +109,7 @@
 			opacity: 0.5;
 		}
 
+		/* Icons passed in as children. */
 		& :global(svg) {
 			flex-shrink: 0;
 			pointer-events: none;
@@ -126,68 +123,67 @@
 
 	/* Variants */
 	.button[data-variant='secondary'] {
-		--bg: var(--dui-button-bg, var(--dui-color-secondary));
-		--fg: var(--dui-button-fg, var(--dui-color-secondary-foreground));
+		background: var(--dui-button-bg, var(--dui-color-secondary));
+		color: var(--dui-button-fg, var(--dui-color-secondary-foreground));
+
+		&:hover {
+			background: var(--dui-button-hover-bg, var(--dui-color-secondary-hover));
+		}
 	}
 
 	.button[data-variant='outline'] {
-		--bg: var(--dui-button-bg, var(--dui-color-control));
-		--fg: var(--dui-button-fg, var(--dui-color-foreground));
-		--border: var(--dui-button-border, var(--dui-color-input));
-		--hover-bg: var(--dui-button-hover-bg, var(--dui-color-control-hover));
-		--hover-fg: var(--dui-button-hover-fg, var(--dui-color-foreground));
+		border-color: var(--dui-button-border, var(--dui-color-input));
+		background: var(--dui-button-bg, var(--dui-color-control));
+		color: var(--dui-button-fg, var(--dui-color-foreground));
 		box-shadow: var(--dui-shadow-xs);
 
+		&:hover,
 		&[aria-expanded='true'] {
-			background: var(--hover-bg);
+			background: var(--dui-button-hover-bg, var(--dui-color-control-hover));
 		}
 	}
 
 	.button[data-variant='ghost'] {
-		--bg: var(--dui-button-bg, transparent);
-		--fg: var(--dui-button-fg, var(--dui-color-foreground));
-		--hover-bg: var(--dui-button-hover-bg, var(--dui-color-muted));
-		--hover-fg: var(--dui-button-hover-fg, var(--dui-color-foreground));
+		background: var(--dui-button-bg, transparent);
+		color: var(--dui-button-fg, var(--dui-color-foreground));
+
+		&:hover {
+			background: var(--dui-button-hover-bg, var(--dui-color-muted));
+		}
 	}
 
 	.button[data-variant='destructive'] {
-		--bg: var(--dui-button-bg, color-mix(in oklch, var(--dui-color-destructive) 10%, transparent));
-		/* Pulled slightly toward the foreground color so the text passes AA contrast on its tint. */
-		--fg: var(
-			--dui-button-fg,
-			color-mix(in oklch, var(--dui-color-destructive) 80%, var(--dui-color-foreground))
-		);
-		--hover-bg: var(
-			--dui-button-hover-bg,
-			color-mix(in oklch, var(--dui-color-destructive) 20%, transparent)
-		);
+		background: var(--dui-button-bg, var(--dui-color-destructive-subtle));
+		color: var(--dui-button-fg, var(--dui-color-destructive-text));
+
+		&:hover {
+			background: var(--dui-button-hover-bg, var(--dui-color-destructive-subtle-hover));
+		}
 	}
 
 	.button[data-variant='link'] {
-		--bg: var(--dui-button-bg, transparent);
-		--fg: var(--dui-button-fg, var(--dui-color-primary));
-		--hover-bg: var(--dui-button-hover-bg, transparent);
+		background: var(--dui-button-bg, transparent);
+		color: var(--dui-button-fg, var(--dui-color-primary));
 		text-underline-offset: 4px;
 
 		&:hover {
+			background: var(--dui-button-hover-bg, transparent);
 			text-decoration: underline;
 		}
 	}
 
 	/* Sizes */
 	.button[data-size='sm'] {
-		--height: var(--dui-button-height, 2rem);
-		--padding-x: var(--dui-button-padding-x, var(--dui-space-2-5));
+		height: var(--dui-button-height, 2rem);
 		gap: var(--dui-space-1);
 	}
 
 	.button[data-size='lg'] {
-		--height: var(--dui-button-height, 2.5rem);
-		--padding-x: var(--dui-button-padding-x, var(--dui-space-2-5));
+		height: var(--dui-button-height, 2.5rem);
 	}
 
 	.button[data-size='icon'] {
-		--padding-x: var(--dui-button-padding-x, 0);
-		width: var(--height);
+		width: var(--dui-button-height, 2.25rem);
+		padding-inline: 0;
 	}
 </style>
