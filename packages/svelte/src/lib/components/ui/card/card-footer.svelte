@@ -17,7 +17,7 @@
 	.footer {
 		display: flex;
 		align-items: center;
-		gap: var(--space-2);
-		padding-inline: var(--_card-spacing);
+		gap: var(--dui-space-2);
+		padding-inline: var(--card-spacing);
 	}
 </style>

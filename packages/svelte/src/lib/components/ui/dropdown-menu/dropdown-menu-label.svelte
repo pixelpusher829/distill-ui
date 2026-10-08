@@ -10,10 +10,10 @@
 
 <style>
 	.label {
-		padding: var(--space-1-5) var(--space-2);
-		color: var(--color-muted-foreground);
-		font-size: var(--text-xs);
-		line-height: var(--text-xs-line-height);
-		font-weight: var(--font-weight-medium);
+		padding: var(--dui-space-1-5) var(--dui-space-2);
+		color: var(--dui-color-muted-foreground);
+		font-size: var(--dui-text-xs);
+		line-height: var(--dui-text-xs-line-height);
+		font-weight: var(--dui-font-weight-medium);
 	}
 </style>

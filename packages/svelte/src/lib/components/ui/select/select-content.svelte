@@ -26,20 +26,20 @@
 		margin: 0;
 		padding: 0;
 		border: 0;
-		min-width: max(var(--select-content-min-width, 9rem), var(--melt-invoker-width));
+		min-width: max(var(--dui-select-content-min-width, 9rem), var(--melt-invoker-width));
 		max-height: var(--melt-popover-available-height);
 		overflow-x: hidden;
 		outline: none;
 		overflow-y: auto;
-		border-radius: var(--select-content-radius, var(--radius-md));
-		background: var(--select-content-bg, var(--color-popover));
-		color: var(--select-content-fg, var(--color-popover-foreground));
+		border-radius: var(--dui-select-content-radius, var(--dui-radius-md));
+		background: var(--dui-select-content-bg, var(--dui-color-popover));
+		color: var(--dui-select-content-fg, var(--dui-color-popover-foreground));
 		box-shadow:
-			0 0 0 1px color-mix(in oklch, var(--color-foreground) 10%, transparent),
-			var(--shadow-md);
+			0 0 0 1px color-mix(in oklch, var(--dui-color-foreground) 10%, transparent),
+			var(--dui-shadow-md);
 		transition:
-			opacity var(--duration-fast) var(--ease-out),
-			scale var(--duration-fast) var(--ease-out);
+			opacity var(--dui-duration-fast) var(--dui-ease-out),
+			scale var(--dui-duration-fast) var(--dui-ease-out);
 
 		@starting-style {
 			opacity: 0;
@@ -48,6 +48,6 @@
 	}
 
 	.viewport {
-		padding: var(--space-1);
+		padding: var(--dui-space-1);
 	}
 </style>

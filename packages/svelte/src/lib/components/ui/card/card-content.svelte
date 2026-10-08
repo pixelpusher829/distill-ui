@@ -15,6 +15,6 @@
 
 <style>
 	.content {
-		padding-inline: var(--_card-spacing);
+		padding-inline: var(--card-spacing);
 	}
 </style>

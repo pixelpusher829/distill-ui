@@ -25,22 +25,22 @@
 
 <style>
 	.content {
-		width: var(--popover-width, 18rem);
+		width: var(--dui-popover-width, 18rem);
 		margin: 0;
-		padding: var(--popover-padding, var(--space-4));
+		padding: var(--dui-popover-padding, var(--dui-space-4));
 		border: 0;
-		border-radius: var(--popover-radius, var(--radius-md));
-		background: var(--popover-bg, var(--color-popover));
-		color: var(--popover-fg, var(--color-popover-foreground));
+		border-radius: var(--dui-popover-radius, var(--dui-radius-md));
+		background: var(--dui-popover-bg, var(--dui-color-popover));
+		color: var(--dui-popover-fg, var(--dui-color-popover-foreground));
 		box-shadow:
-			0 0 0 1px color-mix(in oklch, var(--color-foreground) 10%, transparent),
-			var(--shadow-md);
-		font-size: var(--text-sm);
-		line-height: var(--text-sm-line-height);
+			0 0 0 1px color-mix(in oklch, var(--dui-color-foreground) 10%, transparent),
+			var(--dui-shadow-md);
+		font-size: var(--dui-text-sm);
+		line-height: var(--dui-text-sm-line-height);
 		outline: none;
 		transition:
-			opacity var(--duration-fast) var(--ease-out),
-			scale var(--duration-fast) var(--ease-out);
+			opacity var(--dui-duration-fast) var(--dui-ease-out),
+			scale var(--dui-duration-fast) var(--dui-ease-out);
 
 		@starting-style {
 			opacity: 0;

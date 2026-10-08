@@ -32,42 +32,43 @@
 
 <style>
 	.trigger {
-		--_height: var(--select-trigger-height, 2.25rem);
+		--height: var(--dui-select-trigger-height, 2.25rem);
 
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: var(--space-1-5);
-		width: var(--select-trigger-width, fit-content);
-		height: var(--_height);
-		padding-block: var(--space-2);
-		padding-inline: var(--space-2-5) var(--space-2);
-		border: 1px solid var(--select-trigger-border, var(--color-input));
-		border-radius: var(--select-trigger-radius, var(--radius-md));
-		background: var(--select-trigger-bg, transparent);
-		color: var(--color-foreground);
-		box-shadow: var(--shadow-xs);
+		gap: var(--dui-space-1-5);
+		width: var(--dui-select-trigger-width, fit-content);
+		height: var(--height);
+		padding-block: var(--dui-space-2);
+		padding-inline: var(--dui-space-2-5) var(--dui-space-2);
+		border: 1px solid var(--dui-select-trigger-border, var(--dui-color-input));
+		border-radius: var(--dui-select-trigger-radius, var(--dui-radius-md));
+		background: var(--dui-select-trigger-bg, transparent);
+		color: var(--dui-color-foreground);
+		box-shadow: var(--dui-shadow-xs);
 		font: inherit;
-		font-size: var(--text-sm);
-		line-height: var(--text-sm-line-height);
+		font-size: var(--dui-text-sm);
+		line-height: var(--dui-text-sm-line-height);
 		white-space: nowrap;
 		cursor: pointer;
 		outline: none;
 		transition:
-			color var(--duration-fast) var(--ease-out),
-			box-shadow var(--duration-fast) var(--ease-out);
+			color var(--dui-duration-fast) var(--dui-ease-out),
+			box-shadow var(--dui-duration-fast) var(--dui-ease-out);
 
 		&[data-size='sm'] {
-			--_height: var(--select-trigger-height, 2rem);
+			--height: var(--dui-select-trigger-height, 2rem);
 		}
 
 		&:focus-visible {
-			border-color: var(--color-ring);
-			box-shadow: 0 0 0 var(--ring-width) color-mix(in oklch, var(--color-ring) 50%, transparent);
+			border-color: var(--dui-color-ring);
+			box-shadow: 0 0 0 var(--dui-ring-width)
+				color-mix(in oklch, var(--dui-color-ring) 50%, transparent);
 		}
 
 		&[data-placeholder] {
-			color: var(--color-muted-foreground);
+			color: var(--dui-color-muted-foreground);
 		}
 
 		&:disabled {
@@ -76,7 +77,7 @@
 		}
 
 		&[aria-invalid='true'] {
-			border-color: var(--color-destructive);
+			border-color: var(--dui-color-destructive);
 		}
 	}
 
@@ -85,7 +86,7 @@
 		width: 1rem;
 		height: 1rem;
 		fill: none;
-		stroke: var(--color-muted-foreground);
+		stroke: var(--dui-color-muted-foreground);
 		stroke-width: 2;
 		stroke-linecap: round;
 		stroke-linejoin: round;

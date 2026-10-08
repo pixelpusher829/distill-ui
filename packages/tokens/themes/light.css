@@ -6,33 +6,33 @@
 [data-theme='light'] {
 	color-scheme: light;
 
-	--color-background: oklch(1 0 0);
-	--color-foreground: oklch(0.145 0 0);
-	--color-card: oklch(1 0 0);
-	--color-card-foreground: oklch(0.145 0 0);
-	--color-popover: oklch(1 0 0);
-	--color-popover-foreground: oklch(0.145 0 0);
-	--color-primary: oklch(0.205 0 0);
-	--color-primary-foreground: oklch(0.985 0 0);
-	--color-secondary: oklch(0.97 0 0);
-	--color-secondary-foreground: oklch(0.205 0 0);
-	--color-muted: oklch(0.97 0 0);
-	--color-muted-foreground: oklch(0.556 0 0);
-	--color-accent: oklch(0.97 0 0);
-	--color-accent-foreground: oklch(0.205 0 0);
-	--color-destructive: oklch(0.577 0.245 27.325);
-	--color-destructive-foreground: oklch(0.985 0 0);
-	--color-border: oklch(0.922 0 0);
-	--color-input: oklch(0.922 0 0);
-	--color-ring: oklch(0.708 0 0);
-	--color-overlay: oklch(0 0 0 / 10%);
+	--dui-color-background: oklch(1 0 0);
+	--dui-color-foreground: oklch(0.145 0 0);
+	--dui-color-card: oklch(1 0 0);
+	--dui-color-card-foreground: oklch(0.145 0 0);
+	--dui-color-popover: oklch(1 0 0);
+	--dui-color-popover-foreground: oklch(0.145 0 0);
+	--dui-color-primary: oklch(0.205 0 0);
+	--dui-color-primary-foreground: oklch(0.985 0 0);
+	--dui-color-secondary: oklch(0.97 0 0);
+	--dui-color-secondary-foreground: oklch(0.205 0 0);
+	--dui-color-muted: oklch(0.97 0 0);
+	--dui-color-muted-foreground: oklch(0.556 0 0);
+	--dui-color-accent: oklch(0.97 0 0);
+	--dui-color-accent-foreground: oklch(0.205 0 0);
+	--dui-color-destructive: oklch(0.577 0.245 27.325);
+	--dui-color-destructive-foreground: oklch(0.985 0 0);
+	--dui-color-border: oklch(0.922 0 0);
+	--dui-color-input: oklch(0.922 0 0);
+	--dui-color-ring: oklch(0.708 0 0);
+	--dui-color-overlay: oklch(0 0 0 / 10%);
 
 	/* Surfaces that differ by theme in more than color: outline controls, active tabs and switches. */
-	--color-control: transparent;
-	--color-control-hover: var(--color-muted);
-	--color-tab-active: var(--color-background);
-	--color-tab-active-border: transparent;
-	--color-switch-track: var(--color-input);
-	--color-switch-thumb: var(--color-background);
-	--color-switch-thumb-checked: var(--color-background);
+	--dui-color-control: transparent;
+	--dui-color-control-hover: var(--dui-color-muted);
+	--dui-color-tab-active: var(--dui-color-background);
+	--dui-color-tab-active-border: transparent;
+	--dui-color-switch-track: var(--dui-color-input);
+	--dui-color-switch-thumb: var(--dui-color-background);
+	--dui-color-switch-thumb-checked: var(--dui-color-background);
 }

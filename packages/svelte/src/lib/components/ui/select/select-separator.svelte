@@ -13,7 +13,7 @@
 <style>
 	.separator {
 		height: 1px;
-		margin: var(--space-1) calc(var(--space-1) * -1);
-		background: var(--color-border);
+		margin: var(--dui-space-1) calc(var(--dui-space-1) * -1);
+		background: var(--dui-color-border);
 	}
 </style>

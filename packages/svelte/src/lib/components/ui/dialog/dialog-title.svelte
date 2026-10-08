@@ -11,8 +11,8 @@
 <style>
 	.title {
 		margin: 0;
-		font-size: var(--text-base);
+		font-size: var(--dui-text-base);
 		line-height: 1;
-		font-weight: var(--font-weight-medium);
+		font-weight: var(--dui-font-weight-medium);
 	}
 </style>

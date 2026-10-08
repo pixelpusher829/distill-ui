@@ -19,7 +19,7 @@
 		display: grid;
 		grid-template-columns: 1fr auto;
 		align-items: start;
-		row-gap: var(--space-1);
-		padding-inline: var(--_card-spacing);
+		row-gap: var(--dui-space-1);
+		padding-inline: var(--card-spacing);
 	}
 </style>

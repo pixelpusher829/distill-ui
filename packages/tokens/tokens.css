@@ -12,58 +12,58 @@
 
 :root {
 	/* Spacing: 1 step = 0.25rem (4px at the default font size). */
-	--space-0-5: 0.125rem;
-	--space-1: 0.25rem;
-	--space-1-5: 0.375rem;
-	--space-2: 0.5rem;
-	--space-2-5: 0.625rem;
-	--space-3: 0.75rem;
-	--space-4: 1rem;
-	--space-5: 1.25rem;
-	--space-6: 1.5rem;
-	--space-8: 2rem;
-	--space-10: 2.5rem;
-	--space-12: 3rem;
+	--dui-space-0-5: 0.125rem;
+	--dui-space-1: 0.25rem;
+	--dui-space-1-5: 0.375rem;
+	--dui-space-2: 0.5rem;
+	--dui-space-2-5: 0.625rem;
+	--dui-space-3: 0.75rem;
+	--dui-space-4: 1rem;
+	--dui-space-5: 1.25rem;
+	--dui-space-6: 1.5rem;
+	--dui-space-8: 2rem;
+	--dui-space-10: 2.5rem;
+	--dui-space-12: 3rem;
 
-	/* Radius: one knob (--radius) scales the whole set. */
-	--radius: 0.625rem;
-	--radius-sm: calc(var(--radius) * 0.6);
-	--radius-md: calc(var(--radius) * 0.8);
-	--radius-lg: var(--radius);
-	--radius-xl: calc(var(--radius) * 1.4);
-	--radius-full: 9999px;
+	/* Radius: one knob (--dui-radius) scales the whole set. */
+	--dui-radius: 0.625rem;
+	--dui-radius-sm: calc(var(--dui-radius) * 0.6);
+	--dui-radius-md: calc(var(--dui-radius) * 0.8);
+	--dui-radius-lg: var(--dui-radius);
+	--dui-radius-xl: calc(var(--dui-radius) * 1.4);
+	--dui-radius-full: 9999px;
 
 	/* Shadows */
-	--shadow-xs: 0 1px 2px 0 oklch(0 0 0 / 5%);
-	--shadow-sm: 0 1px 3px 0 oklch(0 0 0 / 10%), 0 1px 2px -1px oklch(0 0 0 / 10%);
-	--shadow-md: 0 4px 6px -1px oklch(0 0 0 / 10%), 0 2px 4px -2px oklch(0 0 0 / 10%);
-	--shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 10%), 0 4px 6px -4px oklch(0 0 0 / 10%);
+	--dui-shadow-xs: 0 1px 2px 0 oklch(0 0 0 / 5%);
+	--dui-shadow-sm: 0 1px 3px 0 oklch(0 0 0 / 10%), 0 1px 2px -1px oklch(0 0 0 / 10%);
+	--dui-shadow-md: 0 4px 6px -1px oklch(0 0 0 / 10%), 0 2px 4px -2px oklch(0 0 0 / 10%);
+	--dui-shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 10%), 0 4px 6px -4px oklch(0 0 0 / 10%);
 
 	/* Fonts */
-	--font-sans:
+	--dui-font-sans:
 		ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-	--font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+	--dui-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
 
-	--text-xs: 0.75rem;
-	--text-xs-line-height: 1rem;
-	--text-sm: 0.875rem;
-	--text-sm-line-height: 1.25rem;
-	--text-base: 1rem;
-	--text-base-line-height: 1.5rem;
-	--text-lg: 1.125rem;
-	--text-lg-line-height: 1.75rem;
+	--dui-text-xs: 0.75rem;
+	--dui-text-xs-line-height: 1rem;
+	--dui-text-sm: 0.875rem;
+	--dui-text-sm-line-height: 1.25rem;
+	--dui-text-base: 1rem;
+	--dui-text-base-line-height: 1.5rem;
+	--dui-text-lg: 1.125rem;
+	--dui-text-lg-line-height: 1.75rem;
 
-	--font-weight-normal: 400;
-	--font-weight-medium: 500;
-	--font-weight-semibold: 600;
+	--dui-font-weight-normal: 400;
+	--dui-font-weight-medium: 500;
+	--dui-font-weight-semibold: 600;
 
 	/* Focus ring */
-	--ring-width: 3px;
+	--dui-ring-width: 3px;
 
 	/* Stacking */
-	--z-dropdown: 50;
-	--z-overlay: 50;
-	--z-modal: 50;
-	--z-popover: 50;
-	--z-toast: 100;
+	--dui-z-dropdown: 50;
+	--dui-z-overlay: 50;
+	--dui-z-modal: 50;
+	--dui-z-popover: 50;
+	--dui-z-toast: 100;
 }

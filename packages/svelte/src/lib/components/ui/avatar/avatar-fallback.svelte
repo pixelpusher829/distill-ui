@@ -24,11 +24,11 @@
 		width: 100%;
 		height: 100%;
 		border-radius: inherit;
-		background: var(--avatar-fallback-bg, var(--color-muted));
+		background: var(--dui-avatar-fallback-bg, var(--dui-color-muted));
 		/* Pulled toward the foreground so initials pass AA contrast on the muted fill. */
 		color: var(
-			--avatar-fallback-fg,
-			color-mix(in oklch, var(--color-muted-foreground) 70%, var(--color-foreground))
+			--dui-avatar-fallback-fg,
+			color-mix(in oklch, var(--dui-color-muted-foreground) 70%, var(--dui-color-foreground))
 		);
 	}
 </style>

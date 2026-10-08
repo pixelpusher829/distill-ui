@@ -33,43 +33,44 @@
 
 <style>
 	.badge {
-		--_bg: var(--badge-bg, var(--color-primary));
-		--_fg: var(--badge-fg, var(--color-primary-foreground));
-		--_border: var(--badge-border, transparent);
-		--_hover-bg: var(--badge-hover-bg, color-mix(in oklch, var(--_bg) 80%, transparent));
-		--_radius: var(--badge-radius, var(--radius-full));
+		--bg: var(--dui-badge-bg, var(--dui-color-primary));
+		--fg: var(--dui-badge-fg, var(--dui-color-primary-foreground));
+		--border: var(--dui-badge-border, transparent);
+		--hover-bg: var(--dui-badge-hover-bg, color-mix(in oklch, var(--bg) 80%, transparent));
+		--radius: var(--dui-badge-radius, var(--dui-radius-full));
 
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		gap: var(--space-1);
+		gap: var(--dui-space-1);
 		flex-shrink: 0;
 		width: fit-content;
 		height: 1.25rem;
-		padding: var(--space-0-5) var(--space-2);
+		padding: var(--dui-space-0-5) var(--dui-space-2);
 		overflow: hidden;
-		border: 1px solid var(--_border);
-		border-radius: var(--_radius);
-		background: var(--_bg);
-		color: var(--_fg);
-		font-size: var(--text-xs);
-		line-height: var(--text-xs-line-height);
-		font-weight: var(--font-weight-medium);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background: var(--bg);
+		color: var(--fg);
+		font-size: var(--dui-text-xs);
+		line-height: var(--dui-text-xs-line-height);
+		font-weight: var(--dui-font-weight-medium);
 		white-space: nowrap;
 		text-decoration: none;
 		outline: none;
 		transition:
-			background-color var(--duration-fast) var(--ease-out),
-			box-shadow var(--duration-fast) var(--ease-out);
+			background-color var(--dui-duration-fast) var(--dui-ease-out),
+			box-shadow var(--dui-duration-fast) var(--dui-ease-out);
 
 		/* Only links react to hover. */
 		&[href]:hover {
-			background: var(--_hover-bg);
+			background: var(--hover-bg);
 		}
 
 		&:focus-visible {
-			border-color: var(--color-ring);
-			box-shadow: 0 0 0 var(--ring-width) color-mix(in oklch, var(--color-ring) 50%, transparent);
+			border-color: var(--dui-color-ring);
+			box-shadow: 0 0 0 var(--dui-ring-width)
+				color-mix(in oklch, var(--dui-color-ring) 50%, transparent);
 		}
 
 		& :global(svg) {
@@ -81,40 +82,40 @@
 	}
 
 	.badge[data-variant='secondary'] {
-		--_bg: var(--badge-bg, var(--color-secondary));
-		--_fg: var(--badge-fg, var(--color-secondary-foreground));
+		--bg: var(--dui-badge-bg, var(--dui-color-secondary));
+		--fg: var(--dui-badge-fg, var(--dui-color-secondary-foreground));
 	}
 
 	.badge[data-variant='outline'] {
-		--_bg: var(--badge-bg, transparent);
-		--_fg: var(--badge-fg, var(--color-foreground));
-		--_border: var(--badge-border, var(--color-border));
-		--_hover-bg: var(--badge-hover-bg, var(--color-muted));
+		--bg: var(--dui-badge-bg, transparent);
+		--fg: var(--dui-badge-fg, var(--dui-color-foreground));
+		--border: var(--dui-badge-border, var(--dui-color-border));
+		--hover-bg: var(--dui-badge-hover-bg, var(--dui-color-muted));
 	}
 
 	.badge[data-variant='ghost'] {
-		--_bg: var(--badge-bg, transparent);
-		--_fg: var(--badge-fg, var(--color-foreground));
-		--_hover-bg: var(--badge-hover-bg, var(--color-muted));
+		--bg: var(--dui-badge-bg, transparent);
+		--fg: var(--dui-badge-fg, var(--dui-color-foreground));
+		--hover-bg: var(--dui-badge-hover-bg, var(--dui-color-muted));
 	}
 
 	.badge[data-variant='destructive'] {
-		--_bg: var(--badge-bg, color-mix(in oklch, var(--color-destructive) 10%, transparent));
+		--bg: var(--dui-badge-bg, color-mix(in oklch, var(--dui-color-destructive) 10%, transparent));
 		/* Pulled toward the foreground so the text passes AA contrast, as in Button. */
-		--_fg: var(
-			--badge-fg,
-			color-mix(in oklch, var(--color-destructive) 80%, var(--color-foreground))
+		--fg: var(
+			--dui-badge-fg,
+			color-mix(in oklch, var(--dui-color-destructive) 80%, var(--dui-color-foreground))
 		);
-		--_hover-bg: var(
-			--badge-hover-bg,
-			color-mix(in oklch, var(--color-destructive) 20%, transparent)
+		--hover-bg: var(
+			--dui-badge-hover-bg,
+			color-mix(in oklch, var(--dui-color-destructive) 20%, transparent)
 		);
 	}
 
 	.badge[data-variant='link'] {
-		--_bg: var(--badge-bg, transparent);
-		--_fg: var(--badge-fg, var(--color-primary));
-		--_hover-bg: var(--badge-hover-bg, transparent);
+		--bg: var(--dui-badge-bg, transparent);
+		--fg: var(--dui-badge-fg, var(--dui-color-primary));
+		--hover-bg: var(--dui-badge-hover-bg, transparent);
 		text-underline-offset: 4px;
 
 		&[href]:hover {

@@ -10,70 +10,70 @@
 [data-theme='dark'] {
 	color-scheme: dark;
 
-	--color-background: oklch(0.145 0 0);
-	--color-foreground: oklch(0.985 0 0);
-	--color-card: oklch(0.205 0 0);
-	--color-card-foreground: oklch(0.985 0 0);
-	--color-popover: oklch(0.205 0 0);
-	--color-popover-foreground: oklch(0.985 0 0);
-	--color-primary: oklch(0.922 0 0);
-	--color-primary-foreground: oklch(0.205 0 0);
-	--color-secondary: oklch(0.269 0 0);
-	--color-secondary-foreground: oklch(0.985 0 0);
-	--color-muted: oklch(0.269 0 0);
-	--color-muted-foreground: oklch(0.708 0 0);
-	--color-accent: oklch(0.371 0 0);
-	--color-accent-foreground: oklch(0.985 0 0);
-	--color-destructive: oklch(0.704 0.191 22.216);
-	--color-destructive-foreground: oklch(0.985 0 0);
-	--color-border: oklch(1 0 0 / 10%);
-	--color-input: oklch(1 0 0 / 15%);
-	--color-ring: oklch(0.556 0 0);
-	--color-overlay: oklch(0 0 0 / 50%);
+	--dui-color-background: oklch(0.145 0 0);
+	--dui-color-foreground: oklch(0.985 0 0);
+	--dui-color-card: oklch(0.205 0 0);
+	--dui-color-card-foreground: oklch(0.985 0 0);
+	--dui-color-popover: oklch(0.205 0 0);
+	--dui-color-popover-foreground: oklch(0.985 0 0);
+	--dui-color-primary: oklch(0.922 0 0);
+	--dui-color-primary-foreground: oklch(0.205 0 0);
+	--dui-color-secondary: oklch(0.269 0 0);
+	--dui-color-secondary-foreground: oklch(0.985 0 0);
+	--dui-color-muted: oklch(0.269 0 0);
+	--dui-color-muted-foreground: oklch(0.708 0 0);
+	--dui-color-accent: oklch(0.371 0 0);
+	--dui-color-accent-foreground: oklch(0.985 0 0);
+	--dui-color-destructive: oklch(0.704 0.191 22.216);
+	--dui-color-destructive-foreground: oklch(0.985 0 0);
+	--dui-color-border: oklch(1 0 0 / 10%);
+	--dui-color-input: oklch(1 0 0 / 15%);
+	--dui-color-ring: oklch(0.556 0 0);
+	--dui-color-overlay: oklch(0 0 0 / 50%);
 
-	--color-control: color-mix(in oklch, var(--color-input) 30%, transparent);
-	--color-control-hover: color-mix(in oklch, var(--color-input) 50%, transparent);
-	--color-tab-active: var(--color-control);
-	--color-tab-active-border: var(--color-input);
-	--color-switch-track: color-mix(in oklch, var(--color-input) 80%, transparent);
-	--color-switch-thumb: var(--color-foreground);
-	--color-switch-thumb-checked: var(--color-primary-foreground);
+	--dui-color-control: color-mix(in oklch, var(--dui-color-input) 30%, transparent);
+	--dui-color-control-hover: color-mix(in oklch, var(--dui-color-input) 50%, transparent);
+	--dui-color-tab-active: var(--dui-color-control);
+	--dui-color-tab-active-border: var(--dui-color-input);
+	--dui-color-switch-track: color-mix(in oklch, var(--dui-color-input) 80%, transparent);
+	--dui-color-switch-thumb: var(--dui-color-foreground);
+	--dui-color-switch-thumb-checked: var(--dui-color-primary-foreground);
 }
 
 @media (prefers-color-scheme: dark) {
 	:root:not(.light):not([data-theme='light']) {
 		color-scheme: dark;
 
-		--color-background: oklch(0.145 0 0);
-		--color-foreground: oklch(0.985 0 0);
-		--color-card: oklch(0.205 0 0);
-		--color-card-foreground: oklch(0.985 0 0);
-		--color-popover: oklch(0.205 0 0);
-		--color-popover-foreground: oklch(0.985 0 0);
-		--color-primary: oklch(0.922 0 0);
-		--color-primary-foreground: oklch(0.205 0 0);
-		--color-secondary: oklch(0.269 0 0);
-		--color-secondary-foreground: oklch(0.985 0 0);
-		--color-muted: oklch(0.269 0 0);
-		--color-muted-foreground: oklch(0.708 0 0);
-		--color-accent: oklch(0.371 0 0);
-		--color-accent-foreground: oklch(0.985 0 0);
-		--color-destructive: oklch(0.704 0.191 22.216);
-		--color-destructive-foreground: oklch(0.985 0 0);
-		--color-border: oklch(1 0 0 / 10%);
-		--color-input: oklch(1 0 0 / 15%);
-		--color-ring: oklch(0.556 0 0);
-		--color-overlay: oklch(0 0 0 / 50%);
+		--dui-color-background: oklch(0.145 0 0);
+		--dui-color-foreground: oklch(0.985 0 0);
+		--dui-color-card: oklch(0.205 0 0);
+		--dui-color-card-foreground: oklch(0.985 0 0);
+		--dui-color-popover: oklch(0.205 0 0);
+		--dui-color-popover-foreground: oklch(0.985 0 0);
+		--dui-color-primary: oklch(0.922 0 0);
+		--dui-color-primary-foreground: oklch(0.205 0 0);
+		--dui-color-secondary: oklch(0.269 0 0);
+		--dui-color-secondary-foreground: oklch(0.985 0 0);
+		--dui-color-muted: oklch(0.269 0 0);
+		--dui-color-muted-foreground: oklch(0.708 0 0);
+		--dui-color-accent: oklch(0.371 0 0);
+		--dui-color-accent-foreground: oklch(0.985 0 0);
+		--dui-color-destructive: oklch(0.704 0.191 22.216);
+		--dui-color-destructive-foreground: oklch(0.985 0 0);
+		--dui-color-border: oklch(1 0 0 / 10%);
+		--dui-color-input: oklch(1 0 0 / 15%);
+		--dui-color-ring: oklch(0.556 0 0);
+		--dui-color-overlay: oklch(0 0 0 / 50%);
 
-		--color-control: color-mix(in oklch, var(--color-input) 30%, transparent);
-		--color-control-hover: color-mix(in oklch, var(--color-input) 50%, transparent);
-		--color-tab-active: var(--color-control);
-		--color-tab-active-border: var(--color-input);
-		--color-switch-track: color-mix(in oklch, var(--color-input) 80%, transparent);
-		--color-switch-thumb: var(--color-foreground);
-		--color-switch-thumb-checked: var(--color-primary-foreground);
-		--color-switch-track: color-mix(in oklch, var(--color-input) 80%, transparent);
-		--color-switch-thumb: var(--color-foreground);
-		--color-switch-thumb-checked: var(--color-primary-foreground);
+		--dui-color-control: color-mix(in oklch, var(--dui-color-input) 30%, transparent);
+		--dui-color-control-hover: color-mix(in oklch, var(--dui-color-input) 50%, transparent);
+		--dui-color-tab-active: var(--dui-color-control);
+		--dui-color-tab-active-border: var(--dui-color-input);
+		--dui-color-switch-track: color-mix(in oklch, var(--dui-color-input) 80%, transparent);
+		--dui-color-switch-thumb: var(--dui-color-foreground);
+		--dui-color-switch-thumb-checked: var(--dui-color-primary-foreground);
+		--dui-color-switch-track: color-mix(in oklch, var(--dui-color-input) 80%, transparent);
+		--dui-color-switch-thumb: var(--dui-color-foreground);
+		--dui-color-switch-thumb-checked: var(--dui-color-primary-foreground);
 	}
 }

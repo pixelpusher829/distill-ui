@@ -6,8 +6,8 @@
 
 body {
 	margin: 0;
-	background: var(--color-background);
-	color: var(--color-foreground);
-	font-family: var(--font-sans);
+	background: var(--dui-color-background);
+	color: var(--dui-color-foreground);
+	font-family: var(--dui-font-sans);
 	-webkit-font-smoothing: antialiased;
 }

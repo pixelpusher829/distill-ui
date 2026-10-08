@@ -39,32 +39,33 @@
 		flex: 1;
 		align-items: center;
 		justify-content: center;
-		gap: var(--space-1-5);
+		gap: var(--dui-space-1-5);
 		height: calc(100% - 1px);
-		padding: var(--space-1) var(--space-2);
+		padding: var(--dui-space-1) var(--dui-space-2);
 		border: 1px solid transparent;
-		border-radius: var(--radius-md);
+		border-radius: var(--dui-radius-md);
 		background: transparent;
-		color: color-mix(in oklch, var(--color-foreground) 60%, transparent);
+		color: color-mix(in oklch, var(--dui-color-foreground) 60%, transparent);
 		font: inherit;
-		font-size: var(--text-sm);
-		line-height: var(--text-sm-line-height);
-		font-weight: var(--font-weight-medium);
+		font-size: var(--dui-text-sm);
+		line-height: var(--dui-text-sm-line-height);
+		font-weight: var(--dui-font-weight-medium);
 		white-space: nowrap;
 		cursor: pointer;
 		transition:
-			color var(--duration-fast) var(--ease-out),
-			background-color var(--duration-fast) var(--ease-out),
-			box-shadow var(--duration-fast) var(--ease-out);
+			color var(--dui-duration-fast) var(--dui-ease-out),
+			background-color var(--dui-duration-fast) var(--dui-ease-out),
+			box-shadow var(--dui-duration-fast) var(--dui-ease-out);
 
 		&:hover {
-			color: var(--color-foreground);
+			color: var(--dui-color-foreground);
 		}
 
 		&:focus-visible {
-			outline: 1px solid var(--color-ring);
-			border-color: var(--color-ring);
-			box-shadow: 0 0 0 var(--ring-width) color-mix(in oklch, var(--color-ring) 50%, transparent);
+			outline: 1px solid var(--dui-color-ring);
+			border-color: var(--dui-color-ring);
+			box-shadow: 0 0 0 var(--dui-ring-width)
+				color-mix(in oklch, var(--dui-color-ring) 50%, transparent);
 		}
 
 		&:disabled {
@@ -81,9 +82,9 @@
 		&::after {
 			content: '';
 			position: absolute;
-			background: var(--color-foreground);
+			background: var(--dui-color-foreground);
 			opacity: 0;
-			transition: opacity var(--duration-fast) var(--ease-out);
+			transition: opacity var(--dui-duration-fast) var(--dui-ease-out);
 		}
 
 		&[data-orientation='horizontal']::after {
@@ -100,14 +101,14 @@
 	}
 
 	.trigger[data-active][data-list-variant='default'] {
-		border-color: var(--color-tab-active-border);
-		background: var(--tabs-trigger-active-bg, var(--color-tab-active));
-		color: var(--color-foreground);
-		box-shadow: var(--shadow-sm);
+		border-color: var(--dui-color-tab-active-border);
+		background: var(--dui-tabs-trigger-active-bg, var(--dui-color-tab-active));
+		color: var(--dui-color-foreground);
+		box-shadow: var(--dui-shadow-sm);
 	}
 
 	.trigger[data-active][data-list-variant='line'] {
-		color: var(--color-foreground);
+		color: var(--dui-color-foreground);
 
 		&::after {
 			opacity: 1;

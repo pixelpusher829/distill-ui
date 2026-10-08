@@ -10,17 +10,17 @@ Change a documented convention only after discussing it (see "Notes for Claude C
 
 ### Tokens
 
-All values come from CSS custom properties in `packages/tokens`. Importing `tokens.css` brings in everything:
+All values come from CSS custom properties in `packages/tokens`. Importing `tokens.css` brings in everything. Every public variable starts with `--dui-` so it can't clash with an app's own variables or with Tailwind's (which also uses names like `--color-primary`):
 
-- `tokens.css`: spacing (`--space-*`), radius (`--radius`, `--radius-sm|md|lg|xl|full`), shadows (`--shadow-xs|sm|md|lg`), fonts (`--font-sans|mono`, `--text-*`, `--font-weight-*`), focus ring width (`--ring-width`) and z-index layers (`--z-*`).
-- `themes/light.css` and `themes/dark.css`: colors, named after shadcn's semantic names with a `--color-` prefix (`--color-background`, `--color-primary`, `--color-muted-foreground`, `--color-ring` and so on).
-- `motion.css`: durations (`--duration-fast|normal|slow`), easings (`--ease-*`), shared keyframes, and the reduced-motion override.
+- `tokens.css`: spacing (`--dui-space-*`), radius (`--dui-radius`, `--dui-radius-sm|md|lg|xl|full`), shadows (`--dui-shadow-xs|sm|md|lg`), fonts (`--dui-font-sans|mono`, `--dui-text-*`, `--dui-font-weight-*`), focus ring width (`--dui-ring-width`) and z-index layers (`--dui-z-*`).
+- `themes/light.css` and `themes/dark.css`: colors, named after shadcn's semantic names with a `--dui-color-` prefix (`--dui-color-background`, `--dui-color-primary`, `--dui-color-muted-foreground`, `--dui-color-ring` and so on).
+- `motion.css`: durations (`--dui-duration-fast|normal|slow`), easings (`--dui-ease-*`), shared keyframes, and the reduced-motion override.
 
 Rules:
 
 - Never hardcode a color, size, radius, shadow or duration in a component. If a value has no token, add one and note it here.
-- Don't add fallbacks for missing tokens (`var(--color-primary, #111)`). Components require `tokens.css`.
-- When a theme needs more than a color swap (for example, dark mode giving outline controls a translucent fill), add a semantic token to both themes instead of writing a dark-mode selector in the component. Examples: `--color-control`, `--color-control-hover`, `--color-tab-active`, `--color-tab-active-border`, `--color-switch-track`, `--color-switch-thumb`, `--color-switch-thumb-checked`.
+- Don't add fallbacks for missing tokens (`var(--dui-color-primary, #111)`). Components require `tokens.css`.
+- When a theme needs more than a color swap (for example, dark mode giving outline controls a translucent fill), add a semantic token to both themes instead of writing a dark-mode selector in the component. Examples: `--dui-color-control`, `--dui-color-control-hover`, `--dui-color-tab-active`, `--dui-color-tab-active-border`, `--dui-color-switch-track`, `--dui-color-switch-thumb`, `--dui-color-switch-thumb-checked`.
 
 ### Dark mode
 
@@ -28,26 +28,28 @@ Dark applies when `<html>` has `class="dark"` or `data-theme="dark"`, or when th
 
 ### Component custom properties
 
-Every component exposes custom properties for its main visual knobs, falling back to global tokens. Private copies use a `--_` prefix:
+Every component exposes public custom properties (its customization options), falling back to global tokens. Inside the component, each one is resolved into a plain-named internal variable (`--bg`, `--height`) that the rest of the component's CSS reads. The rule of thumb: a variable starting with `--dui-` is meant to be set, anything else is internal.
+
+The internal step exists because a variable can't fall back to itself (`--dui-button-bg: var(--dui-button-bg, …)` is invalid), and it lets hover colors and variants be written once against `--bg`:
 
 ```css
 .button {
-	--_bg: var(--button-bg, var(--color-primary));
-	--_fg: var(--button-fg, var(--color-primary-foreground));
-	background: var(--_bg);
-	color: var(--_fg);
+	--bg: var(--dui-button-bg, var(--dui-color-primary));
+	--fg: var(--dui-button-fg, var(--dui-color-primary-foreground));
+	background: var(--bg);
+	color: var(--fg);
 }
 ```
 
 Consumers override from the element or any ancestor:
 
 ```html
-<div style="--button-bg: oklch(0.55 0.2 260); --button-radius: 9999px">…</div>
+<div style="--dui-button-bg: oklch(0.55 0.2 260); --dui-button-radius: 9999px">…</div>
 ```
 
-Parts of a compound component can share a private variable through inheritance: the root sets it and the parts read it (Card sets `--_card-spacing` and Header, Content and Footer pad with it; Avatar.Group sets `--_avatar-overlap` for each Avatar). Prefix these with the component name so they can't collide with a nested component's own `--_` variables.
+Parts of a compound component can share an internal variable through inheritance: the root sets it and the parts read it (Card sets `--card-spacing` and Header, Content and Footer pad with it; Avatar.Group sets `--avatar-overlap` for each Avatar). Name these after the component so they can't collide with a nested component's own internal variables.
 
-Naming: `--<component>-<property>`, or `--<component>-<part>-<property>` for parts (`--select-trigger-width`, `--dialog-overlay-bg`). Variants re-point the private variables and keep the public override first, so `--button-bg` still wins on every variant.
+Naming: `--dui-<component>-<property>`, or `--dui-<component>-<part>-<property>` for parts (`--dui-select-trigger-width`, `--dui-dialog-overlay-bg`). Variants re-point the internal variables and keep the public override first, so `--dui-button-bg` still wins on every variant.
 
 ### Variants and sizes
 
@@ -89,8 +91,8 @@ Component styles are **unlayered** and kept at **one class plus attribute select
 	opacity: 0;
 	scale: 0.95;
 	transition:
-		opacity var(--duration-fast) var(--ease-out),
-		scale var(--duration-fast) var(--ease-out);
+		opacity var(--dui-duration-fast) var(--dui-ease-out),
+		scale var(--dui-duration-fast) var(--dui-ease-out);
 
 	&[data-open] {
 		opacity: 1;
@@ -106,8 +108,9 @@ Every interactive element gets a visible ring:
 ```css
 &:focus-visible {
 	outline: none;
-	border-color: var(--color-ring);
-	box-shadow: 0 0 0 var(--ring-width) color-mix(in oklch, var(--color-ring) 50%, transparent);
+	border-color: var(--dui-color-ring);
+	box-shadow: 0 0 0 var(--dui-ring-width)
+		color-mix(in oklch, var(--dui-color-ring) 50%, transparent);
 }
 ```
 
@@ -135,7 +138,7 @@ Decided in Phase 1a (see PLAN-svelte.md). Every element a component styles is wr
 
 <style>
 	.content {
-		background: var(--dialog-bg, var(--color-popover));
+		background: var(--dui-dialog-bg, var(--dui-color-popover));
 	}
 </style>
 ```

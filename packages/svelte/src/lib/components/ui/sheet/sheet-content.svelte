@@ -51,10 +51,10 @@
 		margin: 0;
 		padding: 0;
 		border: 0;
-		background: var(--sheet-overlay-bg, var(--color-overlay));
+		background: var(--dui-sheet-overlay-bg, var(--dui-color-overlay));
 		backdrop-filter: blur(4px);
 		opacity: 0;
-		transition: opacity var(--duration-fast) var(--ease-out);
+		transition: opacity var(--dui-duration-fast) var(--dui-ease-out);
 
 		&[data-open] {
 			opacity: 1;
@@ -62,28 +62,28 @@
 	}
 
 	.content {
-		--_size: var(--sheet-size, 24rem);
+		--size: var(--dui-sheet-size, 24rem);
 
 		position: fixed;
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-4);
+		gap: var(--dui-space-4);
 		width: auto;
 		max-width: none;
 		height: auto;
 		max-height: none;
 		margin: 0;
-		padding: var(--sheet-padding, var(--space-6));
+		padding: var(--dui-sheet-padding, var(--dui-space-6));
 		border: 0;
-		background: var(--sheet-bg, var(--color-background));
-		color: var(--sheet-fg, var(--color-foreground));
+		background: var(--dui-sheet-bg, var(--dui-color-background));
+		color: var(--dui-sheet-fg, var(--dui-color-foreground));
 		box-shadow:
-			0 0 0 1px color-mix(in oklch, var(--color-foreground) 10%, transparent),
-			var(--shadow-lg);
-		font-size: var(--text-sm);
-		line-height: var(--text-sm-line-height);
+			0 0 0 1px color-mix(in oklch, var(--dui-color-foreground) 10%, transparent),
+			var(--dui-shadow-lg);
+		font-size: var(--dui-text-sm);
+		line-height: var(--dui-text-sm-line-height);
 		outline: none;
-		transition: translate var(--duration-slow) var(--ease-in-out);
+		transition: translate var(--dui-duration-slow) var(--dui-ease-in-out);
 
 		&:not([open]) {
 			display: none;
@@ -97,13 +97,13 @@
 	/* Each side pins the sheet to that edge and slides it in from off-screen. */
 	.content[data-side='right'] {
 		inset: 0 0 0 auto;
-		width: min(var(--_size), 75%);
+		width: min(var(--size), 75%);
 		translate: 100% 0;
 	}
 
 	.content[data-side='left'] {
 		inset: 0 auto 0 0;
-		width: min(var(--_size), 75%);
+		width: min(var(--size), 75%);
 		translate: -100% 0;
 	}
 
@@ -124,29 +124,30 @@
 
 	.close {
 		position: absolute;
-		top: var(--space-4);
-		right: var(--space-4);
+		top: var(--dui-space-4);
+		right: var(--dui-space-4);
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		width: 1.75rem;
 		height: 1.75rem;
 		border: none;
-		border-radius: var(--radius-md);
+		border-radius: var(--dui-radius-md);
 		background: transparent;
-		color: var(--color-foreground);
+		color: var(--dui-color-foreground);
 		cursor: pointer;
 		opacity: 0.7;
-		transition: opacity var(--duration-fast) var(--ease-out);
+		transition: opacity var(--dui-duration-fast) var(--dui-ease-out);
 
 		&:hover {
 			opacity: 1;
-			background: var(--color-muted);
+			background: var(--dui-color-muted);
 		}
 
 		&:focus-visible {
 			outline: none;
-			box-shadow: 0 0 0 var(--ring-width) color-mix(in oklch, var(--color-ring) 50%, transparent);
+			box-shadow: 0 0 0 var(--dui-ring-width)
+				color-mix(in oklch, var(--dui-color-ring) 50%, transparent);
 		}
 
 		svg {

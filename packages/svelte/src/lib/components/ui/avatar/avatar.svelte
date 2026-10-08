@@ -28,18 +28,18 @@
 
 <style>
 	.avatar {
-		--_size: var(--avatar-size, 2rem);
+		--size: var(--dui-avatar-size, 2rem);
 
 		position: relative;
 		display: flex;
 		flex-shrink: 0;
-		width: var(--_size);
-		height: var(--_size);
+		width: var(--size);
+		height: var(--size);
 		/* Set by Avatar.Group so stacked avatars overlap with a gap ring. */
-		margin-inline-start: var(--_avatar-overlap, 0);
-		border-radius: var(--avatar-radius, var(--radius-full));
-		box-shadow: 0 0 0 var(--_avatar-ring-width, 0) var(--color-background);
-		font-size: var(--text-sm);
+		margin-inline-start: var(--avatar-overlap, 0);
+		border-radius: var(--dui-avatar-radius, var(--dui-radius-full));
+		box-shadow: 0 0 0 var(--avatar-ring-width, 0) var(--dui-color-background);
+		font-size: var(--dui-text-sm);
 		user-select: none;
 
 		&:first-child {
@@ -51,18 +51,18 @@
 			content: '';
 			position: absolute;
 			inset: 0;
-			border: 1px solid color-mix(in oklch, var(--color-foreground) 10%, transparent);
+			border: 1px solid color-mix(in oklch, var(--dui-color-foreground) 10%, transparent);
 			border-radius: inherit;
 			pointer-events: none;
 		}
 	}
 
 	.avatar[data-size='sm'] {
-		--_size: var(--avatar-size, 1.5rem);
-		font-size: var(--text-xs);
+		--size: var(--dui-avatar-size, 1.5rem);
+		font-size: var(--dui-text-xs);
 	}
 
 	.avatar[data-size='lg'] {
-		--_size: var(--avatar-size, 2.5rem);
+		--size: var(--dui-avatar-size, 2.5rem);
 	}
 </style>
