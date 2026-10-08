@@ -26,6 +26,7 @@
 	--dui-color-accent-foreground: oklch(0.985 0 0);
 	--dui-color-destructive: oklch(0.704 0.191 22.216);
 	--dui-color-destructive-foreground: oklch(0.985 0 0);
+	--dui-color-success: oklch(0.7 0.17 150);
 	--dui-color-border: oklch(1 0 0 / 10%);
 	--dui-color-input: oklch(1 0 0 / 15%);
 	--dui-color-ring: oklch(0.556 0 0);
@@ -60,6 +61,7 @@
 		--dui-color-accent-foreground: oklch(0.985 0 0);
 		--dui-color-destructive: oklch(0.704 0.191 22.216);
 		--dui-color-destructive-foreground: oklch(0.985 0 0);
+		--dui-color-success: oklch(0.7 0.17 150);
 		--dui-color-border: oklch(1 0 0 / 10%);
 		--dui-color-input: oklch(1 0 0 / 15%);
 		--dui-color-ring: oklch(0.556 0 0);

@@ -12,6 +12,8 @@ export { Separator } from './components/ui/separator/index.js';
 export { Skeleton } from './components/ui/skeleton/index.js';
 export { Switch } from './components/ui/switch/index.js';
 export { Textarea } from './components/ui/textarea/index.js';
+export { Toaster, toast, type ToastData, type ToastVariant } from './components/ui/toast/index.js';
+export * as Alert from './components/ui/alert/index.js';
 export * as AlertDialog from './components/ui/alert-dialog/index.js';
 export * as Avatar from './components/ui/avatar/index.js';
 export * as Card from './components/ui/card/index.js';

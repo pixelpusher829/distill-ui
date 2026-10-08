@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '@distill-ui/tokens/tokens.css';
+	import { Toaster } from '@distill-ui/svelte';
 	import '../app.css';
 	import favicon from '#lib/assets/favicon.svg';
 	import type { LayoutProps } from './$types';
@@ -12,3 +13,4 @@
 </svelte:head>
 
 {@render children()}
+<Toaster />

@@ -182,6 +182,19 @@ for (const theme of themes) {
 			await expect(tip).toBeHidden();
 		});
 
+		test('toast appears, runs its action and closes', async ({ page }) => {
+			await page.getByRole('button', { name: 'Show toast' }).click();
+			const t = page.getByRole('alert').filter({ hasText: 'Event has been created' });
+			await expect(t).toBeVisible();
+			await expectNoAxeViolations(page);
+			await t.getByRole('button', { name: 'Undo' }).click();
+			await expect(t).toBeHidden();
+			const undone = page.getByRole('alert').filter({ hasText: 'Undone' });
+			await expect(undone).toBeVisible();
+			await undone.getByRole('button', { name: 'Close' }).click();
+			await expect(undone).toBeHidden();
+		});
+
 		test('tabs move with arrow keys and skip disabled tabs', async ({ page }) => {
 			await page.getByRole('tab', { name: 'Account' }).focus();
 			await page.keyboard.press('ArrowRight');
