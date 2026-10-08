@@ -20,7 +20,7 @@ Rules:
 
 - Never hardcode a color, size, radius, shadow or duration in a component. If a value has no token, add one and note it here.
 - Don't add fallbacks for missing tokens (`var(--dui-color-primary, #111)`). Components require `tokens.css`.
-- When a theme needs more than a color swap (for example, dark mode giving outline controls a translucent fill), add a semantic token to both themes instead of writing a dark-mode selector in the component. Examples: `--dui-color-control`, `--dui-color-control-hover`, `--dui-color-tab-active`, `--dui-color-tab-active-border`, `--dui-color-switch-track`, `--dui-color-switch-thumb`, `--dui-color-switch-thumb-checked`.
+- When a theme needs more than a color swap (for example, dark mode giving outline controls a translucent fill), add a semantic token to both themes instead of writing a dark-mode selector in the component. Status colors beyond shadcn's set live in the themes too (`--dui-color-success`). Examples: `--dui-color-control`, `--dui-color-control-hover`, `--dui-color-tab-active`, `--dui-color-tab-active-border`, `--dui-color-switch-track`, `--dui-color-switch-thumb`, `--dui-color-switch-thumb-checked`.
 
 ### Dark mode
 
@@ -144,7 +144,7 @@ Decided in Phase 1a (see PLAN-svelte.md). Every element a component styles is wr
 ```
 
 - No `child` snippets and no `:global()` in component files.
-- **One exception:** a component may style _consumer-supplied_ children it can't otherwise reach, scoped under its own class, such as icons inside a button: `.button :global(svg)`. Keep it to sizing and pointer events.
+- **One exception:** a component may style _consumer-supplied_ children it can't otherwise reach, scoped under its own class, such as icons inside a button: `.button :global(svg)`. Keep it to sizing, placement and pointer events. Alert also uses `.alert:has(> :global(svg))` to add an icon column only when an icon is passed.
 - Melt renders popovers and dialogs in the browser's top layer (native `<dialog>`, the popover API), not through a portal, so they stay where they are in the DOM. Custom properties set on an ancestor therefore reach open content too.
 
 ### File layout
@@ -189,6 +189,8 @@ When Melt lacks a feature, add it in our component file, in the same spread-attr
 - **Select label.** `Select.Label` uses Melt's label props, and the content points `aria-labelledby` at it.
 
 Components Melt has no builder for get a small builder of our own that returns spreadable props in the same shape, following the WAI-ARIA Authoring Practices pattern for that component. The first one is `dropdown-menu/menu.svelte.ts`: it extends Melt's `BasePopover` (positioning, Escape, outside click, focus return) and adds the menu button pattern (roles, arrow keys, Home/End, typeahead, disabled items skipped). It lives in the component's folder so it gets copied along with it.
+
+Toast keeps one Melt `Toaster` in `toast/toaster.svelte.ts`. Apps place `<Toaster />` once (usually the root layout) and call `toast()`, `toast.success()` or `toast.error()` from anywhere.
 
 Alert Dialog and Sheet are their own copies of the Dialog files rather than variants of Dialog, so each folder can be copied on its own. Alert Dialog turns off closing on outside click and uses `role="alertdialog"`. Sheet adds a `side` prop.
 

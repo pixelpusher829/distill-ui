@@ -145,6 +145,8 @@ Launch with a solid core set, then add the rest after launch (Phase 6). Port fro
 
 Everything else waits until after launch (see Phase 6).
 
+**Status (Oct 2026):** all four batches are built, with docs demos and browser tests. Dropdown Menu has Item, CheckboxItem, Label, Separator, Group and Shortcut; radio items and submenus wait for Phase 6.
+
 For each component (here and in Phase 6):
 - [ ] Port markup and props; keep Melt's behavior intact, and add what Melt lacks.
 - [ ] Convert every Tailwind class to scoped CSS using tokens. `data-[state=open]:x` → `[data-state="open"] { x }`.

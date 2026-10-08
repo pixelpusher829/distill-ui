@@ -1,5 +1,6 @@
 <script lang="ts">
 	import {
+		Alert,
 		AlertDialog,
 		Avatar,
 		Badge,
@@ -19,6 +20,7 @@
 		Switch,
 		Tabs,
 		Textarea,
+		toast,
 		Tooltip
 	} from '@distill-ui/svelte';
 
@@ -235,6 +237,50 @@
 			<Avatar.Root><Avatar.Fallback>BO</Avatar.Fallback></Avatar.Root>
 			<Avatar.Root><Avatar.Fallback>CY</Avatar.Fallback></Avatar.Root>
 		</Avatar.Group>
+	</section>
+
+	<section data-testid="alert">
+		<h2>Alert</h2>
+		<div class="stack-sm">
+			<Alert.Root>
+				<svg
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					aria-hidden="true"
+				>
+					<circle cx="12" cy="12" r="10" />
+					<path d="m9 12 2 2 4-4" />
+				</svg>
+				<Alert.Title>Success! Your changes have been saved</Alert.Title>
+				<Alert.Description
+					>This is an alert with an icon, a title and a description.</Alert.Description
+				>
+			</Alert.Root>
+			<Alert.Root variant="destructive">
+				<Alert.Title>Unable to process your payment.</Alert.Title>
+				<Alert.Description>Please verify your billing information and try again.</Alert.Description>
+			</Alert.Root>
+		</div>
+	</section>
+
+	<section data-testid="toast">
+		<h2>Toast</h2>
+		<div class="row">
+			<Button
+				variant="outline"
+				onclick={() =>
+					toast('Event has been created', {
+						description: 'Sunday, December 3 at 9:00 AM',
+						action: { label: 'Undo', onClick: () => toast('Undone') }
+					})}
+			>
+				Show toast
+			</Button>
+			<Button variant="outline" onclick={() => toast.success('Profile saved')}>Success</Button>
+			<Button variant="outline" onclick={() => toast.error('Something went wrong')}>Error</Button>
+		</div>
 	</section>
 
 	<section data-testid="dialog">
