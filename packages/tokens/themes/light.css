@@ -26,4 +26,10 @@
 	--color-input: oklch(0.922 0 0);
 	--color-ring: oklch(0.708 0 0);
 	--color-overlay: oklch(0 0 0 / 10%);
+
+	/* Surfaces that differ by theme in more than color: outline controls and active tabs. */
+	--color-control: transparent;
+	--color-control-hover: var(--color-muted);
+	--color-tab-active: var(--color-background);
+	--color-tab-active-border: transparent;
 }

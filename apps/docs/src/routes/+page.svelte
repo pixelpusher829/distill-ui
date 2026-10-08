@@ -5,7 +5,7 @@
 <main>
 	<h1>distill-ui</h1>
 	<p>Docs and playground coming soon. Components will be previewed here as they are built.</p>
-	<p><a href="/spike">Phase 1a scoping spike</a></p>
+	<p><a href="/components">Components</a></p>
 </main>
 
 <style>

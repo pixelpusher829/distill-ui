@@ -8,16 +8,16 @@ This is the first of two plans. The Vue version (`PLAN-vue.md`) comes after this
 
 A copy-into-your-project component library in the spirit of shadcn/ui, built for Svelte 5, styled with **scoped `<style>` blocks and CSS custom properties instead of Tailwind**. Users own the component files and customize them by editing CSS, not class strings.
 
-Behavior and accessibility come from **Bits UI**. Component structure is referenced from **shadcn-svelte** (MIT). Our contribution is the styling layer, the theming system, and the distribution.
+Behavior and accessibility come from **Melt UI** builders (`melt`), with our own small additions where Melt has no builder or lacks a feature (see Phase 1a). Component structure is referenced from **shadcn-svelte** (MIT). Our contribution is the styling layer, the theming system, and the distribution.
 
 ## Principles
 
 1. **No Tailwind, no utility classes, no runtime CSS-in-JS.** Plain CSS in each component's `<style>` block.
 2. **Tokens are the public API.** All colors, spacing, radii, shadows, fonts and motion values come from CSS custom properties defined in one tokens file.
 3. **Variants via data attributes.** `data-variant="outline"`, `data-size="sm"`. No class-merging helpers (`cn`, `tailwind-variants`, `clsx`).
-4. **State via Bits UI data attributes.** Style `[data-state="open"]`, `[data-disabled]`, `[data-highlighted]`, `[data-orientation]` etc.
+4. **State via data attributes.** Style the attributes Melt sets (`[data-open]`, `[data-active]`, `[data-highlighted]`, `[data-orientation]`) plus `[data-disabled]` where we add it. Don't invent a second vocabulary on top.
 5. **Consumers must be able to override easily.** Every component exposes component-level custom properties (e.g. `--button-bg`) that fall back to global tokens. Selectors stay low-specificity.
-6. **Accessibility is not negotiable.** Never remove behavior Bits UI provides. Visible focus styles on every interactive element.
+6. **Accessibility is not negotiable.** Never remove behavior Melt provides, and where we add behavior Melt lacks (disabled items, ARIA links), test it. Visible focus styles on every interactive element.
 7. **Modern CSS is fine.** Native nesting, `:where()`, `@layer`, `color-mix()`, `oklch()`, container queries. Target evergreen browsers.
 8. **Open the file, see the CSS, edit it.** This library exists because styling headless Svelte libraries with scoped CSS is painful: Bits UI renders parts inside its own components, so Svelte strips your scoped selectors as unused, and the usual escapes are Tailwind or wrapping every part in a `child` snippet. Users of this library must never hit that. Every styled element should be reachable by a plain scoped selector in the component's own file, with no `:global()` and no extra work from the consumer.
 9. **Keep CSS portable.** The Vue version will reuse this library's CSS. Avoid Svelte-only styling tricks inside the CSS itself where a plain-CSS approach works equally well, and keep framework-specific scoping details out of the shared tokens and keyframes.
@@ -25,10 +25,10 @@ Behavior and accessibility come from **Bits UI**. Component structure is referen
 ## Licensing and attribution
 
 - License: MIT.
-- Keep shadcn-svelte's copyright notice in `LICENSE` alongside ours, and credit shadcn/ui, shadcn-svelte and Bits UI in the README.
+- Keep shadcn-svelte's copyright notice in `LICENSE` alongside ours, and credit shadcn/ui, shadcn-svelte and Melt UI in the README.
 - This is a new repo, not a GitHub fork. shadcn-svelte is a reference we diff against, not an upstream we merge.
 
-## Repo structure (monorepo, pnpm workspaces)
+## Repo structure (monorepo, bun workspaces)
 
 ```
 /
@@ -61,14 +61,14 @@ Keep `registry/` split by framework from the start so Vue can slot in at `regist
 
 ## Phase 0 — Setup
 
-- [ ] Init pnpm monorepo, TypeScript, Prettier, ESLint, svelte-check.
-- [ ] Create `packages/tokens` (plain CSS, no build step needed).
-- [ ] Create `packages/svelte` (Svelte 5, SvelteKit library mode) with `bits-ui` as a dependency.
-- [ ] Create `apps/docs` (SvelteKit) that imports from `packages/svelte` for live previews.
-- [ ] Clone shadcn-svelte into a gitignored `reference/shadcn-svelte/` folder for comparison.
-- [ ] Add LICENSE with both copyright notices.
+- [x] Init bun monorepo, TypeScript, Prettier, ESLint, svelte-check.
+- [x] Create `packages/tokens` (plain CSS, no build step needed).
+- [x] Create `packages/svelte` (Svelte 5, SvelteKit library mode) with `melt` as a dependency.
+- [x] Create `apps/docs` (SvelteKit) that imports from `packages/svelte` for live previews.
+- [x] Clone shadcn-svelte into a gitignored `reference/shadcn-svelte/` folder for comparison.
+- [x] Add LICENSE with both copyright notices.
 
-**Done when:** `pnpm dev` runs the docs app and renders a placeholder page.
+**Done when:** `bun run dev` runs the docs app and renders a placeholder page.
 
 ## Phase 1 — Conventions spike (most important phase)
 
@@ -92,6 +92,8 @@ Criteria:
 - **Reference availability:** shadcn-svelte is built on Bits UI, so Option C means more structure to work out ourselves.
 
 If the foundation is Melt, update dependencies, the "Behavior and accessibility come from" line, and the Quality bar accordingly.
+
+**Decision (Oct 2026): Option C, Melt UI.** A and B were both built and work, but A puts `child` snippets in every component file and B makes every styled part global. Since users copy these files into their own projects, both put exactly the friction principle 8 rules out in front of them. Known Melt gaps, handled ourselves in the same spread-attributes style: no disabled options in Select or disabled tabs in Tabs; Dialog doesn't link its title and description; no builders yet for Checkbox, Switch, Dropdown Menu, Context Menu, Menubar, Navigation Menu, Calendar, Date Picker, Command, Scroll Area or Hover Card. Write those as small builders in our own code, matching Melt's API shape, and follow Melt's releases in case it adds them.
 
 ### 1b. Tokens
 
@@ -144,7 +146,7 @@ Launch with a solid core set, then add the rest after launch (Phase 6). Port fro
 Everything else waits until after launch (see Phase 6).
 
 For each component (here and in Phase 6):
-- [ ] Port markup and props; keep Bits UI behavior intact.
+- [ ] Port markup and props; keep Melt's behavior intact, and add what Melt lacks.
 - [ ] Convert every Tailwind class to scoped CSS using tokens. `data-[state=open]:x` → `[data-state="open"] { x }`.
 - [ ] Expose component-level custom properties for the main visual knobs.
 - [ ] Add a docs page with live examples of every variant, plus a "Customizing" snippet.
@@ -155,7 +157,7 @@ For each component (here and in Phase 6):
 ## Phase 3 — Distribution / CLI
 
 - [ ] First check whether shadcn-svelte's CLI custom-registry support (or the shadcn registry format) can serve our components. Prefer it over writing our own CLI.
-- [ ] If not suitable, build a small CLI (`npx distill-ui add button`) that: copies component files into the user's `$lib/components/ui`, installs `bits-ui` if missing, and copies `tokens.css` + themes on `init`. Design it so a `--framework vue` option can be added later (detect the framework from `package.json` by default).
+- [ ] If not suitable, build a small CLI (`npx distill-ui add button`) that: copies component files into the user's `$lib/components/ui`, installs `melt` and `@floating-ui/dom` if missing, and copies `tokens.css` + themes on `init`. Design it so a `--framework vue` option can be added later (detect the framework from `package.json` by default).
 - [ ] Build script that generates `registry/svelte/` JSON from `packages/svelte`.
 - [ ] Always support a no-CLI path: every docs page has a "copy the file" button.
 
@@ -200,7 +202,7 @@ Once the shared conventions have been stable for a while, start `PLAN-vue.md` (i
 ## Quality bar (every component)
 
 - svelte-check and lint pass with no warnings.
-- Keyboard navigation works and matches Bits UI's behavior; visible focus ring on every interactive element.
+- Keyboard navigation works and follows the WAI-ARIA Authoring Practices pattern for that component; visible focus ring on every interactive element.
 - Automated a11y check (axe via Playwright) on the docs example page passes.
 - Looks correct in light and dark, and with `prefers-reduced-motion`.
 - Overriding `--<component>-*` custom properties from a parent works, demonstrated in docs.
@@ -209,12 +211,12 @@ Once the shared conventions have been stable for a while, start `PLAN-vue.md` (i
 
 ## Ongoing maintenance
 
-- Periodically diff `reference/shadcn-svelte` and Bits UI release notes; port relevant fixes manually.
-- Pin Bits UI to a major version; test before bumping.
+- Periodically diff `reference/shadcn-svelte` and Melt release notes; port relevant fixes manually.
+- Pin Melt to an exact version while it is pre-1.0; test before bumping.
 
 ## Notes for Claude Code
 
 - Work one phase at a time; do not start Phase 2 until `CONVENTIONS.md` exists and the four spike components meet the quality bar.
-- Before porting a component, read its shadcn-svelte source in `reference/` and the relevant Bits UI docs.
+- Before porting a component, read its shadcn-svelte source in `reference/` and the relevant Melt docs (or the WAI-ARIA pattern when Melt has no builder).
 - When a Tailwind class has no obvious token equivalent, add a token rather than hardcoding a value, and note it in `CONVENTIONS.md`.
 - Ask before changing a convention that is already documented.

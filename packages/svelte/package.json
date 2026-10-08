@@ -48,8 +48,7 @@
 	},
 	"dependencies": {
 		"@distill-ui/tokens": "workspace:*",
-		"@floating-ui/dom": "^1.8.0",
-		"bits-ui": "^2.19.5",
+		"@floating-ui/dom": "^1.6.0",
 		"melt": "0.44.0"
 	},
 	"devDependencies": {

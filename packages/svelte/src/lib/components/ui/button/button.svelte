@@ -130,10 +130,10 @@
 	}
 
 	.button[data-variant='outline'] {
-		--_bg: var(--button-bg, var(--color-background));
+		--_bg: var(--button-bg, var(--color-control));
 		--_fg: var(--button-fg, var(--color-foreground));
-		--_border: var(--button-border, var(--color-border));
-		--_hover-bg: var(--button-hover-bg, var(--color-muted));
+		--_border: var(--button-border, var(--color-input));
+		--_hover-bg: var(--button-hover-bg, var(--color-control-hover));
 		--_hover-fg: var(--button-hover-fg, var(--color-foreground));
 		box-shadow: var(--shadow-xs);
 
@@ -151,7 +151,11 @@
 
 	.button[data-variant='destructive'] {
 		--_bg: var(--button-bg, color-mix(in oklch, var(--color-destructive) 10%, transparent));
-		--_fg: var(--button-fg, var(--color-destructive));
+		/* Pulled slightly toward the foreground color so the text passes AA contrast on its tint. */
+		--_fg: var(
+			--button-fg,
+			color-mix(in oklch, var(--color-destructive) 80%, var(--color-foreground))
+		);
 		--_hover-bg: var(
 			--button-hover-bg,
 			color-mix(in oklch, var(--color-destructive) 20%, transparent)
