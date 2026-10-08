@@ -31,14 +31,13 @@
 	{@render children?.()}
 </svelte:element>
 
+<!--
+	Options you can set from a parent or on the badge itself:
+	--dui-badge-bg, --dui-badge-fg, --dui-badge-hover-bg, --dui-badge-border, --dui-badge-radius
+-->
+
 <style>
 	.badge {
-		--bg: var(--dui-badge-bg, var(--dui-color-primary));
-		--fg: var(--dui-badge-fg, var(--dui-color-primary-foreground));
-		--border: var(--dui-badge-border, transparent);
-		--hover-bg: var(--dui-badge-hover-bg, color-mix(in oklch, var(--bg) 80%, transparent));
-		--radius: var(--dui-badge-radius, var(--dui-radius-full));
-
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -48,10 +47,10 @@
 		height: 1.25rem;
 		padding: var(--dui-space-0-5) var(--dui-space-2);
 		overflow: hidden;
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-		background: var(--bg);
-		color: var(--fg);
+		border: 1px solid var(--dui-badge-border, transparent);
+		border-radius: var(--dui-badge-radius, var(--dui-radius-full));
+		background: var(--dui-badge-bg, var(--dui-color-primary));
+		color: var(--dui-badge-fg, var(--dui-color-primary-foreground));
 		font-size: var(--dui-text-xs);
 		line-height: var(--dui-text-xs-line-height);
 		font-weight: var(--dui-font-weight-medium);
@@ -64,7 +63,7 @@
 
 		/* Only links react to hover. */
 		&[href]:hover {
-			background: var(--hover-bg);
+			background: var(--dui-badge-hover-bg, var(--dui-color-primary-hover));
 		}
 
 		&:focus-visible {
@@ -82,43 +81,49 @@
 	}
 
 	.badge[data-variant='secondary'] {
-		--bg: var(--dui-badge-bg, var(--dui-color-secondary));
-		--fg: var(--dui-badge-fg, var(--dui-color-secondary-foreground));
+		background: var(--dui-badge-bg, var(--dui-color-secondary));
+		color: var(--dui-badge-fg, var(--dui-color-secondary-foreground));
+
+		&[href]:hover {
+			background: var(--dui-badge-hover-bg, var(--dui-color-secondary-hover));
+		}
 	}
 
 	.badge[data-variant='outline'] {
-		--bg: var(--dui-badge-bg, transparent);
-		--fg: var(--dui-badge-fg, var(--dui-color-foreground));
-		--border: var(--dui-badge-border, var(--dui-color-border));
-		--hover-bg: var(--dui-badge-hover-bg, var(--dui-color-muted));
+		border-color: var(--dui-badge-border, var(--dui-color-border));
+		background: var(--dui-badge-bg, transparent);
+		color: var(--dui-badge-fg, var(--dui-color-foreground));
+
+		&[href]:hover {
+			background: var(--dui-badge-hover-bg, var(--dui-color-muted));
+		}
 	}
 
 	.badge[data-variant='ghost'] {
-		--bg: var(--dui-badge-bg, transparent);
-		--fg: var(--dui-badge-fg, var(--dui-color-foreground));
-		--hover-bg: var(--dui-badge-hover-bg, var(--dui-color-muted));
+		background: var(--dui-badge-bg, transparent);
+		color: var(--dui-badge-fg, var(--dui-color-foreground));
+
+		&[href]:hover {
+			background: var(--dui-badge-hover-bg, var(--dui-color-muted));
+		}
 	}
 
 	.badge[data-variant='destructive'] {
-		--bg: var(--dui-badge-bg, color-mix(in oklch, var(--dui-color-destructive) 10%, transparent));
-		/* Pulled toward the foreground so the text passes AA contrast, as in Button. */
-		--fg: var(
-			--dui-badge-fg,
-			color-mix(in oklch, var(--dui-color-destructive) 80%, var(--dui-color-foreground))
-		);
-		--hover-bg: var(
-			--dui-badge-hover-bg,
-			color-mix(in oklch, var(--dui-color-destructive) 20%, transparent)
-		);
+		background: var(--dui-badge-bg, var(--dui-color-destructive-subtle));
+		color: var(--dui-badge-fg, var(--dui-color-destructive-text));
+
+		&[href]:hover {
+			background: var(--dui-badge-hover-bg, var(--dui-color-destructive-subtle-hover));
+		}
 	}
 
 	.badge[data-variant='link'] {
-		--bg: var(--dui-badge-bg, transparent);
-		--fg: var(--dui-badge-fg, var(--dui-color-primary));
-		--hover-bg: var(--dui-badge-hover-bg, transparent);
+		background: var(--dui-badge-bg, transparent);
+		color: var(--dui-badge-fg, var(--dui-color-primary));
 		text-underline-offset: 4px;
 
 		&[href]:hover {
+			background: var(--dui-badge-hover-bg, transparent);
 			text-decoration: underline;
 		}
 	}

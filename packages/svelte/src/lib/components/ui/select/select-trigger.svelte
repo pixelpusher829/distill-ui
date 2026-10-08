@@ -30,16 +30,19 @@
 	<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
 </button>
 
+<!--
+	Options you can set from a parent or on the select trigger itself:
+	--dui-select-trigger-width, --dui-select-trigger-height, --dui-select-trigger-border, --dui-select-trigger-radius, --dui-select-trigger-bg
+-->
+
 <style>
 	.trigger {
-		--height: var(--dui-select-trigger-height, 2.25rem);
-
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		gap: var(--dui-space-1-5);
 		width: var(--dui-select-trigger-width, fit-content);
-		height: var(--height);
+		height: var(--dui-select-trigger-height, 2.25rem);
 		padding-block: var(--dui-space-2);
 		padding-inline: var(--dui-space-2-5) var(--dui-space-2);
 		border: 1px solid var(--dui-select-trigger-border, var(--dui-color-input));
@@ -58,7 +61,7 @@
 			box-shadow var(--dui-duration-fast) var(--dui-ease-out);
 
 		&[data-size='sm'] {
-			--height: var(--dui-select-trigger-height, 2rem);
+			height: var(--dui-select-trigger-height, 2rem);
 		}
 
 		&:focus-visible {

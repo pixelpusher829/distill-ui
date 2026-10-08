@@ -13,6 +13,11 @@
 	{@render children?.()}
 </label>
 
+<!--
+	Options you can set from a parent or on the label itself:
+	--dui-label-fg
+-->
+
 <style>
 	.label {
 		display: flex;

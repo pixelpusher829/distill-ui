@@ -19,6 +19,11 @@
 	</div>
 </div>
 
+<!--
+	Options you can set from a parent or on the select content itself:
+	--dui-select-content-min-width, --dui-select-content-radius, --dui-select-content-bg, --dui-select-content-fg
+-->
+
 <style>
 	/* Melt positions with floating-ui and the popover API; open animation uses @starting-style
 	   because the popover goes from display:none, and Melt has no exit-animation hook here. */

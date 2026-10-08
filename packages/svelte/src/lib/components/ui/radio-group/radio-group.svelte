@@ -45,6 +45,11 @@
 	{@render children?.()}
 </div>
 
+<!--
+	Options you can set from a parent or on the radio group itself:
+	--dui-radio-group-gap
+-->
+
 <style>
 	.radio-group {
 		display: grid;

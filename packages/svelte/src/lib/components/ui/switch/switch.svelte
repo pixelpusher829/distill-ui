@@ -24,15 +24,16 @@
 	data-size={size}
 />
 
+<!--
+	Options you can set from a parent or on the switch itself:
+	--dui-switch-width, --dui-switch-height, --dui-switch-thumb, --dui-switch-thumb-size, --dui-switch-track, --dui-switch-checked-track, --dui-switch-checked-thumb
+-->
+
 <style>
 	.switch {
 		--width: var(--dui-switch-width, 2rem);
 		--height: var(--dui-switch-height, 1.15rem);
 		--thumb-size: var(--dui-switch-thumb-size, 1rem);
-		--track: var(--dui-switch-track, var(--dui-color-switch-track));
-		--checked-track: var(--dui-switch-checked-track, var(--dui-color-primary));
-		--thumb: var(--dui-switch-thumb, var(--dui-color-switch-thumb));
-		--checked-thumb: var(--dui-switch-checked-thumb, var(--dui-color-switch-thumb-checked));
 
 		appearance: none;
 		display: inline-flex;
@@ -43,7 +44,7 @@
 		margin: 0;
 		border: 1px solid transparent;
 		border-radius: var(--dui-radius-full);
-		background: var(--track);
+		background: var(--dui-switch-track, var(--dui-color-switch-track));
 		box-shadow: var(--dui-shadow-xs);
 		cursor: pointer;
 		outline: none;
@@ -57,16 +58,16 @@
 			width: var(--thumb-size);
 			height: var(--thumb-size);
 			border-radius: var(--dui-radius-full);
-			background: var(--thumb);
+			background: var(--dui-switch-thumb, var(--dui-color-switch-thumb));
 			pointer-events: none;
 			transition: translate var(--dui-duration-fast) var(--dui-ease-out);
 		}
 
 		&:checked {
-			background: var(--checked-track);
+			background: var(--dui-switch-checked-track, var(--dui-color-primary));
 
 			&::before {
-				background: var(--checked-thumb);
+				background: var(--dui-switch-checked-thumb, var(--dui-color-switch-thumb-checked));
 				translate: calc(var(--width) - var(--thumb-size) - 2px) 0;
 			}
 		}

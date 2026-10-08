@@ -16,6 +16,11 @@
 	{@render children?.()}
 </span>
 
+<!--
+	Options you can set from a parent or on the avatar fallback itself:
+	--dui-avatar-fallback-bg
+-->
+
 <style>
 	.fallback {
 		display: flex;

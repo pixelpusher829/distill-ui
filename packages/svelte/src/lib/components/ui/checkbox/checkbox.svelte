@@ -20,14 +20,15 @@
 	class={['checkbox', className]}
 />
 
+<!--
+	Options you can set from a parent or on the checkbox itself:
+	--dui-checkbox-size, --dui-checkbox-border, --dui-checkbox-radius, --dui-checkbox-bg, --dui-checkbox-checked-fg, --dui-checkbox-checked-bg
+-->
+
 <style>
 	.checkbox {
+		/* The size is reused below for the mark, so it is set once here. */
 		--size: var(--dui-checkbox-size, 1rem);
-		--bg: var(--dui-checkbox-bg, var(--dui-color-control));
-		--border: var(--dui-checkbox-border, var(--dui-color-input));
-		--checked-bg: var(--dui-checkbox-checked-bg, var(--dui-color-primary));
-		--checked-fg: var(--dui-checkbox-checked-fg, var(--dui-color-primary-foreground));
-		--radius: var(--dui-checkbox-radius, 4px);
 
 		appearance: none;
 		display: inline-grid;
@@ -36,10 +37,10 @@
 		width: var(--size);
 		height: var(--size);
 		margin: 0;
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-		background: var(--bg);
-		color: var(--checked-fg);
+		border: 1px solid var(--dui-checkbox-border, var(--dui-color-input));
+		border-radius: var(--dui-checkbox-radius, 4px);
+		background: var(--dui-checkbox-bg, var(--dui-color-control));
+		color: var(--dui-checkbox-checked-fg, var(--dui-color-primary-foreground));
 		box-shadow: var(--dui-shadow-xs);
 		cursor: pointer;
 		outline: none;
@@ -58,8 +59,8 @@
 
 		&:checked,
 		&:indeterminate {
-			border-color: var(--checked-bg);
-			background: var(--checked-bg);
+			border-color: var(--dui-checkbox-checked-bg, var(--dui-color-primary));
+			background: var(--dui-checkbox-checked-bg, var(--dui-color-primary));
 
 			&::before {
 				scale: 1;
