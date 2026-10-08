@@ -27,9 +27,12 @@
 	--color-ring: oklch(0.708 0 0);
 	--color-overlay: oklch(0 0 0 / 10%);
 
-	/* Surfaces that differ by theme in more than color: outline controls and active tabs. */
+	/* Surfaces that differ by theme in more than color: outline controls, active tabs and switches. */
 	--color-control: transparent;
 	--color-control-hover: var(--color-muted);
 	--color-tab-active: var(--color-background);
 	--color-tab-active-border: transparent;
+	--color-switch-track: var(--color-input);
+	--color-switch-thumb: var(--color-background);
+	--color-switch-thumb-checked: var(--color-background);
 }

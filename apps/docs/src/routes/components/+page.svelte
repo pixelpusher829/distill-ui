@@ -1,5 +1,16 @@
 <script lang="ts">
-	import { Button, Dialog, Select, Tabs } from '@distill-ui/svelte';
+	import {
+		Button,
+		Checkbox,
+		Dialog,
+		Input,
+		Label,
+		RadioGroup,
+		Select,
+		Switch,
+		Tabs,
+		Textarea
+	} from '@distill-ui/svelte';
 
 	let dark = $state(false);
 	$effect(() => {
@@ -14,6 +25,10 @@
 		{ value: 'pineapple', label: 'Pineapple' }
 	];
 	let fruit = $state('');
+
+	let plan = $state('comfortable');
+	let terms = $state(false);
+	let airplane = $state(false);
 
 	const variants = ['default', 'secondary', 'outline', 'ghost', 'destructive', 'link'] as const;
 </script>
@@ -54,6 +69,68 @@
 			style="--button-bg: oklch(0.55 0.2 260); --button-fg: white; --button-radius: 9999px"
 		>
 			<Button>Overridden from a parent</Button>
+		</div>
+	</section>
+
+	<section data-testid="inputs">
+		<h2>Input, Textarea and Label</h2>
+		<div class="field">
+			<Label for="email">Email</Label>
+			<Input id="email" type="email" placeholder="you@example.com" />
+		</div>
+		<div class="field">
+			<Label for="invalid">Username</Label>
+			<Input id="invalid" value="taken" aria-invalid="true" aria-describedby="invalid-hint" />
+			<p id="invalid-hint" class="hint">That username is taken.</p>
+		</div>
+		<div class="field">
+			<Label for="picture">Picture</Label>
+			<Input id="picture" type="file" />
+		</div>
+		<div class="field">
+			<Label for="disabled-input">Disabled</Label>
+			<Input id="disabled-input" disabled placeholder="Can't type here" />
+		</div>
+		<div class="field">
+			<Label for="message">Message</Label>
+			<Textarea id="message" placeholder="Type your message here." />
+		</div>
+		<h3>Customizing</h3>
+		<div class="field" style="--input-radius: 9999px; --input-height: 2.75rem">
+			<Label for="pill">Pill input</Label>
+			<Input id="pill" placeholder="Rounded from a parent" />
+		</div>
+	</section>
+
+	<section data-testid="checkbox">
+		<h2>Checkbox</h2>
+		<div class="stack-sm">
+			<Label><Checkbox bind:checked={terms} /> Accept terms and conditions</Label>
+			<Label><Checkbox indeterminate /> Some items selected</Label>
+			<Label><Checkbox disabled /> Disabled</Label>
+		</div>
+	</section>
+
+	<section data-testid="radio-group">
+		<h2>Radio Group</h2>
+		<RadioGroup.Root bind:value={plan} aria-label="Spacing">
+			<Label><RadioGroup.Item value="default" /> Default</Label>
+			<Label><RadioGroup.Item value="comfortable" /> Comfortable</Label>
+			<Label><RadioGroup.Item value="compact" /> Compact</Label>
+		</RadioGroup.Root>
+		<p class="hint spaced">Selected: {plan}</p>
+	</section>
+
+	<section data-testid="switch">
+		<h2>Switch</h2>
+		<div class="stack-sm">
+			<Label><Switch bind:checked={airplane} /> Airplane mode</Label>
+			<Label><Switch size="sm" /> Small</Label>
+			<Label><Switch disabled /> Disabled</Label>
+		</div>
+		<h3>Customizing</h3>
+		<div style="--switch-checked-track: oklch(0.6 0.17 150)">
+			<Label><Switch checked /> Green from a parent</Label>
 		</div>
 	</section>
 
@@ -159,6 +236,28 @@
 		align-items: center;
 		gap: var(--space-2);
 		margin-bottom: var(--space-3);
+	}
+
+	.field {
+		display: grid;
+		gap: var(--space-2);
+		max-width: 20rem;
+		margin-bottom: var(--space-4);
+	}
+
+	.hint {
+		margin: 0;
+		color: var(--color-muted-foreground);
+		font-size: var(--text-sm);
+	}
+
+	.spaced {
+		margin-top: var(--space-3);
+	}
+
+	.stack-sm {
+		display: grid;
+		gap: var(--space-3);
 	}
 
 	.stack {

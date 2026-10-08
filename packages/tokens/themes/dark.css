@@ -35,6 +35,9 @@
 	--color-control-hover: color-mix(in oklch, var(--color-input) 50%, transparent);
 	--color-tab-active: var(--color-control);
 	--color-tab-active-border: var(--color-input);
+	--color-switch-track: color-mix(in oklch, var(--color-input) 80%, transparent);
+	--color-switch-thumb: var(--color-foreground);
+	--color-switch-thumb-checked: var(--color-primary-foreground);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -66,5 +69,11 @@
 		--color-control-hover: color-mix(in oklch, var(--color-input) 50%, transparent);
 		--color-tab-active: var(--color-control);
 		--color-tab-active-border: var(--color-input);
+		--color-switch-track: color-mix(in oklch, var(--color-input) 80%, transparent);
+		--color-switch-thumb: var(--color-foreground);
+		--color-switch-thumb-checked: var(--color-primary-foreground);
+		--color-switch-track: color-mix(in oklch, var(--color-input) 80%, transparent);
+		--color-switch-thumb: var(--color-foreground);
+		--color-switch-thumb-checked: var(--color-primary-foreground);
 	}
 }

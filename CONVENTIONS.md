@@ -20,7 +20,7 @@ Rules:
 
 - Never hardcode a color, size, radius, shadow or duration in a component. If a value has no token, add one and note it here.
 - Don't add fallbacks for missing tokens (`var(--color-primary, #111)`). Components require `tokens.css`.
-- When a theme needs more than a color swap (for example, dark mode giving outline controls a translucent fill), add a semantic token to both themes instead of writing a dark-mode selector in the component. Examples: `--color-control`, `--color-control-hover`, `--color-tab-active`, `--color-tab-active-border`.
+- When a theme needs more than a color swap (for example, dark mode giving outline controls a translucent fill), add a semantic token to both themes instead of writing a dark-mode selector in the component. Examples: `--color-control`, `--color-control-hover`, `--color-tab-active`, `--color-tab-active-border`, `--color-switch-track`, `--color-switch-thumb`, `--color-switch-thumb-checked`.
 
 ### Dark mode
 
@@ -68,8 +68,9 @@ Style the attributes the behavior layer sets. With Melt UI, those are:
 | Orientation                                       | `[data-orientation="horizontal" \| "vertical"]` |
 | Disabled (added by us where Melt lacks it)        | `[data-disabled]`, plus `aria-disabled="true"`  |
 | Placeholder showing (Select trigger, added by us) | `[data-placeholder]`                            |
+| Invalid (any form control)                        | `[aria-invalid="true"]`                         |
 
-Don't add a second vocabulary (no `data-state="open"` alongside `data-open`).
+Native form controls use their own pseudo-classes (`:checked`, `:indeterminate`, `:disabled`). Don't add a second vocabulary (no `data-state="open"` alongside `data-open`).
 
 ### Specificity and cascade layers
 
@@ -111,6 +112,12 @@ Every interactive element gets a visible ring:
 ---
 
 ## Svelte
+
+### Native elements first
+
+When a native HTML element already gives the full WAI-ARIA behavior, use it instead of a builder. Input, Textarea, Label, Checkbox, Radio Group and Switch are native `<input>`, `<textarea>` and `<label>` elements styled with `appearance: none`, so keyboard support, form submission and screen-reader announcements come from the browser. Radio Group items share one `name`, which gives arrow-key movement and a single tab stop. Switch is a checkbox with `role="switch"`. Check marks and thumbs are `::before` pseudo-elements, and icons are SVG masks so they follow `currentColor`.
+
+Reach for Melt (or a builder of our own) only when no native element does the job.
 
 ### Scoping strategy: Melt UI builders on our own elements
 
@@ -181,4 +188,4 @@ Components Melt has no builder for (Checkbox, Switch, Dropdown Menu, Calendar an
 
 - `bun run check`: svelte-check with no errors or warnings.
 - `bun run lint`: Prettier and ESLint.
-- `bun run test` in `apps/docs`: Playwright tests for keyboard behavior and axe (WCAG 2.2 AA), in light and dark. Run `bunx playwright install chromium` once first.
+- `bun run test`: Playwright tests for keyboard behavior and axe (WCAG 2.2 AA), in light and dark. Run `bunx playwright install chromium` in `apps/docs` once first.
