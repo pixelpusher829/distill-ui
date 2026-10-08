@@ -17,7 +17,7 @@ Behavior and accessibility come from **Reka UI**. Component structure and props 
 | `packages/tokens` (tokens, themes, keyframes) — unchanged | `packages/vue` component files |
 | Shared section of `CONVENTIONS.md` | Vue section of `CONVENTIONS.md` (scoping strategy) |
 | Variant vocabulary, custom-property names, data-attribute selectors | Props/emit patterns, `v-model` wiring |
-| Nearly all component CSS (copy from the `.svelte` `<style>` blocks) | Adjustments where Reka UI's DOM or attributes differ from Bits UI |
+| Nearly all component CSS (copy from the `.svelte` `<style>` blocks) | Adjustments where Reka UI's DOM or attributes differ from Melt UI |
 | Docs content, theming guide, CLI/registry infrastructure | Vue code samples, Vue preview rendering, `registry/vue/` |
 | Quality bar | Vue-specific checks (vue-tsc, Nuxt SSR) |
 
@@ -85,9 +85,9 @@ Verify on Dialog and Select (including portalled content and nested parts), then
 
 Criteria are the same as Svelte: styles reliably apply, readable files, consumer overrides work.
 
-### 1b. Mapping Bits UI → Reka UI attributes
+### 1b. Mapping Melt UI → Reka UI attributes
 
-- [ ] For each spike component, list the data attributes and DOM structure Reka UI produces and compare with Bits UI. Note differences (attribute names, state values, extra wrapper elements) in the Vue section of `CONVENTIONS.md`.
+- [ ] For each spike component, list the data attributes and DOM structure Reka UI produces and compare with the Melt-based Svelte version. Note differences (attribute names, state values, extra wrapper elements) in the Vue section of `CONVENTIONS.md`.
 - [ ] Where Reka UI exposes CSS variables (e.g. popper/content sizing like available height or transform origin), map them to what our Svelte CSS expects.
 
 ### 1c. Props, variants and v-model

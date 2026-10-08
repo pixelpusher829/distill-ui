@@ -7,7 +7,7 @@ Status: early setup. See [PLAN-svelte.md](./PLAN-svelte.md) for the roadmap and 
 ## Repo layout
 
 - `packages/tokens` – framework-agnostic CSS tokens, themes and keyframes
-- `packages/svelte` – the Svelte components (SvelteKit library mode, Bits UI)
+- `packages/svelte` – the Svelte components (SvelteKit library mode, Melt UI)
 - `apps/docs` – SvelteKit docs and playground site
 
 ## Getting started
@@ -30,4 +30,4 @@ Other scripts, run from the repo root:
 
 ## Credits
 
-Component structure is referenced from [shadcn-svelte](https://github.com/huntabyte/shadcn-svelte), itself a port of [shadcn/ui](https://ui.shadcn.com). Behavior and accessibility come from [Bits UI](https://bits-ui.com). All MIT licensed; see [LICENSE](./LICENSE).
+Component structure is referenced from [shadcn-svelte](https://github.com/huntabyte/shadcn-svelte), itself a port of [shadcn/ui](https://ui.shadcn.com). Behavior and accessibility come from [Melt UI](https://next.melt-ui.com). All MIT licensed; see [LICENSE](./LICENSE).

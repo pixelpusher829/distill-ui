@@ -1,7 +1,9 @@
-export * as Button from './components/ui/button/index.js';
-
-// Phase 1a scoping spike: the same Dialog and Select built three ways.
-// Only one survives into components/ui once the approach is chosen.
-export * as SpikeA from './spike/a/index.js';
-export * as SpikeB from './spike/b/index.js';
-export * as SpikeC from './spike/c/index.js';
+export {
+	Button,
+	type ButtonProps,
+	type ButtonSize,
+	type ButtonVariant
+} from './components/ui/button/index.js';
+export * as Dialog from './components/ui/dialog/index.js';
+export * as Select from './components/ui/select/index.js';
+export * as Tabs from './components/ui/tabs/index.js';
