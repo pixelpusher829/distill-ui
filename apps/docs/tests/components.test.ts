@@ -89,6 +89,14 @@ for (const theme of themes) {
 			await expect(page.getByText('Selected: compact')).toBeVisible();
 		});
 
+		test('avatar shows the image once loaded and the fallback when it fails', async ({ page }) => {
+			const section = page.getByTestId('avatar');
+			await expect(section.getByRole('img', { name: 'Profile picture' })).toBeVisible();
+			await expect(section.getByText('JB')).toBeHidden();
+			await expect(section.getByRole('img', { name: 'Missing picture' })).toBeHidden();
+			await expect(section.getByText('CN')).toBeVisible();
+		});
+
 		test('tabs move with arrow keys and skip disabled tabs', async ({ page }) => {
 			await page.getByRole('tab', { name: 'Account' }).focus();
 			await page.keyboard.press('ArrowRight');

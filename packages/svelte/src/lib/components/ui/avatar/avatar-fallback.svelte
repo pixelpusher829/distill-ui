@@ -1,0 +1,34 @@
+<script lang="ts">
+	import type { HTMLAttributes } from 'svelte/elements';
+	import { getAvatarContext } from './context.js';
+
+	let {
+		ref = $bindable(null),
+		class: className,
+		children,
+		...restProps
+	}: HTMLAttributes<HTMLSpanElement> & { ref?: HTMLSpanElement | null } = $props();
+
+	const ctx = getAvatarContext();
+</script>
+
+<span {...restProps} {...ctx.avatar.fallback} bind:this={ref} class={['fallback', className]}>
+	{@render children?.()}
+</span>
+
+<style>
+	.fallback {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+		border-radius: inherit;
+		background: var(--avatar-fallback-bg, var(--color-muted));
+		/* Pulled toward the foreground so initials pass AA contrast on the muted fill. */
+		color: var(
+			--avatar-fallback-fg,
+			color-mix(in oklch, var(--color-muted-foreground) 70%, var(--color-foreground))
+		);
+	}
+</style>
