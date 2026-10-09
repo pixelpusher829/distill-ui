@@ -53,11 +53,22 @@ export const load: PageServerLoad = async () => ({
 		border-radius: 9999px;
 	}
 
-	/* So you reach for a workaround. */
+	/* Workaround 1: leak the style to the whole app. */
 	:global(.trigger) {
 		border-radius: 9999px;
 	}
-</style>`
+</style>
+
+<!-- Workaround 2: render the element yourself
+     with a child snippet, so .trigger above works.
+     Repeat for every part you want to style. -->
+<Select.Trigger>
+	{#snippet child({ props })}
+		<button {...props} class="trigger">
+			<Select.Value />
+		</button>
+	{/snippet}
+</Select.Trigger>`
 		},
 		after: {
 			lang: 'svelte',

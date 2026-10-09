@@ -52,18 +52,6 @@
 		</div>
 	</section>
 
-	<section class="play" aria-labelledby="play-title">
-		<header class="section-head">
-			<p class="kicker">Try it</p>
-			<h2 id="play-title">Three variables. Every component.</h2>
-			<p>
-				Colors, corners and spacing are CSS custom properties. Drag a slider and the whole card
-				follows, because every part reads the same tokens.
-			</p>
-		</header>
-		<ThemePlayground />
-	</section>
-
 	<section class="why" aria-labelledby="why-title">
 		<header class="section-head">
 			<p class="kicker">Why this exists</p>
@@ -113,8 +101,9 @@
 			<h2 id="scoped-title">Your selector reaches the element.</h2>
 			<p>
 				Headless libraries render each part inside their own components, so Svelte never sees the
-				element your selector is aimed at. distill-ui writes every element in the component's own
-				file, so a plain scoped selector just works.
+				element your selector is aimed at. The fixes are <code>:global()</code>, which leaks your
+				styles to the whole app, or a child snippet around every part you want to style. distill-ui writes every
+				element in the component's own file, so a plain scoped selector just works.
 			</p>
 		</header>
 		<div class="compare">
@@ -127,6 +116,18 @@
 				<CodeBlock code={data.code.after} />
 			</div>
 		</div>
+	</section>
+
+	<section aria-labelledby="play-title">
+		<header class="section-head">
+			<p class="kicker">Try it</p>
+			<h2 id="play-title">Three variables. Every component.</h2>
+			<p>
+				Colors, corners and spacing are CSS custom properties. Drag a slider and the whole card
+				follows, because every part reads the same tokens.
+			</p>
+		</header>
+		<ThemePlayground />
 	</section>
 
 	<section class="features" aria-label="What you get">
@@ -288,10 +289,6 @@
 		letter-spacing: -0.03em;
 	}
 
-	.play {
-		padding-top: var(--dui-space-8);
-	}
-
 	/* Why */
 
 	.why {
@@ -338,7 +335,7 @@
 
 	.compare {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
 		gap: var(--dui-space-5);
 		align-items: start;
 

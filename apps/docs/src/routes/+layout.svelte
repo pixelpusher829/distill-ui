@@ -145,6 +145,14 @@
 		}
 	}
 
+	/* The smallest phones need tighter spacing to fit everything on one row. */
+	@media (max-width: 22rem) {
+		header {
+			gap: var(--dui-space-2);
+			padding-inline: var(--dui-space-3);
+		}
+	}
+
 	/* Show the logo's name again where there's room for it next to the links. */
 	@media (min-width: 28rem) and (max-width: 40rem) {
 		.logo .name {
