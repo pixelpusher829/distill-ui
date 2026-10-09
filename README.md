@@ -28,6 +28,10 @@ Other scripts, run from the repo root:
 - `bun run build` – build the library and the docs site
 - `bun run reference` – clone shadcn-svelte into the gitignored `reference/` folder for comparison
 
+## Support
+
+distill-ui is free and built in my spare time. If it saves you time, you can [buy me a coffee](https://buymeacoffee.com/jbarnes).
+
 ## Credits
 
 Component structure is referenced from [shadcn-svelte](https://github.com/huntabyte/shadcn-svelte), itself a port of [shadcn/ui](https://ui.shadcn.com). Behavior and accessibility come from [Melt UI](https://next.melt-ui.com). All MIT licensed; see [LICENSE](./LICENSE).
