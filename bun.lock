@@ -35,6 +35,13 @@
         "vite": "^8.3.0",
       },
     },
+    "packages/cli": {
+      "name": "distill-ui",
+      "version": "0.0.1",
+      "bin": {
+        "distill-ui": "./src/index.js",
+      },
+    },
     "packages/svelte": {
       "name": "@distill-ui/svelte",
       "version": "0.0.1",
@@ -259,6 +266,8 @@
     "devalue": ["devalue@5.9.4", "", {}, "sha512-sPAT4pztbu6586/hrhOnMKS17IJrvg12mXiSPSS3W5qDeN2RGgvZ0diZCm31dBbnevfVmujNO3IM2wrS4Y2Rhg=="],
 
     "diff-sequences": ["diff-sequences@29.6.3", "", {}, "sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q=="],
+
+    "distill-ui": ["distill-ui@workspace:packages/cli"],
 
     "escape-string-regexp": ["escape-string-regexp@4.0.0", "", {}, "sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA=="],
 

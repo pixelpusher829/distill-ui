@@ -1,0 +1,53 @@
+{
+	"name": "sheet",
+	"type": "component",
+	"dependencies": [
+		"@floating-ui/dom@^1.6.0",
+		"melt@0.44.0"
+	],
+	"registryDependencies": [
+		"button"
+	],
+	"files": [
+		{
+			"path": "sheet/context.ts",
+			"content": "import { getContext, setContext } from 'svelte';\nimport type { Dialog } from 'melt/builders';\n\n// Melt gives one builder object per dialog; the parts share it through context.\n// Melt doesn't wire up aria-labelledby / aria-describedby, so we carry the ids too.\ntype SheetContext = { dialog: Dialog; titleId: string; descriptionId: string };\n\nconst key = Symbol('distill-sheet');\nexport const setSheetContext = (ctx: SheetContext) => setContext(key, ctx);\nexport const getSheetContext = () => getContext<SheetContext>(key);\n"
+		},
+		{
+			"path": "sheet/index.ts",
+			"content": "import Close from './sheet-close.svelte';\nimport Content from './sheet-content.svelte';\nimport Description from './sheet-description.svelte';\nimport Footer from './sheet-footer.svelte';\nimport Header from './sheet-header.svelte';\nimport Title from './sheet-title.svelte';\nimport Trigger from './sheet-trigger.svelte';\nimport Root from './sheet.svelte';\n\nexport { Root, Trigger, Close, Content, Header, Footer, Title, Description };\n"
+		},
+		{
+			"path": "sheet/sheet-close.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLButtonAttributes } from 'svelte/elements';\n\timport { Button, type ButtonSize, type ButtonVariant } from '../button/index.js';\n\timport { getSheetContext } from './context.js';\n\n\t// A Button that closes the dialog: `<Sheet.Close>Cancel</Sheet.Close>`.\n\tlet {\n\t\tvariant = 'outline',\n\t\tchildren,\n\t\tonclick,\n\t\t...restProps\n\t}: HTMLButtonAttributes & { variant?: ButtonVariant; size?: ButtonSize } = $props();\n\n\tconst { dialog } = getSheetContext();\n</script>\n\n<Button\n\t{...restProps}\n\t{variant}\n\tonclick={(e: MouseEvent & { currentTarget: HTMLButtonElement }) => {\n\t\tonclick?.(e);\n\t\tdialog.open = false;\n\t}}\n>\n\t{@render children?.()}\n</Button>\n"
+		},
+		{
+			"path": "sheet/sheet-content.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { Snippet } from 'svelte';\n\timport type { HTMLDialogAttributes } from 'svelte/elements';\n\timport { getSheetContext } from './context.js';\n\n\tlet {\n\t\tclass: className,\n\t\tchildren,\n\t\tshowCloseButton = true,\n\t\tside = 'right',\n\t\t...restProps\n\t}: HTMLDialogAttributes & {\n\t\tchildren: Snippet;\n\t\tshowCloseButton?: boolean;\n\t\tside?: 'top' | 'right' | 'bottom' | 'left';\n\t} = $props();\n\n\tconst { dialog, titleId, descriptionId } = getSheetContext();\n</script>\n\n<!-- Melt uses a native <dialog> in the top layer, so no portal is needed. -->\n<div {...dialog.overlay} class=\"overlay\"></div>\n<dialog\n\t{...restProps}\n\t{...dialog.content}\n\tclass={['content', className]}\n\tdata-side={side}\n\taria-labelledby={titleId}\n\taria-describedby={descriptionId}\n>\n\t{@render children()}\n\t{#if showCloseButton}\n\t\t<button type=\"button\" class=\"close\" onclick={() => (dialog.open = false)}>\n\t\t\t<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n\t\t\t\t<path d=\"M18 6 6 18\" />\n\t\t\t\t<path d=\"m6 6 12 12\" />\n\t\t\t</svg>\n\t\t\t<span class=\"sr-only\">Close</span>\n\t\t</button>\n\t{/if}\n</dialog>\n\n<!--\n\tOptions you can set from a parent or on the sheet content itself:\n\t--dui-sheet-overlay-bg, --dui-sheet-padding, --dui-sheet-bg, --dui-sheet-fg, --dui-sheet-size\n-->\n\n<style>\n\t/* Melt closes the dialog on transitionend, so this animates with\n\t   transitions on [data-open] rather than the shared keyframes. */\n\t.overlay {\n\t\tposition: fixed;\n\t\tinset: 0;\n\t\twidth: auto;\n\t\theight: auto;\n\t\tmargin: 0;\n\t\tpadding: 0;\n\t\tborder: 0;\n\t\tbackground: var(--dui-sheet-overlay-bg, var(--dui-color-overlay));\n\t\tbackdrop-filter: blur(4px);\n\t\topacity: 0;\n\t\ttransition: opacity var(--dui-duration-fast) var(--dui-ease-out);\n\n\t\t&[data-open] {\n\t\t\topacity: 1;\n\t\t}\n\t}\n\n\t.content {\n\t\tposition: fixed;\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\t\tgap: var(--dui-space-4);\n\t\twidth: auto;\n\t\tmax-width: none;\n\t\theight: auto;\n\t\tmax-height: none;\n\t\tmargin: 0;\n\t\tpadding: var(--dui-sheet-padding, var(--dui-space-6));\n\t\tborder: 0;\n\t\tbackground: var(--dui-sheet-bg, var(--dui-color-background));\n\t\tcolor: var(--dui-sheet-fg, var(--dui-color-foreground));\n\t\tbox-shadow:\n\t\t\t0 0 0 1px color-mix(in oklch, var(--dui-color-foreground) 10%, transparent),\n\t\t\tvar(--dui-shadow-lg);\n\t\tfont-size: var(--dui-text-sm);\n\t\tline-height: var(--dui-text-sm-line-height);\n\t\toutline: none;\n\t\ttransition: translate var(--dui-duration-slow) var(--dui-ease-in-out);\n\n\t\t&:not([open]) {\n\t\t\tdisplay: none;\n\t\t}\n\n\t\t&::backdrop {\n\t\t\tbackground: transparent;\n\t\t}\n\t}\n\n\t/* Each side pins the sheet to that edge and slides it in from off-screen. */\n\t.content[data-side='right'] {\n\t\tinset: 0 0 0 auto;\n\t\twidth: min(var(--dui-sheet-size, 24rem), 75%);\n\t\ttranslate: 100% 0;\n\t}\n\n\t.content[data-side='left'] {\n\t\tinset: 0 auto 0 0;\n\t\twidth: min(var(--dui-sheet-size, 24rem), 75%);\n\t\ttranslate: -100% 0;\n\t}\n\n\t.content[data-side='top'] {\n\t\tinset: 0 0 auto 0;\n\t\ttranslate: 0 -100%;\n\t}\n\n\t.content[data-side='bottom'] {\n\t\tinset: auto 0 0 0;\n\t\ttranslate: 0 100%;\n\t}\n\n\t/* After the side rules, so it wins when open. */\n\t.content[data-open] {\n\t\ttranslate: 0 0;\n\t}\n\n\t.close {\n\t\tposition: absolute;\n\t\ttop: var(--dui-space-4);\n\t\tright: var(--dui-space-4);\n\t\tdisplay: inline-flex;\n\t\talign-items: center;\n\t\tjustify-content: center;\n\t\twidth: 1.75rem;\n\t\theight: 1.75rem;\n\t\tborder: none;\n\t\tborder-radius: var(--dui-radius-md);\n\t\tbackground: transparent;\n\t\tcolor: var(--dui-color-foreground);\n\t\tcursor: pointer;\n\t\topacity: 0.7;\n\t\ttransition: opacity var(--dui-duration-fast) var(--dui-ease-out);\n\n\t\t&:hover {\n\t\t\topacity: 1;\n\t\t\tbackground: var(--dui-color-muted);\n\t\t}\n\n\t\t&:focus-visible {\n\t\t\toutline: none;\n\t\t\tbox-shadow: 0 0 0 var(--dui-ring-width)\n\t\t\t\tcolor-mix(in oklch, var(--dui-color-ring) 50%, transparent);\n\t\t}\n\n\t\tsvg {\n\t\t\twidth: 1rem;\n\t\t\theight: 1rem;\n\t\t\tfill: none;\n\t\t\tstroke: currentColor;\n\t\t\tstroke-width: 2;\n\t\t\tstroke-linecap: round;\n\t\t\tstroke-linejoin: round;\n\t\t}\n\t}\n\n\t.sr-only {\n\t\tposition: absolute;\n\t\twidth: 1px;\n\t\theight: 1px;\n\t\tpadding: 0;\n\t\tmargin: -1px;\n\t\toverflow: hidden;\n\t\tclip-path: inset(50%);\n\t\twhite-space: nowrap;\n\t\tborder: 0;\n\t}\n</style>\n"
+		},
+		{
+			"path": "sheet/sheet-description.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLAttributes } from 'svelte/elements';\n\timport { getSheetContext } from './context.js';\n\n\tlet { class: className, children, ...restProps }: HTMLAttributes<HTMLParagraphElement> = $props();\n\tconst { descriptionId } = getSheetContext();\n</script>\n\n<p id={descriptionId} class={['description', className]} {...restProps}>{@render children?.()}</p>\n\n<style>\n\t.description {\n\t\tmargin: 0;\n\t\tcolor: var(--dui-color-muted-foreground);\n\t\tfont-size: var(--dui-text-sm);\n\t\tline-height: var(--dui-text-sm-line-height);\n\t}\n</style>\n"
+		},
+		{
+			"path": "sheet/sheet-footer.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLAttributes } from 'svelte/elements';\n\n\tlet {\n\t\tref = $bindable(null),\n\t\tclass: className,\n\t\tchildren,\n\t\t...restProps\n\t}: HTMLAttributes<HTMLDivElement> & { ref?: HTMLDivElement | null } = $props();\n</script>\n\n<div bind:this={ref} class={['footer', className]} {...restProps}>\n\t{@render children?.()}\n</div>\n\n<style>\n\t.footer {\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\t\tgap: var(--dui-space-2);\n\t\t/* Sits at the bottom of the sheet. */\n\t\tmargin-top: auto;\n\t}\n</style>\n"
+		},
+		{
+			"path": "sheet/sheet-header.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLAttributes } from 'svelte/elements';\n\n\tlet {\n\t\tref = $bindable(null),\n\t\tclass: className,\n\t\tchildren,\n\t\t...restProps\n\t}: HTMLAttributes<HTMLDivElement> & { ref?: HTMLDivElement | null } = $props();\n</script>\n\n<div bind:this={ref} class={['header', className]} {...restProps}>\n\t{@render children?.()}\n</div>\n\n<style>\n\t.header {\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\t\tgap: var(--dui-space-1-5);\n\t}\n</style>\n"
+		},
+		{
+			"path": "sheet/sheet-title.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLAttributes } from 'svelte/elements';\n\timport { getSheetContext } from './context.js';\n\n\tlet { class: className, children, ...restProps }: HTMLAttributes<HTMLHeadingElement> = $props();\n\tconst { titleId } = getSheetContext();\n</script>\n\n<h2 id={titleId} class={['title', className]} {...restProps}>{@render children?.()}</h2>\n\n<style>\n\t.title {\n\t\tmargin: 0;\n\t\tfont-size: var(--dui-text-base);\n\t\tline-height: 1;\n\t\tfont-weight: var(--dui-font-weight-medium);\n\t}\n</style>\n"
+		},
+		{
+			"path": "sheet/sheet-trigger.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLButtonAttributes } from 'svelte/elements';\n\timport { Button, type ButtonSize, type ButtonVariant } from '../button/index.js';\n\timport { getSheetContext } from './context.js';\n\n\t// Renders our Button with Melt's trigger attributes, so it takes the same\n\t// variant and size props: `<Sheet.Trigger variant=\"outline\">Open</Sheet.Trigger>`.\n\tlet {\n\t\tvariant = 'default',\n\t\tchildren,\n\t\t...restProps\n\t}: HTMLButtonAttributes & { variant?: ButtonVariant; size?: ButtonSize } = $props();\n\n\tconst { dialog } = getSheetContext();\n</script>\n\n<Button {...restProps} {...dialog.trigger} aria-haspopup=\"dialog\" {variant}>\n\t{@render children?.()}\n</Button>\n"
+		},
+		{
+			"path": "sheet/sheet.svelte",
+			"content": "<script lang=\"ts\">\n\timport { Dialog } from 'melt/builders';\n\timport type { Snippet } from 'svelte';\n\timport { setSheetContext } from './context.js';\n\n\tlet { open = $bindable(false), children }: { open?: boolean; children?: Snippet } = $props();\n\n\tconst uid = $props.id();\n\tconst dialog = new Dialog({\n\t\topen: () => open,\n\t\tonOpenChange: (v) => (open = v)\n\t});\n\tsetSheetContext({ dialog, titleId: `${uid}-title`, descriptionId: `${uid}-description` });\n</script>\n\n{@render children?.()}\n"
+		}
+	]
+}

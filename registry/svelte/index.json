@@ -1,0 +1,156 @@
+{
+	"components": [
+		{
+			"name": "alert",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "alert-dialog",
+			"dependencies": [
+				"@floating-ui/dom@^1.6.0",
+				"melt@0.44.0"
+			],
+			"registryDependencies": [
+				"button"
+			]
+		},
+		{
+			"name": "avatar",
+			"dependencies": [
+				"@floating-ui/dom@^1.6.0",
+				"melt@0.44.0"
+			],
+			"registryDependencies": []
+		},
+		{
+			"name": "badge",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "button",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "card",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "checkbox",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "dialog",
+			"dependencies": [
+				"@floating-ui/dom@^1.6.0",
+				"melt@0.44.0"
+			],
+			"registryDependencies": [
+				"button"
+			]
+		},
+		{
+			"name": "dropdown-menu",
+			"dependencies": [
+				"@floating-ui/dom@^1.6.0",
+				"melt@0.44.0"
+			],
+			"registryDependencies": [
+				"button"
+			]
+		},
+		{
+			"name": "input",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "label",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "popover",
+			"dependencies": [
+				"@floating-ui/dom@^1.6.0",
+				"melt@0.44.0"
+			],
+			"registryDependencies": [
+				"button"
+			]
+		},
+		{
+			"name": "radio-group",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "select",
+			"dependencies": [
+				"@floating-ui/dom@^1.6.0",
+				"melt@0.44.0"
+			],
+			"registryDependencies": []
+		},
+		{
+			"name": "separator",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "sheet",
+			"dependencies": [
+				"@floating-ui/dom@^1.6.0",
+				"melt@0.44.0"
+			],
+			"registryDependencies": [
+				"button"
+			]
+		},
+		{
+			"name": "skeleton",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "switch",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "tabs",
+			"dependencies": [
+				"@floating-ui/dom@^1.6.0",
+				"melt@0.44.0"
+			],
+			"registryDependencies": []
+		},
+		{
+			"name": "textarea",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "toast",
+			"dependencies": [
+				"@floating-ui/dom@^1.6.0",
+				"melt@0.44.0"
+			],
+			"registryDependencies": []
+		},
+		{
+			"name": "tooltip",
+			"dependencies": [
+				"@floating-ui/dom@^1.6.0",
+				"melt@0.44.0"
+			],
+			"registryDependencies": [
+				"button"
+			]
+		}
+	]
+}

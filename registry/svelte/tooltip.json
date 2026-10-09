@@ -1,0 +1,33 @@
+{
+	"name": "tooltip",
+	"type": "component",
+	"dependencies": [
+		"@floating-ui/dom@^1.6.0",
+		"melt@0.44.0"
+	],
+	"registryDependencies": [
+		"button"
+	],
+	"files": [
+		{
+			"path": "tooltip/context.ts",
+			"content": "import { getContext, setContext } from 'svelte';\nimport type { Tooltip } from 'melt/builders';\n\ntype TooltipContext = { tooltip: Tooltip };\n\nconst key = Symbol('distill-tooltip');\nexport const setTooltipContext = (ctx: TooltipContext) => setContext(key, ctx);\nexport const getTooltipContext = () => getContext<TooltipContext>(key);\n"
+		},
+		{
+			"path": "tooltip/index.ts",
+			"content": "import Content from './tooltip-content.svelte';\nimport Trigger from './tooltip-trigger.svelte';\nimport Root from './tooltip.svelte';\n\nexport { Root, Trigger, Content };\n"
+		},
+		{
+			"path": "tooltip/tooltip-content.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLAttributes } from 'svelte/elements';\n\timport { getTooltipContext } from './context.js';\n\n\tlet {\n\t\tclass: className,\n\t\tchildren,\n\t\tstyle,\n\t\t...restProps\n\t}: HTMLAttributes<HTMLDivElement> = $props();\n\n\tconst { tooltip } = getTooltipContext();\n</script>\n\n<div\n\t{...restProps}\n\t{...tooltip.content}\n\tstyle=\"{tooltip.content.style}; {style ?? ''}\"\n\tclass={['content', className]}\n>\n\t{@render children?.()}\n\t<div {...tooltip.arrow} class=\"arrow\"></div>\n</div>\n\n<!--\n\tOptions you can set from a parent or on the tooltip content itself:\n\t--dui-tooltip-max-width, --dui-tooltip-radius, --dui-tooltip-bg, --dui-tooltip-fg\n-->\n\n<style>\n\t.content {\n\t\twidth: fit-content;\n\t\tmax-width: var(--dui-tooltip-max-width, 20rem);\n\t\tmargin: 0;\n\t\tpadding: var(--dui-space-1-5) var(--dui-space-3);\n\t\tborder: 0;\n\t\tborder-radius: var(--dui-tooltip-radius, var(--dui-radius-md));\n\t\tbackground: var(--dui-tooltip-bg, var(--dui-color-primary));\n\t\tcolor: var(--dui-tooltip-fg, var(--dui-color-primary-foreground));\n\t\tfont-size: var(--dui-text-xs);\n\t\tline-height: var(--dui-text-xs-line-height);\n\t\ttext-wrap: balance;\n\t\toverflow: visible;\n\t\ttransition:\n\t\t\topacity var(--dui-duration-fast) var(--dui-ease-out),\n\t\t\tscale var(--dui-duration-fast) var(--dui-ease-out);\n\n\t\t@starting-style {\n\t\t\topacity: 0;\n\t\t\tscale: 0.95;\n\t\t}\n\t}\n\n\t/* Melt positions the arrow; we only draw it, as a rotated square in the tooltip's color. */\n\t.arrow {\n\t\twidth: 0.5rem;\n\t\theight: 0.5rem;\n\t\tborder-radius: 2px;\n\t\tbackground: var(--dui-tooltip-bg, var(--dui-color-primary));\n\t}\n</style>\n"
+		},
+		{
+			"path": "tooltip/tooltip-trigger.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLButtonAttributes } from 'svelte/elements';\n\timport { Button, type ButtonSize, type ButtonVariant } from '../button/index.js';\n\timport { getTooltipContext } from './context.js';\n\n\tlet {\n\t\tvariant = 'outline',\n\t\tchildren,\n\t\t...restProps\n\t}: HTMLButtonAttributes & { variant?: ButtonVariant; size?: ButtonSize } = $props();\n\n\tconst { tooltip } = getTooltipContext();\n</script>\n\n<Button {...restProps} {...tooltip.trigger} {variant}>\n\t{@render children?.()}\n</Button>\n"
+		},
+		{
+			"path": "tooltip/tooltip.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { Placement } from '@floating-ui/dom';\n\timport { Tooltip } from 'melt/builders';\n\timport type { Snippet } from 'svelte';\n\timport { setTooltipContext } from './context.js';\n\n\tlet {\n\t\topen = $bindable(false),\n\t\tplacement = 'top',\n\t\topenDelay = 300,\n\t\tchildren\n\t}: { open?: boolean; placement?: Placement; openDelay?: number; children?: Snippet } = $props();\n\n\tconst tooltip = new Tooltip({\n\t\topen: () => open,\n\t\tonOpenChange: (v) => (open = v),\n\t\topenDelay: () => openDelay,\n\t\tfloatingConfig: () => ({ computePosition: { placement }, offset: { mainAxis: 4 } })\n\t});\n\tsetTooltipContext({ tooltip });\n</script>\n\n{@render children?.()}\n"
+		}
+	]
+}
