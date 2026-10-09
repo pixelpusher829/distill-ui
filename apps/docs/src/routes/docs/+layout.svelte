@@ -106,6 +106,7 @@
 		}
 
 		&[aria-current='page'] {
+			box-shadow: inset 2px 0 0 var(--site-accent);
 			background: var(--dui-color-muted);
 			color: var(--dui-color-foreground);
 			font-weight: var(--dui-font-weight-medium);

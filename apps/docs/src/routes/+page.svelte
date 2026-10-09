@@ -1,26 +1,50 @@
 <script lang="ts">
-	import { Button, Card, Input, Label, Switch, Badge, Tabs } from '@distill-ui/svelte';
+	import { Button } from '@distill-ui/svelte';
 	import CodeBlock from '#lib/docs/CodeBlock.svelte';
+	import ThemePlayground from '#lib/docs/ThemePlayground.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
+
+	const reasons = [
+		{
+			title: 'Svelte, used the way it was designed',
+			body: 'Svelte scopes the CSS in each component for you. distill-ui leans on that instead of working around it: no :global(), no child snippets, no build plugin.'
+		},
+		{
+			title: 'Markup in the markup, styles in the style block',
+			body: 'Your template says what the thing is. The style block says what it looks like. Neither one is buried in the other.'
+		},
+		{
+			title: 'Readable by anyone who knows CSS',
+			body: 'background: var(--dui-color-primary) reads like what it does. There is no class vocabulary to learn and nothing to decode.'
+		},
+		{
+			title: 'Yours to change',
+			body: 'Components are copied into your project, not hidden in node_modules. Change a token, set an option from a parent, or rewrite the whole style block.'
+		}
+	];
 </script>
 
 <svelte:head>
 	<title>distill-ui: Svelte components styled with plain CSS</title>
 	<meta
 		name="description"
-		content="Accessible Svelte 5 components you copy into your project and style with plain scoped CSS. No Tailwind."
+		content="Accessible Svelte 5 components you copy into your project and style with plain scoped CSS. No Tailwind, no :global(), no workarounds."
 	/>
 </svelte:head>
 
-<main>
+<div class="page">
 	<section class="hero">
-		<p class="eyebrow"><Badge variant="outline">Svelte 5 · No Tailwind</Badge></p>
-		<h1>Svelte components you style with plain CSS.</h1>
+		<p class="eyebrow">Svelte 5 · Plain CSS · No Tailwind</p>
+		<h1>
+			Svelte already scopes your CSS.
+			<span class="accent">Use it.</span>
+		</h1>
 		<p class="lead">
-			Copy accessible components into your project. Each one is a Svelte file with a normal
-			<code>&lt;style&gt;</code> block, so you change it the way you change any CSS.
+			distill-ui is a set of accessible components you copy into your Svelte project and style with
+			a normal <code>&lt;style&gt;</code> block. No utility classes, no
+			<code>:global()</code>, no workarounds.
 		</p>
 		<div class="actions">
 			<Button href="/docs/installation" size="lg">Get started</Button>
@@ -28,81 +52,109 @@
 		</div>
 	</section>
 
-	<section class="showcase" aria-label="Example components">
-		<Card.Root>
-			<Card.Header>
-				<Card.Title>Create an account</Card.Title>
-				<Card.Description>Every part of this card is a distill-ui component.</Card.Description>
-			</Card.Header>
-			<Card.Content>
-				<Tabs.Root value="email">
-					<Tabs.List aria-label="Sign up with">
-						<Tabs.Trigger value="email">Email</Tabs.Trigger>
-						<Tabs.Trigger value="phone">Phone</Tabs.Trigger>
-					</Tabs.List>
-					<Tabs.Content value="email">
-						<div class="field">
-							<Label for="hero-email">Email</Label>
-							<Input id="hero-email" type="email" placeholder="you@example.com" />
-						</div>
-					</Tabs.Content>
-					<Tabs.Content value="phone">
-						<div class="field">
-							<Label for="hero-phone">Phone</Label>
-							<Input id="hero-phone" type="tel" placeholder="+1 555 0100" />
-						</div>
-					</Tabs.Content>
-				</Tabs.Root>
-				<Label class="toggle"><Switch checked /> Send me product updates</Label>
-			</Card.Content>
-			<Card.Footer>
-				<Button>Sign up</Button>
-				<Button variant="ghost">Cancel</Button>
-			</Card.Footer>
-		</Card.Root>
+	<section class="play" aria-labelledby="play-title">
+		<header class="section-head">
+			<p class="kicker">Try it</p>
+			<h2 id="play-title">Three variables. Every component.</h2>
+			<p>
+				Colors, corners and spacing are CSS custom properties. Drag a slider and the whole card
+				follows, because every part reads the same tokens.
+			</p>
+		</header>
+		<ThemePlayground />
 	</section>
 
-	<section class="problem">
-		<h2>Scoped styles that actually reach the element</h2>
-		<p>
-			Headless Svelte libraries render their parts inside their own components, so your scoped CSS
-			can't see them. distill-ui writes every element in the component's own file, so a plain
-			selector does the job.
-		</p>
+	<section class="why" aria-labelledby="why-title">
+		<header class="section-head">
+			<p class="kicker">Why this exists</p>
+			<h2 id="why-title">Component libraries stopped writing CSS.</h2>
+			<p>
+				Most Svelte component libraries are built on Tailwind. That works for a lot of people. But
+				if you'd rather write CSS, you're left with headless libraries that render their parts
+				somewhere your scoped styles can't reach, and the fixes are bandaids. distill-ui is for
+				people who want control, clean separation, and Svelte without the workarounds.
+			</p>
+		</header>
+		<ol class="reasons">
+			{#each reasons as reason, i (reason.title)}
+				<li>
+					<span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+					<h3>{reason.title}</h3>
+					<p>{reason.body}</p>
+				</li>
+			{/each}
+		</ol>
+	</section>
+
+	<section aria-labelledby="readable-title">
+		<header class="section-head">
+			<p class="kicker">Readable</p>
+			<h2 id="readable-title">More lines, less to decode.</h2>
+			<p>
+				A style block is longer than a class string. It's also something you can read top to bottom,
+				search, and change one line of without breaking the rest.
+			</p>
+		</header>
 		<div class="compare">
-			<CodeBlock code={data.code.before} />
-			<div>
-				<CodeBlock code={data.code.after} />
-				<CodeBlock code={data.code.parent} />
+			<div class="side">
+				<p class="tag">Utility classes</p>
+				<CodeBlock code={data.code.utility} />
+			</div>
+			<div class="side">
+				<p class="tag good">distill-ui</p>
+				<CodeBlock code={data.code.plain} />
 			</div>
 		</div>
 	</section>
 
-	<section class="features">
-		<div>
-			<h3>You own the code</h3>
+	<section aria-labelledby="scoped-title">
+		<header class="section-head">
+			<p class="kicker">Scoped</p>
+			<h2 id="scoped-title">Your selector reaches the element.</h2>
 			<p>
-				Components are copied into your project. Read them, change them, delete what you don't use.
+				Headless libraries render each part inside their own components, so Svelte never sees the
+				element your selector is aimed at. distill-ui writes every element in the component's own
+				file, so a plain scoped selector just works.
+			</p>
+		</header>
+		<div class="compare">
+			<div class="side">
+				<p class="tag">Headless library</p>
+				<CodeBlock code={data.code.before} />
+			</div>
+			<div class="side">
+				<p class="tag good">distill-ui</p>
+				<CodeBlock code={data.code.after} />
+			</div>
+		</div>
+	</section>
+
+	<section class="features" aria-label="What you get">
+		<div>
+			<h3>20 components</h3>
+			<p>Buttons, forms, dialogs, menus, selects, tabs, toasts and more, with more on the way.</p>
+		</div>
+		<div>
+			<h3>Accessible by default</h3>
+			<p>
+				Native elements where the browser does the job, Melt UI for dialogs, menus and selects.
+				Checked with axe in light and dark.
 			</p>
 		</div>
 		<div>
-			<h3>Plain CSS</h3>
-			<p>
-				Tokens for colors, spacing and motion, and options like <code>--dui-button-bg</code> you can set
-				from any parent.
-			</p>
+			<h3>Dark mode built in</h3>
+			<p>Follows the system setting, or set it yourself with one attribute on the page.</p>
 		</div>
 		<div>
-			<h3>Accessible</h3>
+			<h3>Restyle from anywhere</h3>
 			<p>
-				Native elements where they work, and Melt UI for dialogs, menus and selects. Tested with axe
-				in light and dark.
+				Set <code>--dui-button-bg</code> on any parent, in your own scoped CSS, and it just applies.
 			</p>
 		</div>
 	</section>
 
-	<section class="start">
-		<h2>Start in two commands</h2>
+	<section class="start" aria-labelledby="start-title">
+		<h2 id="start-title">Start in two commands</h2>
 		<CodeBlock code={data.code.start} />
 		<p>
 			<a href="/docs/installation">Read the installation guide</a> or
@@ -117,41 +169,82 @@
 			<a href="https://shadcn-svelte.com">shadcn-svelte</a>.
 		</p>
 	</footer>
-</main>
+</div>
 
 <style>
-	main {
-		max-width: 64rem;
+	.page {
+		max-width: 68rem;
 		margin: 0 auto;
 		padding: 0 var(--dui-space-6);
 	}
 
 	section {
-		padding-block: var(--dui-space-12);
+		padding-block: 5rem;
 	}
 
+	/* Hero */
+
 	.hero {
-		max-width: 42rem;
-		padding-top: 5rem;
-		text-align: center;
+		position: relative;
+		isolation: isolate;
+		max-width: 50rem;
 		margin-inline: auto;
+		padding-top: 6rem;
+		text-align: center;
+
+		/* A soft glow and a fading grid behind the headline. */
+		&::before {
+			content: '';
+			position: absolute;
+			inset: -2rem -40vw auto;
+			z-index: -1;
+			height: 34rem;
+			background:
+				radial-gradient(
+					ellipse 50% 60% at 50% 30%,
+					color-mix(in oklch, var(--site-accent) 22%, transparent),
+					transparent 70%
+				),
+				linear-gradient(var(--dui-color-border) 1px, transparent 1px) 0 0 / 3rem 3rem,
+				linear-gradient(90deg, var(--dui-color-border) 1px, transparent 1px) 0 0 / 3rem 3rem;
+			mask-image: radial-gradient(ellipse 60% 70% at 50% 30%, black, transparent 75%);
+			pointer-events: none;
+		}
 	}
 
 	.eyebrow {
-		margin: 0 0 var(--dui-space-4);
+		display: inline-block;
+		margin: 0 0 var(--dui-space-6);
+		padding: var(--dui-space-1) var(--dui-space-3);
+		border: 1px solid var(--dui-color-border);
+		border-radius: var(--dui-radius-full);
+		background: var(--dui-color-background);
+		color: var(--dui-color-muted-foreground);
+		font-size: var(--dui-text-xs);
+		font-weight: var(--dui-font-weight-medium);
+		letter-spacing: 0.02em;
 	}
 
 	h1 {
 		margin: 0;
-		font-size: clamp(2.25rem, 6vw, 3.5rem);
-		line-height: 1.1;
-		letter-spacing: -0.03em;
+		font-family: var(--site-font-display);
+		font-size: clamp(2.5rem, 7vw, 4.75rem);
+		font-weight: 700;
+		line-height: 1.02;
+		letter-spacing: -0.04em;
+	}
+
+	.accent {
+		background: linear-gradient(100deg, var(--site-accent), var(--site-accent-2));
+		background-clip: text;
+		color: transparent;
 	}
 
 	.lead {
-		margin: var(--dui-space-5) 0 0;
+		max-width: 38rem;
+		margin: var(--dui-space-6) auto 0;
 		color: var(--dui-color-muted-foreground);
-		font-size: var(--dui-text-lg);
+		font-size: 1.1875rem;
 		line-height: 1.6;
 	}
 
@@ -163,52 +256,133 @@
 		margin-top: var(--dui-space-8);
 	}
 
-	.showcase {
-		display: grid;
-		justify-items: center;
-		padding-top: 0;
+	/* Section headings */
 
-		& > :global(*) {
-			width: min(100%, 26rem);
+	.section-head {
+		max-width: 44rem;
+		margin-bottom: var(--dui-space-10);
+
+		& p:last-child {
+			margin: var(--dui-space-4) 0 0;
+			color: var(--dui-color-muted-foreground);
+			font-size: 1.0625rem;
+			line-height: 1.65;
 		}
 	}
 
-	.field {
-		display: grid;
-		gap: var(--dui-space-2);
-	}
-
-	.showcase :global(.toggle) {
-		margin-top: var(--dui-space-4);
+	.kicker {
+		margin: 0 0 var(--dui-space-3);
+		color: var(--site-accent);
+		font-family: var(--dui-font-mono);
+		font-size: var(--dui-text-xs);
+		font-weight: var(--dui-font-weight-semibold);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
 	}
 
 	h2 {
-		margin: 0 0 var(--dui-space-3);
-		font-size: 1.75rem;
-		letter-spacing: -0.02em;
+		margin: 0;
+		font-family: var(--site-font-display);
+		font-size: clamp(1.875rem, 4vw, 2.75rem);
+		font-weight: 700;
+		line-height: 1.1;
+		letter-spacing: -0.03em;
 	}
 
-	.problem > p {
-		max-width: 42rem;
-		margin: 0 0 var(--dui-space-6);
-		color: var(--dui-color-muted-foreground);
-		line-height: 1.6;
+	.play {
+		padding-top: var(--dui-space-8);
 	}
+
+	/* Why */
+
+	.why {
+		border-block: 1px solid var(--dui-color-border);
+	}
+
+	.reasons {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+		gap: var(--dui-space-4);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		& li {
+			padding: var(--dui-space-6);
+			border: 1px solid var(--dui-color-border);
+			border-radius: var(--dui-radius-xl);
+			background: linear-gradient(
+				160deg,
+				color-mix(in oklch, var(--site-accent) 7%, var(--dui-color-card)),
+				var(--dui-color-card) 60%
+			);
+		}
+
+		& .num {
+			color: var(--site-accent);
+			font-family: var(--dui-font-mono);
+			font-size: var(--dui-text-sm);
+			font-weight: var(--dui-font-weight-semibold);
+		}
+
+		& h3 {
+			margin: var(--dui-space-3) 0 var(--dui-space-2);
+			font-size: var(--dui-text-lg);
+			line-height: 1.3;
+		}
+
+		& p {
+			margin: 0;
+			color: var(--dui-color-muted-foreground);
+			font-size: var(--dui-text-sm);
+			line-height: 1.65;
+		}
+	}
+
+	/* Comparisons */
 
 	.compare {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-		gap: var(--dui-space-4);
+		gap: var(--dui-space-5);
 		align-items: start;
 
 		& :global(.code) {
-			margin-top: 0;
+			margin: 0;
 		}
 	}
 
+	.tag {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--dui-space-2);
+		margin: 0 0 var(--dui-space-3);
+		color: var(--dui-color-muted-foreground);
+		font-size: var(--dui-text-sm);
+		font-weight: var(--dui-font-weight-medium);
+
+		&::before {
+			content: '';
+			width: 0.5rem;
+			height: 0.5rem;
+			border-radius: var(--dui-radius-full);
+			background: var(--dui-color-muted-foreground);
+		}
+
+		&.good {
+			color: var(--dui-color-foreground);
+
+			&::before {
+				background: var(--site-accent);
+			}
+		}
+	}
+
+	/* Features */
+
 	.features {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
 		gap: var(--dui-space-8);
 		border-top: 1px solid var(--dui-color-border);
 
@@ -225,10 +399,17 @@
 		}
 	}
 
+	/* Start */
+
 	.start {
 		max-width: 36rem;
 		margin-inline: auto;
+		padding-top: 0;
 		text-align: center;
+
+		& h2 {
+			margin-bottom: var(--dui-space-6);
+		}
 
 		& :global(.code) {
 			text-align: start;
@@ -250,5 +431,19 @@
 		color: var(--dui-color-muted-foreground);
 		font-size: var(--dui-text-sm);
 		text-align: center;
+	}
+
+	@media (max-width: 40rem) {
+		.page {
+			padding-inline: var(--dui-space-4);
+		}
+
+		section {
+			padding-block: 3.5rem;
+		}
+
+		.hero {
+			padding-top: 4rem;
+		}
 	}
 </style>

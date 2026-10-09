@@ -4,6 +4,29 @@
 	box-sizing: border-box;
 }
 
+/* The docs site's own brand, separate from the library's tokens so the demos keep their default look. */
+:root {
+	--site-accent: oklch(0.55 0.22 285);
+	--site-accent-2: oklch(0.6 0.2 330);
+	--site-font-display: 'Bricolage Grotesque', var(--dui-font-sans);
+}
+
+[data-theme='dark'] {
+	--site-accent: oklch(0.74 0.15 285);
+	--site-accent-2: oklch(0.76 0.14 330);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) {
+		--site-accent: oklch(0.74 0.15 285);
+		--site-accent-2: oklch(0.76 0.14 330);
+	}
+}
+
+::selection {
+	background: color-mix(in oklch, var(--site-accent) 30%, transparent);
+}
+
 body {
 	margin: 0;
 	background: var(--dui-color-background);
@@ -61,7 +84,9 @@ a {
 
 	& h1 {
 		margin: 0 0 var(--dui-space-2);
-		font-size: 2rem;
+		font-family: var(--site-font-display);
+		font-size: 2.5rem;
+		font-weight: 700;
 		line-height: 1.2;
 		letter-spacing: -0.02em;
 	}
@@ -74,6 +99,7 @@ a {
 
 	& h2 {
 		margin: var(--dui-space-10) 0 var(--dui-space-3);
+		font-family: var(--site-font-display);
 		padding-bottom: var(--dui-space-2);
 		border-bottom: 1px solid var(--dui-color-border);
 		font-size: 1.375rem;
@@ -104,7 +130,12 @@ a {
 	}
 
 	& a {
+		text-decoration-color: color-mix(in oklch, var(--site-accent) 60%, transparent);
 		text-underline-offset: 3px;
+
+		&:hover {
+			text-decoration-color: var(--site-accent);
+		}
 	}
 
 	& table {
