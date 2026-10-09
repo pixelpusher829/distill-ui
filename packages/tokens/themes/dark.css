@@ -74,8 +74,5 @@
 		--dui-color-switch-track: color-mix(in oklch, var(--dui-color-input) 80%, transparent);
 		--dui-color-switch-thumb: var(--dui-color-foreground);
 		--dui-color-switch-thumb-checked: var(--dui-color-primary-foreground);
-		--dui-color-switch-track: color-mix(in oklch, var(--dui-color-input) 80%, transparent);
-		--dui-color-switch-thumb: var(--dui-color-foreground);
-		--dui-color-switch-thumb-checked: var(--dui-color-primary-foreground);
 	}
 }

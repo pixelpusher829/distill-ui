@@ -173,6 +173,7 @@ export const guides = [
 	{ href: '/docs', title: 'Introduction' },
 	{ href: '/docs/installation', title: 'Installation' },
 	{ href: '/docs/theming', title: 'Theming' },
+	{ href: '/docs/theme-builder', title: 'Theme builder' },
 	{ href: '/docs/customizing', title: 'Customizing' },
 	{ href: '/docs/styling-from-scratch', title: 'Styling from scratch' }
 ];
