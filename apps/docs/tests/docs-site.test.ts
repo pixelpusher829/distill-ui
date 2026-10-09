@@ -88,3 +88,12 @@ test('the theme builder recolors the previews and the theme files', async ({ pag
 		.getByRole('button', { name: 'Save' });
 	await expect(save).toHaveCSS('background-color', /oklch\(0\.55 0\.2 285\)/);
 });
+
+test('the site serves the registry the CLI installs from', async ({ request }) => {
+	const index = await request.get('/r/svelte/index.json');
+	expect(index.ok()).toBe(true);
+	const names = (await index.json()).components.map((c: { name: string }) => c.name);
+	expect(names).toContain('button');
+	const button = await (await request.get('/r/svelte/button.json')).json();
+	expect(button.files[0].path).toMatch(/^button\//);
+});
