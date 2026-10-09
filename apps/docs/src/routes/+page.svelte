@@ -6,22 +6,30 @@
 
 	let { data }: PageProps = $props();
 
-	const reasons = [
+	const reasons: {
+		title: string;
+		example: 'whyNative' | 'whySeparate' | 'whyReadable' | 'whyYours';
+		body: string;
+	}[] = [
 		{
 			title: 'Svelte, used the way it was designed',
+			example: 'whyNative',
 			body: 'Svelte scopes the CSS in each component for you. distill-ui leans on that instead of working around it: no :global(), no child snippets, no build plugin.'
 		},
 		{
 			title: 'Markup in the markup, styles in the style block',
+			example: 'whySeparate',
 			body: 'Your template says what the thing is. The style block says what it looks like. Neither one is buried in the other.'
 		},
 		{
 			title: 'Readable by anyone who knows CSS',
+			example: 'whyReadable',
 			body: 'background: var(--dui-color-primary) reads like what it does. There is no class vocabulary to learn and nothing to decode.'
 		},
 		{
 			title: 'Yours to change',
-			body: 'Components are copied into your project, not hidden in node_modules. Change a token, set an option from a parent, or rewrite the whole style block.'
+			example: 'whyYours',
+			body: 'Components are copied into your project, not hidden in node_modules. Change a token, set an option from a parent like this, or rewrite the whole style block.'
 		}
 	];
 </script>
@@ -43,8 +51,8 @@
 		</h1>
 		<p class="lead">
 			distill-ui is a set of accessible components you copy into your Svelte project and style with
-			a normal <code>&lt;style&gt;</code> block. No utility classes, no
-			<code>:global()</code>, no workarounds.
+			a normal <code>&lt;style&gt;</code> block: pure CSS, the way it was meant to be written. No
+			utility classes, no <code>:global()</code>, no workarounds.
 		</p>
 		<div class="actions">
 			<Button href="/docs/installation" size="lg">Get started</Button>
@@ -81,6 +89,7 @@
 					<span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
 					<h3>{reason.title}</h3>
 					<p>{reason.body}</p>
+					<CodeBlock code={data.code[reason.example]} />
 				</li>
 			{/each}
 		</ol>
@@ -184,7 +193,13 @@
 
 	/* Hero */
 
+	/* The hero's main button uses the site's cyan. The hover color is worked out on :root, so it's redone here. */
 	.hero {
+		--dui-color-primary: var(--site-accent);
+		--dui-color-primary-foreground: var(--site-accent-foreground);
+		--dui-color-primary-hover: color-mix(in oklch, var(--site-accent) 85%, transparent);
+		--dui-color-ring: var(--site-accent);
+
 		position: relative;
 		isolation: isolate;
 		max-width: 50rem;
@@ -192,19 +207,14 @@
 		padding-top: 6rem;
 		text-align: center;
 
-		/* A soft glow and a fading grid behind the headline. */
+		/* A fading grid behind the headline. */
 		&::before {
 			content: '';
 			position: absolute;
-			inset: -2rem -40vw auto;
+			inset: -2rem calc(50% - 50vw) auto;
 			z-index: -1;
 			height: 34rem;
 			background:
-				radial-gradient(
-					ellipse 50% 60% at 50% 30%,
-					color-mix(in oklch, var(--site-accent) 22%, transparent),
-					transparent 70%
-				),
 				linear-gradient(var(--dui-color-border) 1px, transparent 1px) 0 0 / 3rem 3rem,
 				linear-gradient(90deg, var(--dui-color-border) 1px, transparent 1px) 0 0 / 3rem 3rem;
 			mask-image: radial-gradient(ellipse 60% 70% at 50% 30%, black, transparent 75%);
@@ -235,9 +245,7 @@
 	}
 
 	.accent {
-		background: linear-gradient(100deg, var(--site-accent), var(--site-accent-2));
-		background-clip: text;
-		color: transparent;
+		color: var(--site-accent);
 	}
 
 	.lead {
@@ -301,21 +309,19 @@
 
 	.reasons {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
 		gap: var(--dui-space-4);
 		margin: 0;
 		padding: 0;
 		list-style: none;
 
 		& li {
+			display: flex;
+			flex-direction: column;
 			padding: var(--dui-space-6);
 			border: 1px solid var(--dui-color-border);
 			border-radius: var(--dui-radius-xl);
-			background: linear-gradient(
-				160deg,
-				color-mix(in oklch, var(--site-accent) 7%, var(--dui-color-card)),
-				var(--dui-color-card) 60%
-			);
+			background: var(--dui-color-card);
 		}
 
 		& .num {
@@ -332,10 +338,16 @@
 		}
 
 		& p {
-			margin: 0;
+			margin: 0 0 var(--dui-space-5);
 			color: var(--dui-color-muted-foreground);
 			font-size: var(--dui-text-sm);
 			line-height: 1.65;
+		}
+
+		/* The example sits at the bottom so the four cards line up. */
+		& :global(.code) {
+			margin: auto 0 0;
+			font-size: var(--dui-text-xs);
 		}
 	}
 
