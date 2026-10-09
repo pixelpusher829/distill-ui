@@ -11,12 +11,23 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+	<link
+		rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&display=swap"
+	/>
 </svelte:head>
 
 <a class="skip" href="#content">Skip to content</a>
 
 <header>
-	<a class="logo" href="/">distill-ui</a>
+	<a class="logo" href="/">
+		<svg viewBox="0 0 24 24" aria-hidden="true">
+			<path d="M12 2.5c3.8 4.6 6.5 8.4 6.5 11.9a6.5 6.5 0 0 1-13 0c0-3.5 2.7-7.3 6.5-11.9Z" />
+		</svg>
+		distill-ui
+	</a>
 	<nav aria-label="Main">
 		<a href="/docs">Docs</a>
 		<a href="/docs/components/button">Components</a>
@@ -46,9 +57,20 @@
 	}
 
 	.logo {
-		font-weight: var(--dui-font-weight-semibold);
+		display: inline-flex;
+		align-items: center;
+		gap: var(--dui-space-2);
+		font-family: var(--site-font-display);
+		font-size: 1.125rem;
+		font-weight: 700;
 		text-decoration: none;
 		letter-spacing: -0.01em;
+	}
+
+	.logo svg {
+		width: 1.25rem;
+		height: 1.25rem;
+		fill: var(--site-accent);
 	}
 
 	nav {
