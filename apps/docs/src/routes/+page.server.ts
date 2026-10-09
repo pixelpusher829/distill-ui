@@ -73,6 +73,50 @@ export const load: PageServerLoad = async () => ({
 	}
 </style>`
 		},
+		whyNative: {
+			lang: 'svelte',
+			code: `<input class="input" />
+
+<style>
+	/* Svelte scopes this to this file.
+	   No prefixes, no :global(). */
+	.input {
+		height: 2.25rem;
+	}
+</style>`
+		},
+		whySeparate: {
+			lang: 'svelte',
+			code: `<!-- What it is -->
+<div class="alert" data-variant={variant}>…</div>
+
+<!-- What it looks like -->
+<style>
+	.alert[data-variant='destructive'] {
+		color: var(--dui-color-destructive-text);
+	}
+</style>`
+		},
+		whyReadable: {
+			lang: 'css',
+			code: `.alert {
+	border: 1px solid var(--dui-color-border);
+	border-radius: var(--dui-radius-lg);
+	background: var(--dui-color-card);
+}`
+		},
+		whyYours: {
+			lang: 'svelte',
+			code: `<div class="pricing">
+	<Button>Upgrade</Button>
+</div>
+
+<style>
+	.pricing {
+		--dui-button-bg: teal;
+	}
+</style>`
+		},
 		start: { lang: 'sh', code: 'npx distill-ui init\nnpx distill-ui add button dialog' }
 	})
 });

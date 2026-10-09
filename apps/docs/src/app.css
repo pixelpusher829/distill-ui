@@ -6,20 +6,20 @@
 
 /* The docs site's own brand, separate from the library's tokens so the demos keep their default look. */
 :root {
-	--site-accent: oklch(0.55 0.22 285);
-	--site-accent-2: oklch(0.6 0.2 330);
+	--site-accent: oklch(0.55 0.12 225);
+	--site-accent-foreground: white;
 	--site-font-display: 'Bricolage Grotesque', var(--dui-font-sans);
 }
 
 [data-theme='dark'] {
-	--site-accent: oklch(0.74 0.15 285);
-	--site-accent-2: oklch(0.76 0.14 330);
+	--site-accent: oklch(0.8 0.12 215);
+	--site-accent-foreground: oklch(0.2 0.03 225);
 }
 
 @media (prefers-color-scheme: dark) {
 	:root:not([data-theme='light']) {
-		--site-accent: oklch(0.74 0.15 285);
-		--site-accent-2: oklch(0.76 0.14 330);
+		--site-accent: oklch(0.8 0.12 215);
+		--site-accent-foreground: oklch(0.2 0.03 225);
 	}
 }
 
@@ -29,6 +29,8 @@
 
 body {
 	margin: 0;
+	/* The hero grid runs edge to edge; this stops it adding a sideways scroll. */
+	overflow-x: clip;
 	background: var(--dui-color-background);
 	color: var(--dui-color-foreground);
 	font-family: var(--dui-font-sans);
