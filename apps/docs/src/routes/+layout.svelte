@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '@distill-ui/tokens/tokens.css';
-	import { Toaster } from '@distill-ui/svelte';
+	import { Button, Toaster } from '@distill-ui/svelte';
 	import '../app.css';
 	import favicon from '#lib/assets/favicon.svg';
 	import ThemeToggle from '#lib/docs/ThemeToggle.svelte';
@@ -26,13 +26,31 @@
 		<svg viewBox="0 0 24 24" aria-hidden="true">
 			<path d="M12 2.5c3.8 4.6 6.5 8.4 6.5 11.9a6.5 6.5 0 0 1-13 0c0-3.5 2.7-7.3 6.5-11.9Z" />
 		</svg>
-		distill-ui
+		<span class="name">distill-ui</span>
 	</a>
 	<nav aria-label="Main">
 		<a href="/docs">Docs</a>
 		<a href="/docs/components/button">Components</a>
 		<a href="https://github.com/pixelpusher829/distill-ui">GitHub</a>
 	</nav>
+	<span class="coffee">
+		<Button href="https://buymeacoffee.com/jbarnes" variant="outline" size="sm">
+			<svg
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				aria-hidden="true"
+			>
+				<path d="M17 8h1a4 4 0 1 1 0 8h-1" />
+				<path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" />
+				<path d="M6 2v2M10 2v2M14 2v2" />
+			</svg>
+			<span class="label">Buy me a coffee</span>
+		</Button>
+	</span>
 	<ThemeToggle />
 </header>
 
@@ -65,6 +83,7 @@
 		font-weight: 700;
 		text-decoration: none;
 		letter-spacing: -0.01em;
+		white-space: nowrap;
 	}
 
 	.logo svg {
@@ -112,6 +131,27 @@
 
 		nav {
 			gap: var(--dui-space-3);
+		}
+
+		/* Only the cup on phones; the label is still read out by screen readers. */
+		.coffee .label,
+		.logo .name {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
+			clip-path: inset(50%);
+			white-space: nowrap;
+		}
+	}
+
+	/* Show the logo's name again where there's room for it next to the links. */
+	@media (min-width: 28rem) and (max-width: 40rem) {
+		.logo .name {
+			position: static;
+			width: auto;
+			height: auto;
+			clip-path: none;
 		}
 	}
 </style>
