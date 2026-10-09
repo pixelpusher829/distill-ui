@@ -51,8 +51,8 @@
 		</h1>
 		<p class="lead">
 			distill-ui is a set of accessible components you copy into your Svelte project and style with
-			a normal <code>&lt;style&gt;</code> block. No utility classes, no
-			<code>:global()</code>, no workarounds.
+			a normal <code>&lt;style&gt;</code> block: pure CSS, the way it was meant to be written. No
+			utility classes, no <code>:global()</code>, no workarounds.
 		</p>
 		<div class="actions">
 			<Button href="/docs/installation" size="lg">Get started</Button>
