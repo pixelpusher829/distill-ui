@@ -1,0 +1,16 @@
+{
+	"name": "separator",
+	"type": "component",
+	"dependencies": [],
+	"registryDependencies": [],
+	"files": [
+		{
+			"path": "separator/index.ts",
+			"content": "import Root from './separator.svelte';\n\nexport { Root, Root as Separator };\n"
+		},
+		{
+			"path": "separator/separator.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLAttributes } from 'svelte/elements';\n\n\tlet {\n\t\tref = $bindable(null),\n\t\torientation = 'horizontal',\n\t\tdecorative = true,\n\t\tclass: className,\n\t\t...restProps\n\t}: Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {\n\t\tref?: HTMLDivElement | null;\n\t\torientation?: 'horizontal' | 'vertical';\n\t\t/** Purely visual by default. Set to false when the line separates meaningful sections. */\n\t\tdecorative?: boolean;\n\t} = $props();\n</script>\n\n<div\n\t{...restProps}\n\tbind:this={ref}\n\trole={decorative ? 'none' : 'separator'}\n\taria-orientation={decorative ? undefined : orientation}\n\tclass={['separator', className]}\n\tdata-orientation={orientation}\n></div>\n\n<!--\n\tOptions you can set from a parent or on the separator itself:\n\t--dui-separator-color\n-->\n\n<style>\n\t.separator {\n\t\tflex-shrink: 0;\n\t\tbackground: var(--dui-separator-color, var(--dui-color-border));\n\n\t\t&[data-orientation='horizontal'] {\n\t\t\twidth: 100%;\n\t\t\theight: 1px;\n\t\t}\n\n\t\t&[data-orientation='vertical'] {\n\t\t\twidth: 1px;\n\t\t\talign-self: stretch;\n\t\t}\n\t}\n</style>\n"
+		}
+	]
+}

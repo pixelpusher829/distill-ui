@@ -14,10 +14,11 @@
 		"dev": "bun --filter @distill-ui/docs dev",
 		"build": "bun --filter @distill-ui/svelte build && bun --filter @distill-ui/docs build",
 		"check": "bun --filter '@distill-ui/*' check",
-		"test": "bun --filter @distill-ui/docs test",
+		"test": "node scripts/build-registry.js --check && bun --filter distill-ui test && bun --filter @distill-ui/docs test",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"reference": "git clone --depth 1 https://github.com/huntabyte/shadcn-svelte.git reference/shadcn-svelte"
+		"reference": "git clone --depth 1 https://github.com/huntabyte/shadcn-svelte.git reference/shadcn-svelte",
+		"registry": "node scripts/build-registry.js"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",

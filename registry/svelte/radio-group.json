@@ -1,0 +1,24 @@
+{
+	"name": "radio-group",
+	"type": "component",
+	"dependencies": [],
+	"registryDependencies": [],
+	"files": [
+		{
+			"path": "radio-group/context.ts",
+			"content": "import { getContext, setContext } from 'svelte';\n\n// The group's shared state. Items are native radio inputs that share one `name`, so the\n// browser handles arrow keys and tab order; the context only keeps `value` in sync.\ntype RadioGroupContext = { name: string; value: string; disabled: boolean };\n\nconst key = Symbol('distill-radio-group');\nexport const setRadioGroupContext = (ctx: RadioGroupContext) => setContext(key, ctx);\nexport const getRadioGroupContext = () => getContext<RadioGroupContext>(key);\n"
+		},
+		{
+			"path": "radio-group/index.ts",
+			"content": "import Item from './radio-group-item.svelte';\nimport Root from './radio-group.svelte';\n\nexport { Root, Item };\n"
+		},
+		{
+			"path": "radio-group/radio-group-item.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLInputAttributes } from 'svelte/elements';\n\timport { getRadioGroupContext } from './context.js';\n\n\tlet {\n\t\tref = $bindable(null),\n\t\tvalue,\n\t\tdisabled = false,\n\t\tclass: className,\n\t\t...restProps\n\t}: Omit<HTMLInputAttributes, 'type' | 'value' | 'name' | 'checked'> & {\n\t\tref?: HTMLInputElement | null;\n\t\tvalue: string;\n\t} = $props();\n\n\tconst group = getRadioGroupContext();\n</script>\n\n<input\n\t{...restProps}\n\ttype=\"radio\"\n\tbind:this={ref}\n\tname={group.name}\n\t{value}\n\tchecked={group.value === value}\n\tdisabled={group.disabled || disabled}\n\tonchange={() => (group.value = value)}\n\tclass={['item', className]}\n/>\n\n<!--\n\tOptions you can set from a parent or on the radio group item itself:\n\t--dui-radio-size, --dui-radio-border, --dui-radio-bg, --dui-radio-checked-fg, --dui-radio-checked-bg\n-->\n\n<style>\n\t.item {\n\t\t/* The size is reused below for the mark, so it is set once here. */\n\t\t--size: var(--dui-radio-size, 1rem);\n\n\t\tappearance: none;\n\t\tdisplay: inline-grid;\n\t\tplace-content: center;\n\t\tflex-shrink: 0;\n\t\twidth: var(--size);\n\t\theight: var(--size);\n\t\tmargin: 0;\n\t\tborder: 1px solid var(--dui-radio-border, var(--dui-color-input));\n\t\tborder-radius: var(--dui-radius-full);\n\t\tbackground: var(--dui-radio-bg, var(--dui-color-control));\n\t\tbox-shadow: var(--dui-shadow-xs);\n\t\tcursor: pointer;\n\t\toutline: none;\n\t\ttransition: box-shadow var(--dui-duration-fast) var(--dui-ease-out);\n\n\t\t/* The dot. */\n\t\t&::before {\n\t\t\tcontent: '';\n\t\t\twidth: calc(var(--size) / 2);\n\t\t\theight: calc(var(--size) / 2);\n\t\t\tborder-radius: var(--dui-radius-full);\n\t\t\tbackground: var(--dui-radio-checked-fg, var(--dui-color-primary-foreground));\n\t\t\tscale: 0;\n\t\t}\n\n\t\t&:checked {\n\t\t\tborder-color: var(--dui-radio-checked-bg, var(--dui-color-primary));\n\t\t\tbackground: var(--dui-radio-checked-bg, var(--dui-color-primary));\n\n\t\t\t&::before {\n\t\t\t\tscale: 1;\n\t\t\t}\n\t\t}\n\n\t\t&:focus-visible {\n\t\t\tborder-color: var(--dui-color-ring);\n\t\t\tbox-shadow: 0 0 0 var(--dui-ring-width)\n\t\t\t\tcolor-mix(in oklch, var(--dui-color-ring) 50%, transparent);\n\t\t}\n\n\t\t&[aria-invalid='true'] {\n\t\t\tborder-color: var(--dui-color-destructive);\n\t\t\tbox-shadow: 0 0 0 var(--dui-ring-width)\n\t\t\t\tcolor-mix(in oklch, var(--dui-color-destructive) 20%, transparent);\n\t\t}\n\n\t\t&:disabled {\n\t\t\tcursor: not-allowed;\n\t\t\topacity: 0.5;\n\t\t}\n\t}\n</style>\n"
+		},
+		{
+			"path": "radio-group/radio-group.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLAttributes } from 'svelte/elements';\n\timport { setRadioGroupContext } from './context.js';\n\n\tlet {\n\t\tvalue = $bindable(''),\n\t\tname,\n\t\tdisabled = false,\n\t\torientation = 'vertical',\n\t\tclass: className,\n\t\tchildren,\n\t\t...restProps\n\t}: HTMLAttributes<HTMLDivElement> & {\n\t\tvalue?: string;\n\t\tname?: string;\n\t\tdisabled?: boolean;\n\t\torientation?: 'horizontal' | 'vertical';\n\t} = $props();\n\n\tconst id = $props.id();\n\tsetRadioGroupContext({\n\t\tget name() {\n\t\t\treturn name ?? `radio-group-${id}`;\n\t\t},\n\t\tget value() {\n\t\t\treturn value;\n\t\t},\n\t\tset value(v) {\n\t\t\tvalue = v;\n\t\t},\n\t\tget disabled() {\n\t\t\treturn disabled;\n\t\t}\n\t});\n</script>\n\n<div\n\t{...restProps}\n\trole=\"radiogroup\"\n\taria-disabled={disabled || undefined}\n\taria-orientation={orientation}\n\tclass={['radio-group', className]}\n\tdata-orientation={orientation}\n>\n\t{@render children?.()}\n</div>\n\n<!--\n\tOptions you can set from a parent or on the radio group itself:\n\t--dui-radio-group-gap\n-->\n\n<style>\n\t.radio-group {\n\t\tdisplay: grid;\n\t\tgap: var(--dui-radio-group-gap, var(--dui-space-3));\n\n\t\t&[data-orientation='horizontal'] {\n\t\t\tdisplay: flex;\n\t\t\tflex-wrap: wrap;\n\t\t}\n\t}\n</style>\n"
+		}
+	]
+}

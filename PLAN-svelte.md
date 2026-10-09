@@ -158,12 +158,14 @@ For each component (here and in Phase 6):
 
 ## Phase 3 — Distribution / CLI
 
-- [ ] First check whether shadcn-svelte's CLI custom-registry support (or the shadcn registry format) can serve our components. Prefer it over writing our own CLI.
-- [ ] If not suitable, build a small CLI (`npx distill-ui add button`) that: copies component files into the user's `$lib/components/ui`, installs `melt` and `@floating-ui/dom` if missing, and copies `tokens.css` + themes on `init`. Design it so a `--framework vue` option can be added later (detect the framework from `package.json` by default).
-- [ ] Build script that generates `registry/svelte/` JSON from `packages/svelte`.
-- [ ] Always support a no-CLI path: every docs page has a "copy the file" button.
+- [x] First check whether shadcn-svelte's CLI custom-registry support (or the shadcn registry format) can serve our components. Prefer it over writing our own CLI.
+- [x] If not suitable, build a small CLI (`npx distill-ui add button`) that: copies component files into the user's `$lib/components/ui`, installs `melt` and `@floating-ui/dom` if missing, and copies `tokens.css` + themes on `init`. Design it so a `--framework vue` option can be added later (detect the framework from `package.json` by default).
+- [x] Build script that generates `registry/svelte/` JSON from `packages/svelte`.
+- [ ] Always support a no-CLI path: every docs page has a "copy the file" button. (Built with the docs pages in Phase 4.)
 
 **Done when:** a fresh SvelteKit app (no Tailwind installed) can `init` and `add` components and they render correctly.
+
+**Status (Oct 2026):** shadcn-svelte's CLI (1.7.0) refuses to `init` without Tailwind v4, and `add` needs the `components.json` that `init` writes, so we built our own in `packages/cli` (npm name `distill-ui`, Node built-ins only). `bun run registry` builds `registry/svelte/`, and `bun run test` fails if it's out of date. Tested in a fresh SvelteKit 3 app with no Tailwind: `init`, `add --all`, svelte-check and a build all pass, and the components render. The framework comes from the project's `package.json` and is saved in `distill-ui.json`, and the registry is split by framework, so Vue slots in at `registry/vue/`. Not published to npm yet. The default registry URL points at the GitHub repo, which only works once it's public.
 
 ## Phase 4 — Docs site
 

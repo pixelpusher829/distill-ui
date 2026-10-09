@@ -1,0 +1,16 @@
+{
+	"name": "label",
+	"type": "component",
+	"dependencies": [],
+	"registryDependencies": [],
+	"files": [
+		{
+			"path": "label/index.ts",
+			"content": "import Root from './label.svelte';\n\nexport { Root, Root as Label };\n"
+		},
+		{
+			"path": "label/label.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLLabelAttributes } from 'svelte/elements';\n\n\tlet {\n\t\tref = $bindable(null),\n\t\tclass: className,\n\t\tchildren,\n\t\t...restProps\n\t}: HTMLLabelAttributes & { ref?: HTMLLabelElement | null } = $props();\n</script>\n\n<label {...restProps} bind:this={ref} class={['label', className]}>\n\t{@render children?.()}\n</label>\n\n<!--\n\tOptions you can set from a parent or on the label itself:\n\t--dui-label-fg\n-->\n\n<style>\n\t.label {\n\t\tdisplay: flex;\n\t\talign-items: center;\n\t\tgap: var(--dui-space-2);\n\t\tcolor: var(--dui-label-fg, var(--dui-color-foreground));\n\t\tfont-size: var(--dui-text-sm);\n\t\tline-height: 1;\n\t\tfont-weight: var(--dui-font-weight-medium);\n\t\tuser-select: none;\n\t}\n</style>\n"
+		}
+	]
+}

@@ -1,0 +1,16 @@
+{
+	"name": "switch",
+	"type": "component",
+	"dependencies": [],
+	"registryDependencies": [],
+	"files": [
+		{
+			"path": "switch/index.ts",
+			"content": "import Root from './switch.svelte';\n\nexport { Root, Root as Switch };\n"
+		},
+		{
+			"path": "switch/switch.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLInputAttributes } from 'svelte/elements';\n\n\tlet {\n\t\tref = $bindable(null),\n\t\tchecked = $bindable(false),\n\t\tsize = 'md',\n\t\tclass: className,\n\t\t...restProps\n\t}: Omit<HTMLInputAttributes, 'type' | 'size'> & {\n\t\tref?: HTMLInputElement | null;\n\t\tsize?: 'sm' | 'md';\n\t} = $props();\n</script>\n\n<!-- A native checkbox with role=\"switch\": screen readers announce it as on/off. -->\n<input\n\t{...restProps}\n\ttype=\"checkbox\"\n\trole=\"switch\"\n\tbind:this={ref}\n\tbind:checked\n\tclass={['switch', className]}\n\tdata-size={size}\n/>\n\n<!--\n\tOptions you can set from a parent or on the switch itself:\n\t--dui-switch-width, --dui-switch-height, --dui-switch-thumb, --dui-switch-thumb-size, --dui-switch-track, --dui-switch-checked-track, --dui-switch-checked-thumb\n-->\n\n<style>\n\t.switch {\n\t\t/* Reused below to work out how far the thumb slides, so they are set once here. */\n\t\t--width: var(--dui-switch-width, 2rem);\n\t\t--height: var(--dui-switch-height, 1.15rem);\n\t\t--thumb-size: var(--dui-switch-thumb-size, 1rem);\n\n\t\tappearance: none;\n\t\tdisplay: inline-flex;\n\t\talign-items: center;\n\t\tflex-shrink: 0;\n\t\twidth: var(--width);\n\t\theight: var(--height);\n\t\tmargin: 0;\n\t\tborder: 1px solid transparent;\n\t\tborder-radius: var(--dui-radius-full);\n\t\tbackground: var(--dui-switch-track, var(--dui-color-switch-track));\n\t\tbox-shadow: var(--dui-shadow-xs);\n\t\tcursor: pointer;\n\t\toutline: none;\n\t\ttransition:\n\t\t\tbackground-color var(--dui-duration-fast) var(--dui-ease-out),\n\t\t\tbox-shadow var(--dui-duration-fast) var(--dui-ease-out);\n\n\t\t/* The thumb. */\n\t\t&::before {\n\t\t\tcontent: '';\n\t\t\twidth: var(--thumb-size);\n\t\t\theight: var(--thumb-size);\n\t\t\tborder-radius: var(--dui-radius-full);\n\t\t\tbackground: var(--dui-switch-thumb, var(--dui-color-switch-thumb));\n\t\t\tpointer-events: none;\n\t\t\ttransition: translate var(--dui-duration-fast) var(--dui-ease-out);\n\t\t}\n\n\t\t&:checked {\n\t\t\tbackground: var(--dui-switch-checked-track, var(--dui-color-primary));\n\n\t\t\t&::before {\n\t\t\t\tbackground: var(--dui-switch-checked-thumb, var(--dui-color-switch-thumb-checked));\n\t\t\t\ttranslate: calc(var(--width) - var(--thumb-size) - 2px) 0;\n\t\t\t}\n\t\t}\n\n\t\t&:dir(rtl):checked::before {\n\t\t\ttranslate: calc((var(--width) - var(--thumb-size) - 2px) * -1) 0;\n\t\t}\n\n\t\t&:focus-visible {\n\t\t\tborder-color: var(--dui-color-ring);\n\t\t\tbox-shadow: 0 0 0 var(--dui-ring-width)\n\t\t\t\tcolor-mix(in oklch, var(--dui-color-ring) 50%, transparent);\n\t\t}\n\n\t\t&:disabled {\n\t\t\tcursor: not-allowed;\n\t\t\topacity: 0.5;\n\t\t}\n\t}\n\n\t.switch[data-size='sm'] {\n\t\t--width: var(--dui-switch-width, 1.5rem);\n\t\t--height: var(--dui-switch-height, 0.875rem);\n\t\t--thumb-size: var(--dui-switch-thumb-size, 0.75rem);\n\t}\n</style>\n"
+		}
+	]
+}

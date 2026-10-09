@@ -1,0 +1,40 @@
+{
+	"name": "card",
+	"type": "component",
+	"dependencies": [],
+	"registryDependencies": [],
+	"files": [
+		{
+			"path": "card/card-action.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLAttributes } from 'svelte/elements';\n\n\tlet {\n\t\tref = $bindable(null),\n\t\tclass: className,\n\t\tchildren,\n\t\t...restProps\n\t}: HTMLAttributes<HTMLDivElement> & { ref?: HTMLDivElement | null } = $props();\n</script>\n\n<div {...restProps} bind:this={ref} class={['action', className]}>\n\t{@render children?.()}\n</div>\n\n<style>\n\t.action {\n\t\tgrid-column: 2;\n\t\tgrid-row: 1 / span 2;\n\t\talign-self: start;\n\t\tjustify-self: end;\n\t\tmargin-inline-start: var(--dui-space-4);\n\t}\n</style>\n"
+		},
+		{
+			"path": "card/card-content.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLAttributes } from 'svelte/elements';\n\n\tlet {\n\t\tref = $bindable(null),\n\t\tclass: className,\n\t\tchildren,\n\t\t...restProps\n\t}: HTMLAttributes<HTMLDivElement> & { ref?: HTMLDivElement | null } = $props();\n</script>\n\n<div {...restProps} bind:this={ref} class={['content', className]}>\n\t{@render children?.()}\n</div>\n\n<style>\n\t.content {\n\t\tpadding-inline: var(--card-spacing);\n\t}\n</style>\n"
+		},
+		{
+			"path": "card/card-description.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLAttributes } from 'svelte/elements';\n\n\tlet {\n\t\tref = $bindable(null),\n\t\tclass: className,\n\t\tchildren,\n\t\t...restProps\n\t}: HTMLAttributes<HTMLParagraphElement> & { ref?: HTMLParagraphElement | null } = $props();\n</script>\n\n<p {...restProps} bind:this={ref} class={['description', className]}>\n\t{@render children?.()}\n</p>\n\n<style>\n\t.description {\n\t\tgrid-column: 1;\n\t\tmargin: 0;\n\t\tcolor: var(--dui-color-muted-foreground);\n\t\tfont-size: var(--dui-text-sm);\n\t}\n</style>\n"
+		},
+		{
+			"path": "card/card-footer.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLAttributes } from 'svelte/elements';\n\n\tlet {\n\t\tref = $bindable(null),\n\t\tclass: className,\n\t\tchildren,\n\t\t...restProps\n\t}: HTMLAttributes<HTMLDivElement> & { ref?: HTMLDivElement | null } = $props();\n</script>\n\n<div {...restProps} bind:this={ref} class={['footer', className]}>\n\t{@render children?.()}\n</div>\n\n<style>\n\t.footer {\n\t\tdisplay: flex;\n\t\talign-items: center;\n\t\tgap: var(--dui-space-2);\n\t\tpadding-inline: var(--card-spacing);\n\t}\n</style>\n"
+		},
+		{
+			"path": "card/card-header.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLAttributes } from 'svelte/elements';\n\n\tlet {\n\t\tref = $bindable(null),\n\t\tclass: className,\n\t\tchildren,\n\t\t...restProps\n\t}: HTMLAttributes<HTMLDivElement> & { ref?: HTMLDivElement | null } = $props();\n</script>\n\n<div {...restProps} bind:this={ref} class={['header', className]}>\n\t{@render children?.()}\n</div>\n\n<style>\n\t.header {\n\t\t/* Two columns so Card.Action can sit top-right beside the title and description. */\n\t\tdisplay: grid;\n\t\tgrid-template-columns: 1fr auto;\n\t\talign-items: start;\n\t\trow-gap: var(--dui-space-1);\n\t\tpadding-inline: var(--card-spacing);\n\t}\n</style>\n"
+		},
+		{
+			"path": "card/card-title.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLAttributes } from 'svelte/elements';\n\n\tlet {\n\t\tref = $bindable(null),\n\t\tclass: className,\n\t\tchildren,\n\t\t...restProps\n\t}: HTMLAttributes<HTMLDivElement> & { ref?: HTMLDivElement | null } = $props();\n</script>\n\n<div {...restProps} bind:this={ref} class={['title', className]}>\n\t{@render children?.()}\n</div>\n\n<style>\n\t.title {\n\t\tgrid-column: 1;\n\t\tfont-size: var(--card-title-size);\n\t\tline-height: 1.5;\n\t\tfont-weight: var(--dui-font-weight-medium);\n\t}\n</style>\n"
+		},
+		{
+			"path": "card/card.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLAttributes } from 'svelte/elements';\n\n\tlet {\n\t\tref = $bindable(null),\n\t\tsize = 'md',\n\t\tclass: className,\n\t\tchildren,\n\t\t...restProps\n\t}: HTMLAttributes<HTMLDivElement> & {\n\t\tref?: HTMLDivElement | null;\n\t\tsize?: 'sm' | 'md';\n\t} = $props();\n</script>\n\n<div {...restProps} bind:this={ref} class={['card', className]} data-size={size}>\n\t{@render children?.()}\n</div>\n\n<!--\n\tOptions you can set from a parent or on the card itself:\n\t--dui-card-spacing, --dui-card-radius, --dui-card-bg, --dui-card-fg, --dui-card-border\n-->\n\n<style>\n\t.card {\n\t\t/* Inherited by the card's parts (header, content, footer) for their padding. */\n\t\t--card-spacing: var(--dui-card-spacing, var(--dui-space-6));\n\t\t--card-title-size: var(--dui-text-base);\n\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\t\tgap: var(--card-spacing);\n\t\tpadding-block: var(--card-spacing);\n\t\toverflow: hidden;\n\t\tborder-radius: var(--dui-card-radius, var(--dui-radius-xl));\n\t\tbackground: var(--dui-card-bg, var(--dui-color-card));\n\t\tcolor: var(--dui-card-fg, var(--dui-color-card-foreground));\n\t\tfont-size: var(--dui-text-sm);\n\t\tbox-shadow:\n\t\t\t0 0 0 1px\n\t\t\t\tvar(--dui-card-border, color-mix(in oklch, var(--dui-color-foreground) 10%, transparent)),\n\t\t\tvar(--dui-shadow-xs);\n\t}\n\n\t.card[data-size='sm'] {\n\t\t--card-spacing: var(--dui-card-spacing, var(--dui-space-4));\n\t\t--card-title-size: var(--dui-text-sm);\n\t}\n</style>\n"
+		},
+		{
+			"path": "card/index.ts",
+			"content": "import Action from './card-action.svelte';\nimport Content from './card-content.svelte';\nimport Description from './card-description.svelte';\nimport Footer from './card-footer.svelte';\nimport Header from './card-header.svelte';\nimport Title from './card-title.svelte';\nimport Root from './card.svelte';\n\nexport { Root, Header, Title, Description, Action, Content, Footer };\n"
+		}
+	]
+}

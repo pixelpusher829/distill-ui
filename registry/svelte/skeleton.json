@@ -1,0 +1,16 @@
+{
+	"name": "skeleton",
+	"type": "component",
+	"dependencies": [],
+	"registryDependencies": [],
+	"files": [
+		{
+			"path": "skeleton/index.ts",
+			"content": "import Root from './skeleton.svelte';\n\nexport { Root, Root as Skeleton };\n"
+		},
+		{
+			"path": "skeleton/skeleton.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLAttributes } from 'svelte/elements';\n\n\tlet {\n\t\tref = $bindable(null),\n\t\tclass: className,\n\t\t...restProps\n\t}: Omit<HTMLAttributes<HTMLDivElement>, 'children'> & { ref?: HTMLDivElement | null } = $props();\n</script>\n\n<div {...restProps} bind:this={ref} aria-hidden=\"true\" class={['skeleton', className]}></div>\n\n<!--\n\tOptions you can set from a parent or on the skeleton itself:\n\t--dui-skeleton-radius, --dui-skeleton-bg\n-->\n\n<style>\n\t.skeleton {\n\t\tborder-radius: var(--dui-skeleton-radius, var(--dui-radius-md));\n\t\tbackground: var(--dui-skeleton-bg, var(--dui-color-muted));\n\t\tanimation: distill-pulse var(--dui-duration-pulse) var(--dui-ease-in-out) infinite;\n\t}\n</style>\n"
+		}
+	]
+}

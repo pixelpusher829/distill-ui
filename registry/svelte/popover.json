@@ -1,0 +1,33 @@
+{
+	"name": "popover",
+	"type": "component",
+	"dependencies": [
+		"@floating-ui/dom@^1.6.0",
+		"melt@0.44.0"
+	],
+	"registryDependencies": [
+		"button"
+	],
+	"files": [
+		{
+			"path": "popover/context.ts",
+			"content": "import { getContext, setContext } from 'svelte';\nimport type { Popover } from 'melt/builders';\n\ntype PopoverContext = { popover: Popover };\n\nconst key = Symbol('distill-popover');\nexport const setPopoverContext = (ctx: PopoverContext) => setContext(key, ctx);\nexport const getPopoverContext = () => getContext<PopoverContext>(key);\n"
+		},
+		{
+			"path": "popover/index.ts",
+			"content": "import Content from './popover-content.svelte';\nimport Trigger from './popover-trigger.svelte';\nimport Root from './popover.svelte';\n\nexport { Root, Trigger, Content };\n"
+		},
+		{
+			"path": "popover/popover-content.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLAttributes } from 'svelte/elements';\n\timport { getPopoverContext } from './context.js';\n\n\tlet {\n\t\tclass: className,\n\t\tchildren,\n\t\tstyle,\n\t\t...restProps\n\t}: HTMLAttributes<HTMLDivElement> = $props();\n\n\tconst { popover } = getPopoverContext();\n</script>\n\n<!-- Uses the native popover API (top layer), so no portal is needed. -->\n<div\n\t{...restProps}\n\t{...popover.content}\n\trole=\"dialog\"\n\tstyle=\"{popover.content.style}; {style ?? ''}\"\n\tclass={['content', className]}\n>\n\t{@render children?.()}\n</div>\n\n<!--\n\tOptions you can set from a parent or on the popover content itself:\n\t--dui-popover-width, --dui-popover-padding, --dui-popover-radius, --dui-popover-bg, --dui-popover-fg\n-->\n\n<style>\n\t.content {\n\t\twidth: var(--dui-popover-width, 18rem);\n\t\tmargin: 0;\n\t\tpadding: var(--dui-popover-padding, var(--dui-space-4));\n\t\tborder: 0;\n\t\tborder-radius: var(--dui-popover-radius, var(--dui-radius-md));\n\t\tbackground: var(--dui-popover-bg, var(--dui-color-popover));\n\t\tcolor: var(--dui-popover-fg, var(--dui-color-popover-foreground));\n\t\tbox-shadow:\n\t\t\t0 0 0 1px color-mix(in oklch, var(--dui-color-foreground) 10%, transparent),\n\t\t\tvar(--dui-shadow-md);\n\t\tfont-size: var(--dui-text-sm);\n\t\tline-height: var(--dui-text-sm-line-height);\n\t\toutline: none;\n\t\ttransition:\n\t\t\topacity var(--dui-duration-fast) var(--dui-ease-out),\n\t\t\tscale var(--dui-duration-fast) var(--dui-ease-out);\n\n\t\t@starting-style {\n\t\t\topacity: 0;\n\t\t\tscale: 0.95;\n\t\t}\n\t}\n</style>\n"
+		},
+		{
+			"path": "popover/popover-trigger.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { HTMLButtonAttributes } from 'svelte/elements';\n\timport { Button, type ButtonSize, type ButtonVariant } from '../button/index.js';\n\timport { getPopoverContext } from './context.js';\n\n\tlet {\n\t\tvariant = 'outline',\n\t\tchildren,\n\t\t...restProps\n\t}: HTMLButtonAttributes & { variant?: ButtonVariant; size?: ButtonSize } = $props();\n\n\tconst { popover } = getPopoverContext();\n</script>\n\n<Button\n\t{...restProps}\n\t{...popover.trigger}\n\taria-haspopup=\"dialog\"\n\taria-expanded={popover.open}\n\taria-controls={popover.ids.content}\n\t{variant}\n>\n\t{@render children?.()}\n</Button>\n"
+		},
+		{
+			"path": "popover/popover.svelte",
+			"content": "<script lang=\"ts\">\n\timport type { Placement } from '@floating-ui/dom';\n\timport { Popover } from 'melt/builders';\n\timport type { Snippet } from 'svelte';\n\timport { setPopoverContext } from './context.js';\n\n\tlet {\n\t\topen = $bindable(false),\n\t\tplacement = 'bottom',\n\t\tchildren\n\t}: { open?: boolean; placement?: Placement; children?: Snippet } = $props();\n\n\tconst popover = new Popover({\n\t\topen: () => open,\n\t\tonOpenChange: (v) => (open = v),\n\t\tfloatingConfig: () => ({ computePosition: { placement }, offset: { mainAxis: 4 } })\n\t});\n\tsetPopoverContext({ popover });\n</script>\n\n{@render children?.()}\n"
+		}
+	]
+}

@@ -166,7 +166,7 @@ components/ui/<component>/
 └── index.ts                    # export { Root, Trigger, Content, … }
 ```
 
-Consumers import the namespace: `import { Dialog } from '$lib/components/ui/dialog'` then `<Dialog.Root>`, `<Dialog.Trigger>`. Components with no parts (Button) export the component under its own name too: `import { Button } from …`.
+Consumers import the namespace: `import { Dialog } from '#lib/components/ui/dialog/index.js'` (SvelteKit 3; older projects use `$lib/components/ui/dialog`) then `<Dialog.Root>`, `<Dialog.Trigger>`. Components with no parts (Button) export the component under its own name too: `import { Button } from …`.
 
 ### Props pattern
 
@@ -203,8 +203,17 @@ Toast keeps one Melt `Toaster` in `toast/toaster.svelte.ts`. Apps place `<Toaste
 
 Alert Dialog and Sheet are their own copies of the Dialog files rather than variants of Dialog, so each folder can be copied on its own. Alert Dialog turns off closing on outside click and uses `role="alertdialog"`. Sheet adds a `side` prop.
 
+### Registry and CLI
+
+`bun run registry` turns every folder in `components/ui` into `registry/svelte/<name>.json` and the tokens into `registry/svelte/tokens.json`. The CLI (`packages/cli`) downloads those files. Don't edit `registry/` by hand. The build reads each component's imports to fill in what it needs:
+
+- npm packages it imports (`melt`, `@floating-ui/dom`), at the versions in `packages/svelte/package.json`;
+- other components it imports through `../<name>/` (Dialog uses Button), which `add` copies too.
+
+So a component can only import Svelte, packages listed in `packages/svelte/package.json`, its own files, and other components through `../<name>/index.js`.
+
 ### Checks
 
 - `bun run check`: svelte-check with no errors or warnings.
 - `bun run lint`: Prettier and ESLint.
-- `bun run test`: Playwright tests for keyboard behavior and axe (WCAG 2.2 AA), in light and dark. Run `bunx playwright install chromium` in `apps/docs` once first.
+- `bun run test`: checks the registry is up to date, runs the CLI tests, then the Playwright tests for keyboard behavior and axe (WCAG 2.2 AA), in light and dark. Run `bunx playwright install chromium` in `apps/docs` once first.
