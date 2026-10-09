@@ -11,3 +11,117 @@ body {
 	font-family: var(--dui-font-sans);
 	-webkit-font-smoothing: antialiased;
 }
+
+html {
+	scroll-padding-top: 5rem;
+}
+
+a {
+	color: inherit;
+}
+
+/* Code highlighted by Shiki at build time, with both themes as variables. */
+.shiki {
+	margin: 0;
+	padding: var(--dui-space-4);
+	overflow-x: auto;
+	background-color: var(--shiki-light-bg);
+	font-family: var(--dui-font-mono);
+	font-size: var(--dui-text-sm);
+	line-height: 1.6;
+	tab-size: 2;
+
+	& span {
+		color: var(--shiki-light);
+	}
+}
+
+[data-theme='dark'] .shiki {
+	background-color: var(--shiki-dark-bg);
+
+	& span {
+		color: var(--shiki-dark);
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) .shiki {
+		background-color: var(--shiki-dark-bg);
+
+		& span {
+			color: var(--shiki-dark);
+		}
+	}
+}
+
+/* Long-form text on the guide pages. */
+.prose {
+	max-width: 44rem;
+	line-height: 1.7;
+
+	& h1 {
+		margin: 0 0 var(--dui-space-2);
+		font-size: 2rem;
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+	}
+
+	& .lead {
+		margin: 0 0 var(--dui-space-8);
+		color: var(--dui-color-muted-foreground);
+		font-size: var(--dui-text-lg);
+	}
+
+	& h2 {
+		margin: var(--dui-space-10) 0 var(--dui-space-3);
+		padding-bottom: var(--dui-space-2);
+		border-bottom: 1px solid var(--dui-color-border);
+		font-size: 1.375rem;
+		letter-spacing: -0.01em;
+	}
+
+	& h3 {
+		margin: var(--dui-space-8) 0 var(--dui-space-2);
+		font-size: var(--dui-text-lg);
+	}
+
+	& p,
+	& ul,
+	& ol {
+		margin: var(--dui-space-3) 0;
+	}
+
+	& li + li {
+		margin-top: var(--dui-space-1);
+	}
+
+	& :not(pre) > code {
+		padding: 0.1em 0.35em;
+		border-radius: var(--dui-radius-sm);
+		background: var(--dui-color-muted);
+		font-family: var(--dui-font-mono);
+		font-size: 0.875em;
+	}
+
+	& a {
+		text-underline-offset: 3px;
+	}
+
+	& table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: var(--dui-text-sm);
+	}
+
+	& th,
+	& td {
+		padding: var(--dui-space-2) var(--dui-space-3);
+		border-bottom: 1px solid var(--dui-color-border);
+		text-align: start;
+		vertical-align: top;
+	}
+
+	& th {
+		font-weight: var(--dui-font-weight-medium);
+	}
+}

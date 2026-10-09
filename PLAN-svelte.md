@@ -169,12 +169,14 @@ For each component (here and in Phase 6):
 
 ## Phase 4 — Docs site
 
-- [ ] Landing page with the "Why no Tailwind" pitch and a side-by-side code comparison. Lead with the real pain: headless Svelte libraries are hard to style with scoped CSS, so we did that part for you. Show a before/after: the snippet or `:global()` workaround vs. our component's plain `<style>` block.
-- [ ] Installation (CLI and manual), Theming (tokens, dark mode, creating a theme), Customizing (custom properties, editing files), Conventions.
-- [ ] A "Styling from scratch" page: how to delete or replace a component's `<style>` block and style it yourself against its classes and data attributes. Treat this as a first-class workflow, not a footnote.
-- [ ] Structure component pages so a framework switcher (Svelte / Vue) can be added later without restructuring: keep per-framework code samples in separate files.
+- [x] Landing page with the "Why no Tailwind" pitch and a side-by-side code comparison. Lead with the real pain: headless Svelte libraries are hard to style with scoped CSS, so we did that part for you. Show a before/after: the snippet or `:global()` workaround vs. our component's plain `<style>` block.
+- [x] Installation (CLI and manual), Theming (tokens, dark mode, creating a theme), Customizing (custom properties, editing files), Conventions.
+- [x] A "Styling from scratch" page: how to delete or replace a component's `<style>` block and style it yourself against its classes and data attributes. Treat this as a first-class workflow, not a footnote.
+- [x] Structure component pages so a framework switcher (Svelte / Vue) can be added later without restructuring: keep per-framework code samples in separate files.
 - [ ] A theme builder page that edits tokens live and exports `tokens.css` (nice-to-have).
 - [ ] Deploy (Vercel/Netlify/Cloudflare Pages).
+
+**Status (Oct 2026):** the site is built and every page is prerendered to static HTML. Pages: landing, Introduction, Installation, Theming, Customizing, Styling from scratch, and one page per component with a preview, its code, CLI and manual install (every file with a copy button, read from `registry/`), and its options table (read from the component's CSS). Conventions are linked from the Introduction rather than copied. Demos live in `apps/docs/src/lib/demos/svelte/`, one file per example, so Vue demos can go in `demos/vue/` later. Code is highlighted with Shiki at build time. Every page passes axe in light and dark. The theme builder and deploying are still to do; deploying needs an account.
 
 ## Phase 5 — Launch
 
