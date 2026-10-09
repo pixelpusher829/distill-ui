@@ -6,30 +6,22 @@
 
 	let { data }: PageProps = $props();
 
-	const reasons: {
-		title: string;
-		example: 'whyNative' | 'whySeparate' | 'whyReadable' | 'whyYours';
-		body: string;
-	}[] = [
+	const reasons = [
 		{
 			title: 'Svelte, used the way it was designed',
-			example: 'whyNative',
 			body: 'Svelte scopes the CSS in each component for you. distill-ui leans on that instead of working around it: no :global(), no child snippets, no build plugin.'
 		},
 		{
 			title: 'Markup in the markup, styles in the style block',
-			example: 'whySeparate',
 			body: 'Your template says what the thing is. The style block says what it looks like. Neither one is buried in the other.'
 		},
 		{
 			title: 'Readable by anyone who knows CSS',
-			example: 'whyReadable',
 			body: 'background: var(--dui-color-primary) reads like what it does. There is no class vocabulary to learn and nothing to decode.'
 		},
 		{
 			title: 'Yours to change',
-			example: 'whyYours',
-			body: 'Components are copied into your project, not hidden in node_modules. Change a token, set an option from a parent like this, or rewrite the whole style block.'
+			body: 'Components are copied into your project, not hidden in node_modules. Change a token, set an option from a parent, or rewrite the whole style block.'
 		}
 	];
 </script>
@@ -46,8 +38,8 @@
 	<section class="hero">
 		<p class="eyebrow">Svelte 5 · Plain CSS · No Tailwind</p>
 		<h1>
-			Svelte already scopes your CSS.
-			<span class="accent">Use it.</span>
+			<span class="accent">Scoped CSS,</span>
+			the way Svelte intended.
 		</h1>
 		<p class="lead">
 			distill-ui is a set of accessible components you copy into your Svelte project and style with
@@ -89,7 +81,6 @@
 					<span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
 					<h3>{reason.title}</h3>
 					<p>{reason.body}</p>
-					<CodeBlock code={data.code[reason.example]} />
 				</li>
 			{/each}
 		</ol>
@@ -309,15 +300,13 @@
 
 	.reasons {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
 		gap: var(--dui-space-4);
 		margin: 0;
 		padding: 0;
 		list-style: none;
 
 		& li {
-			display: flex;
-			flex-direction: column;
 			padding: var(--dui-space-6);
 			border: 1px solid var(--dui-color-border);
 			border-radius: var(--dui-radius-xl);
@@ -338,16 +327,10 @@
 		}
 
 		& p {
-			margin: 0 0 var(--dui-space-5);
+			margin: 0;
 			color: var(--dui-color-muted-foreground);
 			font-size: var(--dui-text-sm);
 			line-height: 1.65;
-		}
-
-		/* The example sits at the bottom so the four cards line up. */
-		& :global(.code) {
-			margin: auto 0 0;
-			font-size: var(--dui-text-xs);
 		}
 	}
 

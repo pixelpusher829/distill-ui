@@ -85,31 +85,38 @@
 		}
 	}
 
+	/* Each list hangs off a thin rail; the current page lights up its stretch of it. */
 	ul {
 		display: grid;
-		gap: 1px;
-		margin: 0;
+		margin: 0 0 0 var(--dui-space-2);
 		padding: 0;
+		border-left: 1px solid var(--dui-color-border);
 		list-style: none;
 	}
 
 	a {
 		display: block;
-		padding: var(--dui-space-1) var(--dui-space-2);
-		border-radius: var(--dui-radius-md);
+		margin-left: -1px;
+		padding: var(--dui-space-1) var(--dui-space-3);
+		border-left: 2px solid transparent;
 		color: var(--dui-color-muted-foreground);
 		text-decoration: none;
+		border-radius: 0 var(--dui-radius-sm) var(--dui-radius-sm) 0;
+		transition:
+			color 120ms,
+			border-color 120ms,
+			background-color 120ms;
 
 		&:hover {
-			background: var(--dui-color-muted);
+			border-left-color: var(--dui-color-muted-foreground);
 			color: var(--dui-color-foreground);
 		}
 
 		&[aria-current='page'] {
-			box-shadow: inset 2px 0 0 var(--site-accent);
-			background: var(--dui-color-muted);
+			border-left-color: var(--site-accent);
+			background: color-mix(in oklch, var(--dui-color-foreground) 6%, transparent);
 			color: var(--dui-color-foreground);
-			font-weight: var(--dui-font-weight-medium);
+			font-weight: var(--dui-font-weight-semibold);
 		}
 	}
 
