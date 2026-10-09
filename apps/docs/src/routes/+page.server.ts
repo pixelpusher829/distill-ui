@@ -43,43 +43,40 @@ export const load: PageServerLoad = async () => ({
 		},
 		before: {
 			lang: 'svelte',
-			title: 'Styling a headless library',
-			code: `<Select.Trigger class="trigger" />
+			title: "Styling another library's button",
+			code: `<!-- Workaround 1: leak the style to the
+     whole app with :global(). -->
+<Button class="save">Save</Button>
 
 <style>
-	/* Svelte removes this as unused: the button
-	   is rendered inside Select.Trigger, not here. */
-	.trigger {
-		border-radius: 9999px;
-	}
-
-	/* Workaround 1: leak the style to the whole app. */
-	:global(.trigger) {
+	:global(.save) {
 		border-radius: 9999px;
 	}
 </style>
 
-<!-- Workaround 2: render the element yourself
-     with a child snippet, so .trigger above works.
-     Repeat for every part you want to style. -->
-<Select.Trigger>
+<!-- Workaround 2: render the button yourself
+     with a child snippet, so a scoped .save rule
+     reaches it. Repeat everywhere you use one. -->
+<Button>
 	{#snippet child({ props })}
-		<button {...props} class="trigger">
-			<Select.Value />
-		</button>
+		<button {...props} class="save">Save</button>
 	{/snippet}
-</Select.Trigger>`
+</Button>`
 		},
 		after: {
 			lang: 'svelte',
-			title: 'select-trigger.svelte in distill-ui',
-			code: `<button {...select.trigger} class="trigger">
+			title: 'Styling a distill-ui button',
+			code: `<!-- In your app -->
+<Button>Save</Button>
+
+<!-- In button.svelte, which lives in your project -->
+<button class="button">
 	{@render children?.()}
 </button>
 
 <style>
-	/* The button is right here, so this works. */
-	.trigger {
+	/* Change the scoped style here. It just works. */
+	.button {
 		border-radius: 9999px;
 	}
 </style>`

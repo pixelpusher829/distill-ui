@@ -41,6 +41,12 @@ html {
 	scroll-padding-top: 5rem;
 }
 
+/* Balances line breaks so headings and paragraphs don't end on a single word. :where() keeps it
+   easy to override. */
+:where(h1, h2, h3, h4, h5, h6, p) {
+	text-wrap: pretty;
+}
+
 a {
 	color: inherit;
 }

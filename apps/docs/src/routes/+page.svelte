@@ -59,8 +59,9 @@
 			<p>
 				Most Svelte component libraries are built on Tailwind. That works for a lot of people. But
 				if you'd rather write CSS, you're left with headless libraries that render their parts
-				somewhere your scoped styles can't reach, and the fixes are bandaids. distill-ui is for
-				people who want control, clean separation, and Svelte without the workarounds.
+				somewhere your scoped styles can't reach. The usual fixes are band-aids, not solutions.
+				distill-ui is for people who want control, clean separation, and scoped Svelte styles
+				without the workarounds.
 			</p>
 		</header>
 		<ol class="reasons">
@@ -102,8 +103,9 @@
 			<p>
 				Headless libraries render each part inside their own components, so Svelte never sees the
 				element your selector is aimed at. The fixes are <code>:global()</code>, which leaks your
-				styles to the whole app, or a child snippet around every part you want to style. distill-ui writes every
-				element in the component's own file, so a plain scoped selector just works.
+				styles to the whole app, or a child snippet around every part you want to style. distill-ui
+				writes every element in the component's own file, already styled. To change it, update the
+				styles directly in the component's source file.
 			</p>
 		</header>
 		<div class="compare">
@@ -293,6 +295,11 @@
 
 	.why {
 		border-block: 1px solid var(--dui-color-border);
+
+		/* A touch wider so the intro doesn't end on a single word. */
+		& .section-head {
+			max-width: 47rem;
+		}
 	}
 
 	.reasons {
