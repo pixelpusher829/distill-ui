@@ -9,8 +9,7 @@
 		{ name: 'Cyan', hue: 225, radius: 0.625, chroma: 0.12 },
 		{ name: 'Violet', hue: 285, radius: 1, chroma: 0.2 },
 		{ name: 'Forest', hue: 150, radius: 0.25, chroma: 0.15 },
-		{ name: 'Ember', hue: 35, radius: 0, chroma: 0.19 },
-		{ name: 'Mono', hue: 0, radius: 0.375, chroma: 0 }
+		{ name: 'Ember', hue: 35, radius: 0, chroma: 0.19 }
 	];
 
 	const primary = $derived(`oklch(0.55 ${chroma} ${hue})`);
