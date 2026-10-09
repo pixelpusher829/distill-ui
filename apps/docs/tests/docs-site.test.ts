@@ -71,3 +71,20 @@ test('the docs menu folds on phones', async ({ page }) => {
 	await menu.getByText('Menu', { exact: true }).click();
 	await expect(menu.getByRole('link', { name: 'Installation' })).toBeVisible();
 });
+
+test('the theme builder recolors the previews and the theme files', async ({ page }) => {
+	await page.goto('/docs/theme-builder');
+	await page.waitForLoadState('networkidle');
+	const lightFile = page.locator('figure', { hasText: 'themes/light.css' });
+	await expect(lightFile).toContainText('--dui-color-primary: oklch(0.205 0 0);');
+
+	await page.getByRole('button', { name: 'Violet' }).click();
+	await page.getByRole('radio', { name: 'Slate' }).click();
+	await expect(lightFile).toContainText('--dui-color-primary: oklch(0.55 0.2 285);');
+	await expect(lightFile).toContainText('--dui-color-muted-foreground: oklch(0.556 0.02 255);');
+
+	const save = page
+		.getByRole('region', { name: 'Light preview' })
+		.getByRole('button', { name: 'Save' });
+	await expect(save).toHaveCSS('background-color', /oklch\(0\.55 0\.2 285\)/);
+});

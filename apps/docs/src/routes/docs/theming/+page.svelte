@@ -67,7 +67,8 @@
 	<h2>Make it yours</h2>
 	<p>
 		The token files are yours to edit, the same as the components. To change the brand color, change
-		it in both theme files:
+		it in both theme files, or let the <a href="/docs/theme-builder">theme builder</a> write them for
+		you:
 	</p>
 	<CodeBlock code={data.code.edit} />
 	<p>Corners and fonts are in <code>tokens.css</code>:</p>
@@ -87,5 +88,5 @@
 		dialogs and menus appear without animating. You don't need to do anything for this.
 	</p>
 
-	<p><a href="/docs/customizing">Next: Customizing →</a></p>
+	<p><a href="/docs/theme-builder">Next: Theme builder →</a></p>
 </article>
