@@ -118,6 +118,10 @@ test('every component page passes axe with the Vue demos', async ({ page }) => {
 	await page.addInitScript(() => localStorage.setItem('framework', 'vue'));
 	for (const { slug, name } of components) {
 		await page.goto(`/docs/components/${slug}`);
+		await expect(page.getByRole('button', { name: 'Vue', exact: true })).toHaveAttribute(
+			'aria-pressed',
+			'true'
+		);
 		await expect(
 			page.getByText(name === 'Toast' ? 'Our own toast store' : /Reka UI|Native|Plain HTML/).first()
 		).toBeVisible();
@@ -130,4 +134,23 @@ test('every component page passes axe with the Vue demos', async ({ page }) => {
 			slug
 		).toEqual([]);
 	}
+});
+
+test('the home page swaps its words, examples and color for Vue', async ({ page }) => {
+	await page.goto('/');
+	await page.waitForLoadState('networkidle');
+	const heading = page.getByRole('heading', { level: 1 });
+	await expect(heading).toHaveText(/the way Svelte intended/, { useInnerText: true });
+	const svelteAccent = await page.locator('.accent').evaluate((el) => getComputedStyle(el).color);
+
+	await page.getByRole('button', { name: 'Vue', exact: true }).click();
+	await expect(heading).toHaveText(/the way Vue intended/, { useInnerText: true });
+	await expect(page.getByText('In Button.vue, which lives in your project')).toBeVisible();
+	await expect(page.getByText('In button.svelte, which lives in your project')).toBeHidden();
+	const vueAccent = await page.locator('.accent').evaluate((el) => getComputedStyle(el).color);
+	expect(vueAccent).not.toBe(svelteAccent);
+
+	// The choice is applied before the page paints on the next visit.
+	await page.reload();
+	await expect(heading).toHaveText(/the way Vue intended/, { useInnerText: true });
 });

@@ -4,23 +4,29 @@
 	box-sizing: border-box;
 }
 
-/* The docs site's own brand, separate from the library's tokens so the demos keep their default look. */
+/*
+ * The docs site's own brand, separate from the library's tokens so the demos keep their default
+ * look. The accent follows the framework switch: Svelte orange or Vue green, the brands' own
+ * colors in both themes. Vue green is too light for white text, so it takes Vue's navy instead.
+ */
 :root {
-	--site-accent: oklch(0.55 0.12 225);
+	--site-accent: #ff3e00;
 	--site-accent-foreground: white;
 	--site-font-display: 'Bricolage Grotesque', var(--dui-font-sans);
 }
 
-[data-theme='dark'] {
-	--site-accent: oklch(0.8 0.12 215);
-	--site-accent-foreground: oklch(0.2 0.03 225);
+:root[data-framework='vue'] {
+	--site-accent: #42b883;
+	--site-accent-foreground: #213547;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root:not([data-theme='light']) {
-		--site-accent: oklch(0.8 0.12 215);
-		--site-accent-foreground: oklch(0.2 0.03 225);
-	}
+/*
+ * Content written for one framework: <span data-only="vue">. Both versions are in the page, and
+ * this hides the other one before the page paints, so switching never flashes.
+ */
+:root:not([data-framework='vue']) [data-only='vue'],
+:root[data-framework='vue'] [data-only='svelte'] {
+	display: none;
 }
 
 ::selection {

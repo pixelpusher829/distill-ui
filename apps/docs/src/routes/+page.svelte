@@ -2,15 +2,26 @@
 	import { Button } from '@distill-ui/svelte';
 	import CodeBlock from '#lib/docs/CodeBlock.svelte';
 	import ThemePlayground from '#lib/docs/ThemePlayground.svelte';
+	import type { Code } from '#lib/docs/code.js';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
 
-	const reasons = [
-		{
+	// The page is written for both frameworks; app.css shows the one picked in the header.
+	const frameworks = ['svelte', 'vue'] as const;
+
+	const first = {
+		svelte: {
 			title: 'Svelte, used the way it was designed',
 			body: 'Svelte scopes the CSS in each component for you. distill-ui leans on that instead of working around it: no :global(), no child snippets, no build plugin.'
 		},
+		vue: {
+			title: 'Vue, used the way it was designed',
+			body: 'Vue scopes the CSS in each component with \x3Cstyle scoped>. distill-ui leans on that instead of working around it: no unscoped style blocks, no :deep() from a wrapper, no build plugin.'
+		}
+	};
+
+	const reasons = [
 		{
 			title: 'Markup in the markup, styles in the style block',
 			body: 'Your template says what the thing is. The style block says what it looks like. Neither one is buried in the other.'
@@ -24,7 +35,25 @@
 			body: 'Components are copied into your project, not hidden in node_modules. Change a token, set an option from a parent, or rewrite the whole style block.'
 		}
 	];
+
+	const code = (svelte: Code, vue: Code) => ({ svelte, vue });
+	// Written as \x3C so Svelte doesn't mistake them for the component's own style block.
+	const styleTag = { svelte: '\x3Cstyle>', vue: '\x3Cstyle scoped>' };
 </script>
+
+{#snippet only(framework: 'svelte' | 'vue', svelte: string, vue: string)}
+	<span data-only={framework}>{framework === 'vue' ? vue : svelte}</span>
+{/snippet}
+
+{#snippet word(svelte: string, vue: string)}
+	{#each frameworks as f (f)}{@render only(f, svelte, vue)}{/each}
+{/snippet}
+
+{#snippet codeFor(pair: { svelte: Code; vue: Code })}
+	{#each frameworks as f (f)}
+		<div data-only={f}><CodeBlock code={pair[f]} /></div>
+	{/each}
+{/snippet}
 
 <svelte:head>
 	<title>distill-ui: Svelte and Vue components styled with plain CSS</title>
@@ -36,15 +65,19 @@
 
 <div class="page">
 	<section class="hero">
-		<p class="eyebrow">Svelte 5 · Vue 3 · Plain CSS · No Tailwind</p>
+		<p class="eyebrow">{@render word('Svelte 5', 'Vue 3')} · Plain CSS · No Tailwind</p>
 		<h1>
 			<span class="accent">Scoped CSS,</span>
-			the way Svelte intended.
+			the way {@render word('Svelte', 'Vue')} intended.
 		</h1>
 		<p class="lead">
-			distill-ui is a set of accessible components you copy into your Svelte project and style with
-			a normal <code>&lt;style&gt;</code> block: pure CSS, the way it was meant to be written. No
-			utility classes, no <code>:global()</code>, no workarounds.
+			distill-ui is a set of accessible components you copy into your {@render word(
+				'Svelte',
+				'Vue'
+			)}
+			project and style with a normal <code>{@render word(styleTag.svelte, styleTag.vue)}</code>
+			block: pure CSS, the way it was meant to be written. No utility classes, no
+			<code>{@render word(':global()', ':deep()')}</code>, no workarounds.
 		</p>
 		<div class="actions">
 			<Button href="/docs/installation" size="lg">Get started</Button>
@@ -57,17 +90,22 @@
 			<p class="kicker">Why this exists</p>
 			<h2 id="why-title">Component libraries stopped writing CSS.</h2>
 			<p>
-				Most Svelte component libraries are built on Tailwind. That works for a lot of people. But
-				if you'd rather write CSS, you're left with headless libraries that render their parts
-				somewhere your scoped styles can't reach. The usual fixes are band-aids, not solutions.
-				distill-ui is for people who want control, clean separation, and scoped Svelte styles
-				without the workarounds.
+				Most {@render word('Svelte', 'Vue')} component libraries are built on Tailwind. That works for
+				a lot of people. But if you'd rather write CSS, you're left with headless libraries that render
+				their parts somewhere your scoped styles can't reach. The usual fixes are band-aids, not solutions.
+				distill-ui is for people who want control, clean separation, and scoped
+				{@render word('Svelte', 'Vue')} styles without the workarounds.
 			</p>
 		</header>
 		<ol class="reasons">
+			<li>
+				<span class="num" aria-hidden="true">01</span>
+				<h3>{@render word(first.svelte.title, first.vue.title)}</h3>
+				<p>{@render word(first.svelte.body, first.vue.body)}</p>
+			</li>
 			{#each reasons as reason, i (reason.title)}
 				<li>
-					<span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+					<span class="num" aria-hidden="true">{String(i + 2).padStart(2, '0')}</span>
 					<h3>{reason.title}</h3>
 					<p>{reason.body}</p>
 				</li>
@@ -91,7 +129,7 @@
 			</div>
 			<div class="side">
 				<p class="tag good">distill-ui</p>
-				<CodeBlock code={data.code.plain} />
+				{@render codeFor(code(data.code.plain, data.code.plainVue))}
 			</div>
 		</div>
 	</section>
@@ -100,22 +138,30 @@
 		<header class="section-head">
 			<p class="kicker">Scoped</p>
 			<h2 id="scoped-title">Your selector reaches the element.</h2>
-			<p>
+			<p data-only="svelte">
 				Headless libraries render each part inside their own components, so Svelte never sees the
 				element your selector is aimed at. The fixes are <code>:global()</code>, which leaks your
 				styles to the whole app, or a child snippet around every part you want to style. distill-ui
 				writes every element in the component's own file, already styled. To change it, update the
 				styles directly in the component's source file.
 			</p>
+			<p data-only="vue">
+				Headless libraries render each part inside their own components, and teleport menus and
+				dialogs to the end of the page, so a scoped selector often can't reach the element it's
+				aimed at. The fixes are an unscoped <code>&lt;style&gt;</code> block, which leaks your
+				styles to the whole app, or <code>:deep()</code> from a wrapper, which still misses anything teleported.
+				distill-ui writes every element in the component's own file, already styled. To change it, update
+				the styles directly in the component's source file.
+			</p>
 		</header>
 		<div class="compare">
 			<div class="side">
 				<p class="tag">Headless library</p>
-				<CodeBlock code={data.code.before} />
+				{@render codeFor(code(data.code.before, data.code.beforeVue))}
 			</div>
 			<div class="side">
 				<p class="tag good">distill-ui</p>
-				<CodeBlock code={data.code.after} />
+				{@render codeFor(code(data.code.after, data.code.afterVue))}
 			</div>
 		</div>
 	</section>
@@ -140,8 +186,8 @@
 		<div>
 			<h3>Accessible by default</h3>
 			<p>
-				Native elements where the browser does the job, Melt UI for dialogs, menus and selects.
-				Checked with axe in light and dark.
+				Native elements where the browser does the job, {@render word('Melt UI', 'Reka UI')} for dialogs,
+				menus and selects. Checked with axe in light and dark.
 			</p>
 		</div>
 		<div>
@@ -188,7 +234,7 @@
 
 	/* Hero */
 
-	/* The hero's main button uses the site's cyan. The hover color is worked out on :root, so it's redone here. */
+	/* The hero's main button uses the site's accent. The hover color is worked out on :root, so it's redone here. */
 	.hero {
 		--dui-color-primary: var(--site-accent);
 		--dui-color-primary-foreground: var(--site-accent-foreground);
@@ -265,7 +311,7 @@
 		max-width: 44rem;
 		margin-bottom: var(--dui-space-10);
 
-		& p:last-child {
+		& > p:not(.kicker) {
 			margin: var(--dui-space-4) 0 0;
 			color: var(--dui-color-muted-foreground);
 			font-size: 1.0625rem;

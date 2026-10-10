@@ -81,6 +81,75 @@ export const load: PageServerLoad = async () => ({
 	}
 </style>`
 		},
+		plainVue: {
+			lang: 'vue',
+			title: "distill-ui's button, shortened",
+			code: `<template>
+	<button class="button">Save</button>
+</template>
+
+<style scoped>
+.button {
+	height: 2.25rem;
+	padding-inline: var(--dui-space-2-5);
+	border-radius: var(--dui-radius-md);
+	background: var(--dui-color-primary);
+	color: var(--dui-color-primary-foreground);
+
+	&:hover {
+		background: var(--dui-color-primary-hover);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+	}
+}
+</style>`
+		},
+		beforeVue: {
+			lang: 'vue',
+			title: "Styling another library's select menu",
+			code: `<!-- The menu is teleported to <body>, so a
+     scoped rule never reaches it. -->
+<SelectContent class="menu">...</SelectContent>
+
+<!-- Workaround 1: an unscoped style block,
+     which leaks to the whole app. -->
+<style>
+.menu {
+	border-radius: 9999px;
+}
+</style>
+
+<!-- Workaround 2: :deep() from a wrapper. It only
+     reaches parts rendered inside the wrapper,
+     so the teleported menu still misses out. -->
+<style scoped>
+.picker :deep(.menu) {
+	border-radius: 9999px;
+}
+</style>`
+		},
+		afterVue: {
+			lang: 'vue',
+			title: 'Styling a distill-ui button',
+			code: `<!-- In your app -->
+<Button>Save</Button>
+
+<!-- In Button.vue, which lives in your project -->
+<template>
+	<button class="button">
+		<slot />
+	</button>
+</template>
+
+<style scoped>
+/* Change the scoped style here. It just works. */
+.button {
+	border-radius: 9999px;
+}
+</style>`
+		},
 		start: { lang: 'sh', code: 'npx distill-ui init\nnpx distill-ui add button dialog' }
 	})
 });
