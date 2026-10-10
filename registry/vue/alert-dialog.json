@@ -1,0 +1,52 @@
+{
+	"name": "alert-dialog",
+	"type": "component",
+	"dependencies": [
+		"reka-ui@2.11.0"
+	],
+	"registryDependencies": [
+		"button"
+	],
+	"files": [
+		{
+			"path": "alert-dialog/AlertDialog.vue",
+			"content": "<script setup lang=\"ts\">\nimport {\n\tAlertDialogRoot,\n\tuseForwardPropsEmits,\n\ttype AlertDialogEmits,\n\ttype AlertDialogProps\n} from 'reka-ui';\n\n// Use `v-model:open` to control it from outside.\nconst props = defineProps<AlertDialogProps>();\nconst emits = defineEmits<AlertDialogEmits>();\nconst forwarded = useForwardPropsEmits(props, emits);\n</script>\n\n<template>\n\t<AlertDialogRoot v-bind=\"forwarded\">\n\t\t<slot />\n\t</AlertDialogRoot>\n</template>\n"
+		},
+		{
+			"path": "alert-dialog/AlertDialogAction.vue",
+			"content": "<script setup lang=\"ts\">\nimport { AlertDialogAction } from 'reka-ui';\nimport { Button, type ButtonSize, type ButtonVariant } from '../button/index.js';\n\n// Confirms: runs its @click, then closes. `<AlertDialog.Action @click=\"remove\">`.\nconst { variant = 'default', size } = defineProps<{ variant?: ButtonVariant; size?: ButtonSize }>();\n</script>\n\n<template>\n\t<AlertDialogAction as-child>\n\t\t<Button :variant=\"variant\" :size=\"size\"><slot /></Button>\n\t</AlertDialogAction>\n</template>\n"
+		},
+		{
+			"path": "alert-dialog/AlertDialogCancel.vue",
+			"content": "<script setup lang=\"ts\">\nimport { AlertDialogCancel } from 'reka-ui';\nimport { Button, type ButtonSize, type ButtonVariant } from '../button/index.js';\n\n// Closes without doing anything. Reka focuses it when the dialog opens.\nconst { variant = 'outline', size } = defineProps<{ variant?: ButtonVariant; size?: ButtonSize }>();\n</script>\n\n<template>\n\t<AlertDialogCancel as-child>\n\t\t<Button :variant=\"variant\" :size=\"size\"><slot /></Button>\n\t</AlertDialogCancel>\n</template>\n"
+		},
+		{
+			"path": "alert-dialog/AlertDialogContent.vue",
+			"content": "<script setup lang=\"ts\">\nimport {\n\tAlertDialogContent,\n\tAlertDialogOverlay,\n\tuseForwardPropsEmits,\n\ttype AlertDialogContentEmits,\n\ttype AlertDialogContentProps\n} from 'reka-ui';\n\ndefineOptions({ inheritAttrs: false });\n\n// An alert dialog needs an answer, so Reka doesn't close it on an outside click.\nconst props = defineProps<AlertDialogContentProps>();\nconst emits = defineEmits<AlertDialogContentEmits>();\nconst forwarded = useForwardPropsEmits(props, emits);\n</script>\n\n<template>\n\t<!-- No portal: the content is position: fixed, so it stays inside your styles and tokens. -->\n\t<AlertDialogOverlay as-child>\n\t\t<div class=\"overlay\"></div>\n\t</AlertDialogOverlay>\n\t<AlertDialogContent v-bind=\"forwarded\" as-child>\n\t\t<div v-bind=\"$attrs\" class=\"content\"><slot /></div>\n\t</AlertDialogContent>\n</template>\n\n<!--\n\tOptions you can set from a parent or on the alert dialog content itself:\n\t--dui-alert-dialog-overlay-bg, --dui-alert-dialog-max-width, --dui-alert-dialog-padding, --dui-alert-dialog-radius, --dui-alert-dialog-bg, --dui-alert-dialog-fg\n-->\n\n<style scoped>\n/* Reka waits for animationend before removing the dialog, so this animates with\n   the shared keyframes on [data-state] rather than transitions. */\n.overlay {\n\tposition: fixed;\n\tinset: 0;\n\tz-index: var(--dui-z-overlay);\n\tbackground: var(--dui-alert-dialog-overlay-bg, var(--dui-color-overlay));\n\tbackdrop-filter: blur(4px);\n\n\t&[data-state='open'] {\n\t\tanimation: distill-fade-in var(--dui-duration-fast) var(--dui-ease-out);\n\t}\n\n\t&[data-state='closed'] {\n\t\tanimation: distill-fade-out var(--dui-duration-fast) var(--dui-ease-out);\n\t}\n}\n\n.content {\n\tposition: fixed;\n\tinset: 0;\n\tz-index: var(--dui-z-modal);\n\tdisplay: grid;\n\tgap: var(--dui-space-6);\n\twidth: 100%;\n\tmax-width: min(var(--dui-alert-dialog-max-width, 32rem), calc(100% - var(--dui-space-8)));\n\theight: fit-content;\n\tmargin: auto;\n\tpadding: var(--dui-alert-dialog-padding, var(--dui-space-6));\n\tborder-radius: var(--dui-alert-dialog-radius, var(--dui-radius-xl));\n\tbackground: var(--dui-alert-dialog-bg, var(--dui-color-popover));\n\tcolor: var(--dui-alert-dialog-fg, var(--dui-color-popover-foreground));\n\tbox-shadow: 0 0 0 1px color-mix(in oklch, var(--dui-color-foreground) 10%, transparent);\n\tfont-size: var(--dui-text-sm);\n\tline-height: var(--dui-text-sm-line-height);\n\toutline: none;\n\n\t&[data-state='open'] {\n\t\tanimation: distill-zoom-in var(--dui-duration-fast) var(--dui-ease-out);\n\t}\n\n\t&[data-state='closed'] {\n\t\tanimation: distill-zoom-out var(--dui-duration-fast) var(--dui-ease-out);\n\t}\n}\n</style>\n"
+		},
+		{
+			"path": "alert-dialog/AlertDialogDescription.vue",
+			"content": "<script setup lang=\"ts\">\nimport { AlertDialogDescription } from 'reka-ui';\n</script>\n\n<template>\n\t<!-- Reka gives it an id and points the dialog's aria-describedby at it. -->\n\t<AlertDialogDescription as-child>\n\t\t<p class=\"description\"><slot /></p>\n\t</AlertDialogDescription>\n</template>\n\n<style scoped>\n.description {\n\tmargin: 0;\n\tcolor: var(--dui-color-muted-foreground);\n\tfont-size: var(--dui-text-sm);\n\tline-height: var(--dui-text-sm-line-height);\n}\n</style>\n"
+		},
+		{
+			"path": "alert-dialog/AlertDialogFooter.vue",
+			"content": "<template>\n\t<div class=\"footer\"><slot /></div>\n</template>\n\n<style scoped>\n.footer {\n\tdisplay: flex;\n\tflex-direction: column-reverse;\n\tgap: var(--dui-space-2);\n\n\t@media (width >= 40rem) {\n\t\tflex-direction: row;\n\t\tjustify-content: flex-end;\n\t}\n}\n</style>\n"
+		},
+		{
+			"path": "alert-dialog/AlertDialogHeader.vue",
+			"content": "<template>\n\t<div class=\"header\"><slot /></div>\n</template>\n\n<style scoped>\n.header {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: var(--dui-space-2);\n}\n</style>\n"
+		},
+		{
+			"path": "alert-dialog/AlertDialogTitle.vue",
+			"content": "<script setup lang=\"ts\">\nimport { AlertDialogTitle } from 'reka-ui';\n</script>\n\n<template>\n\t<!-- Reka gives it an id and points the dialog's aria-labelledby at it. -->\n\t<AlertDialogTitle as-child>\n\t\t<h2 class=\"title\"><slot /></h2>\n\t</AlertDialogTitle>\n</template>\n\n<style scoped>\n.title {\n\tmargin: 0;\n\tfont-size: var(--dui-text-base);\n\tline-height: 1;\n\tfont-weight: var(--dui-font-weight-medium);\n}\n</style>\n"
+		},
+		{
+			"path": "alert-dialog/AlertDialogTrigger.vue",
+			"content": "<script setup lang=\"ts\">\nimport { AlertDialogTrigger } from 'reka-ui';\nimport { Button, type ButtonSize, type ButtonVariant } from '../button/index.js';\n\n// Renders our Button, so it takes the same variant and size props.\nconst { variant = 'default', size } = defineProps<{ variant?: ButtonVariant; size?: ButtonSize }>();\n</script>\n\n<template>\n\t<AlertDialogTrigger as-child>\n\t\t<Button :variant=\"variant\" :size=\"size\"><slot /></Button>\n\t</AlertDialogTrigger>\n</template>\n"
+		},
+		{
+			"path": "alert-dialog/index.ts",
+			"content": "export { default as Root } from './AlertDialog.vue';\nexport { default as Trigger } from './AlertDialogTrigger.vue';\nexport { default as Content } from './AlertDialogContent.vue';\nexport { default as Header } from './AlertDialogHeader.vue';\nexport { default as Footer } from './AlertDialogFooter.vue';\nexport { default as Title } from './AlertDialogTitle.vue';\nexport { default as Description } from './AlertDialogDescription.vue';\nexport { default as Action } from './AlertDialogAction.vue';\nexport { default as Cancel } from './AlertDialogCancel.vue';\n"
+		}
+	]
+}

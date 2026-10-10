@@ -8,6 +8,8 @@ export type ComponentDoc = {
 	description: string;
 	/** Where the behavior comes from, shown under the title. */
 	builtOn: string;
+	/** Where the Vue version's behavior comes from, when it isn't the Reka UI part of the same name. */
+	builtOnVue?: string;
 	demos: { file: string; title?: string }[];
 };
 
@@ -25,6 +27,7 @@ export const components: ComponentDoc[] = [
 		description:
 			'A dialog that interrupts to ask for a decision. Clicking outside does not close it.',
 		builtOn: 'Melt UI Dialog',
+		builtOnVue: 'Reka UI Alert Dialog',
 		demos: [{ file: 'alert-dialog' }]
 	},
 	{
@@ -74,6 +77,7 @@ export const components: ComponentDoc[] = [
 		name: 'Dropdown Menu',
 		description: 'A list of actions that opens from a button.',
 		builtOn: 'Our own menu builder on Melt UI Popover',
+		builtOnVue: 'Reka UI Dropdown Menu',
 		demos: [{ file: 'dropdown-menu' }]
 	},
 	{
@@ -158,6 +162,7 @@ export const components: ComponentDoc[] = [
 		name: 'Toast',
 		description: 'A short notification that appears in a corner and goes away on its own.',
 		builtOn: 'Melt UI Toaster',
+		builtOnVue: 'Our own toast store',
 		demos: [{ file: 'toast' }]
 	},
 	{
@@ -177,3 +182,9 @@ export const guides = [
 	{ href: '/docs/customizing', title: 'Customizing' },
 	{ href: '/docs/styling-from-scratch', title: 'Styling from scratch' }
 ];
+
+/** Where a component's behavior comes from, for one framework. */
+export function builtOn(doc: ComponentDoc, framework: 'svelte' | 'vue') {
+	if (framework === 'svelte') return doc.builtOn;
+	return doc.builtOnVue ?? doc.builtOn.replace('Melt UI', 'Reka UI');
+}

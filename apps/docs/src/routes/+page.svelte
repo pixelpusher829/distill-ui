@@ -27,16 +27,16 @@
 </script>
 
 <svelte:head>
-	<title>distill-ui: Svelte components styled with plain CSS</title>
+	<title>distill-ui: Svelte and Vue components styled with plain CSS</title>
 	<meta
 		name="description"
-		content="Accessible Svelte 5 components you copy into your project and style with plain scoped CSS. No Tailwind, no :global(), no workarounds."
+		content="Accessible Svelte 5 and Vue 3 components you copy into your project and style with plain scoped CSS. No Tailwind, no :global(), no workarounds."
 	/>
 </svelte:head>
 
 <div class="page">
 	<section class="hero">
-		<p class="eyebrow">Svelte 5 · Plain CSS · No Tailwind</p>
+		<p class="eyebrow">Svelte 5 · Vue 3 · Plain CSS · No Tailwind</p>
 		<h1>
 			<span class="accent">Scoped CSS,</span>
 			the way Svelte intended.
@@ -167,9 +167,10 @@
 
 	<footer>
 		<p>
-			MIT licensed. Built on <a href="https://melt-ui.com">Melt UI</a>, with component structure
-			from
-			<a href="https://shadcn-svelte.com">shadcn-svelte</a>.
+			MIT licensed. Built on <a href="https://melt-ui.com">Melt UI</a> and
+			<a href="https://reka-ui.com">Reka UI</a>, with component structure from
+			<a href="https://shadcn-svelte.com">shadcn-svelte</a> and
+			<a href="https://www.shadcn-vue.com">shadcn-vue</a>.
 		</p>
 	</footer>
 </div>

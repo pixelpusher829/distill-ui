@@ -1,0 +1,24 @@
+{
+	"name": "radio-group",
+	"type": "component",
+	"dependencies": [],
+	"registryDependencies": [],
+	"files": [
+		{
+			"path": "radio-group/RadioGroup.vue",
+			"content": "<script setup lang=\"ts\">\nimport { computed, useId } from 'vue';\nimport { provideRadioGroup } from './context.js';\n\nconst {\n\tname,\n\tdisabled = false,\n\torientation = 'vertical'\n} = defineProps<{ name?: string; disabled?: boolean; orientation?: 'horizontal' | 'vertical' }>();\nconst value = defineModel<string>({ default: '' });\n\nconst id = useId();\nprovideRadioGroup({\n\tname: computed(() => name ?? `radio-group-${id}`),\n\tvalue,\n\tdisabled: computed(() => disabled)\n});\n</script>\n\n<template>\n\t<div\n\t\trole=\"radiogroup\"\n\t\tclass=\"radio-group\"\n\t\t:aria-disabled=\"disabled || undefined\"\n\t\t:aria-orientation=\"orientation\"\n\t\t:data-orientation=\"orientation\"\n\t>\n\t\t<slot />\n\t</div>\n</template>\n\n<!--\n\tOptions you can set from a parent or on the radio group itself:\n\t--dui-radio-group-gap\n-->\n\n<style scoped>\n.radio-group {\n\tdisplay: grid;\n\tgap: var(--dui-radio-group-gap, var(--dui-space-3));\n\n\t&[data-orientation='horizontal'] {\n\t\tdisplay: flex;\n\t\tflex-wrap: wrap;\n\t}\n}\n</style>\n"
+		},
+		{
+			"path": "radio-group/RadioGroupItem.vue",
+			"content": "<script setup lang=\"ts\">\nimport { injectRadioGroup } from './context.js';\n\nconst { value, disabled = false } = defineProps<{ value: string; disabled?: boolean }>();\nconst group = injectRadioGroup();\n</script>\n\n<template>\n\t<input\n\t\ttype=\"radio\"\n\t\tclass=\"item\"\n\t\t:name=\"group.name.value\"\n\t\t:value=\"value\"\n\t\t:checked=\"group.value.value === value\"\n\t\t:disabled=\"group.disabled.value || disabled\"\n\t\t@change=\"group.value.value = value\"\n\t/>\n</template>\n\n<!--\n\tOptions you can set from a parent or on the radio group item itself:\n\t--dui-radio-size, --dui-radio-border, --dui-radio-bg, --dui-radio-checked-fg, --dui-radio-checked-bg\n-->\n\n<style scoped>\n.item {\n\t/* The size is reused below for the mark, so it is set once here. */\n\t--size: var(--dui-radio-size, 1rem);\n\n\tappearance: none;\n\tdisplay: inline-grid;\n\tplace-content: center;\n\tflex-shrink: 0;\n\twidth: var(--size);\n\theight: var(--size);\n\tmargin: 0;\n\tborder: 1px solid var(--dui-radio-border, var(--dui-color-input));\n\tborder-radius: var(--dui-radius-full);\n\tbackground: var(--dui-radio-bg, var(--dui-color-control));\n\tbox-shadow: var(--dui-shadow-xs);\n\tcursor: pointer;\n\toutline: none;\n\ttransition: box-shadow var(--dui-duration-fast) var(--dui-ease-out);\n\n\t/* The dot. */\n\t&::before {\n\t\tcontent: '';\n\t\twidth: calc(var(--size) / 2);\n\t\theight: calc(var(--size) / 2);\n\t\tborder-radius: var(--dui-radius-full);\n\t\tbackground: var(--dui-radio-checked-fg, var(--dui-color-primary-foreground));\n\t\tscale: 0;\n\t}\n\n\t&:checked {\n\t\tborder-color: var(--dui-radio-checked-bg, var(--dui-color-primary));\n\t\tbackground: var(--dui-radio-checked-bg, var(--dui-color-primary));\n\n\t\t&::before {\n\t\t\tscale: 1;\n\t\t}\n\t}\n\n\t&:focus-visible {\n\t\tborder-color: var(--dui-color-ring);\n\t\tbox-shadow: 0 0 0 var(--dui-ring-width)\n\t\t\tcolor-mix(in oklch, var(--dui-color-ring) 50%, transparent);\n\t}\n\n\t&[aria-invalid='true'] {\n\t\tborder-color: var(--dui-color-destructive);\n\t\tbox-shadow: 0 0 0 var(--dui-ring-width)\n\t\t\tcolor-mix(in oklch, var(--dui-color-destructive) 20%, transparent);\n\t}\n\n\t&:disabled {\n\t\tcursor: not-allowed;\n\t\topacity: 0.5;\n\t}\n}\n</style>\n"
+		},
+		{
+			"path": "radio-group/context.ts",
+			"content": "import { inject, provide, type Ref } from 'vue';\n\n// The group's shared state. Items are native radio inputs that share one `name`, so the\n// browser handles arrow keys and tab order; the context only keeps `value` in sync.\ntype RadioGroupContext = {\n\tname: Readonly<Ref<string>>;\n\tvalue: Ref<string>;\n\tdisabled: Readonly<Ref<boolean>>;\n};\n\nconst key = Symbol('distill-radio-group');\nexport const provideRadioGroup = (ctx: RadioGroupContext) => provide(key, ctx);\nexport const injectRadioGroup = () => inject<RadioGroupContext>(key)!;\n"
+		},
+		{
+			"path": "radio-group/index.ts",
+			"content": "export { default as Root } from './RadioGroup.vue';\nexport { default as Item } from './RadioGroupItem.vue';\n"
+		}
+	]
+}

@@ -1,0 +1,16 @@
+{
+	"name": "label",
+	"type": "component",
+	"dependencies": [],
+	"registryDependencies": [],
+	"files": [
+		{
+			"path": "label/Label.vue",
+			"content": "<template>\n\t<label class=\"label\"><slot /></label>\n</template>\n\n<!--\n\tOptions you can set from a parent or on the label itself:\n\t--dui-label-fg\n-->\n\n<style scoped>\n.label {\n\tdisplay: flex;\n\talign-items: center;\n\tgap: var(--dui-space-2);\n\tcolor: var(--dui-label-fg, var(--dui-color-foreground));\n\tfont-size: var(--dui-text-sm);\n\tline-height: 1;\n\tfont-weight: var(--dui-font-weight-medium);\n\tuser-select: none;\n}\n</style>\n"
+		},
+		{
+			"path": "label/index.ts",
+			"content": "export { default as Root, default as Label } from './Label.vue';\n"
+		}
+	]
+}

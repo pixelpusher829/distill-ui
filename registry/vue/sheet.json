@@ -1,0 +1,48 @@
+{
+	"name": "sheet",
+	"type": "component",
+	"dependencies": [
+		"reka-ui@2.11.0"
+	],
+	"registryDependencies": [
+		"button"
+	],
+	"files": [
+		{
+			"path": "sheet/Sheet.vue",
+			"content": "<script setup lang=\"ts\">\nimport {\n\tDialogRoot,\n\tuseForwardPropsEmits,\n\ttype DialogRootEmits,\n\ttype DialogRootProps\n} from 'reka-ui';\n\n// A Dialog that slides in from an edge. Use `v-model:open` to control it.\nconst props = defineProps<DialogRootProps>();\nconst emits = defineEmits<DialogRootEmits>();\nconst forwarded = useForwardPropsEmits(props, emits);\n</script>\n\n<template>\n\t<DialogRoot v-bind=\"forwarded\">\n\t\t<slot />\n\t</DialogRoot>\n</template>\n"
+		},
+		{
+			"path": "sheet/SheetClose.vue",
+			"content": "<script setup lang=\"ts\">\nimport { DialogClose } from 'reka-ui';\nimport { Button, type ButtonSize, type ButtonVariant } from '../button/index.js';\n\n// A Button that closes the sheet: `<Sheet.Close>Cancel</Sheet.Close>`.\nconst { variant = 'outline', size } = defineProps<{ variant?: ButtonVariant; size?: ButtonSize }>();\n</script>\n\n<template>\n\t<DialogClose as-child>\n\t\t<Button :variant=\"variant\" :size=\"size\"><slot /></Button>\n\t</DialogClose>\n</template>\n"
+		},
+		{
+			"path": "sheet/SheetContent.vue",
+			"content": "<script setup lang=\"ts\">\nimport {\n\tDialogClose,\n\tDialogContent,\n\tDialogOverlay,\n\tuseForwardPropsEmits,\n\ttype DialogContentEmits,\n\ttype DialogContentProps\n} from 'reka-ui';\nimport { computed } from 'vue';\n\ndefineOptions({ inheritAttrs: false });\n\nconst props = withDefaults(\n\tdefineProps<\n\t\tDialogContentProps & { showCloseButton?: boolean; side?: 'top' | 'right' | 'bottom' | 'left' }\n\t>(),\n\t{ showCloseButton: true, side: 'right' }\n);\nconst emits = defineEmits<DialogContentEmits>();\nconst forwarded = useForwardPropsEmits(\n\tcomputed(() => {\n\t\tconst { showCloseButton, side, ...rest } = props;\n\t\treturn rest;\n\t}),\n\temits\n);\n</script>\n\n<template>\n\t<!-- No portal: the content is position: fixed, so it stays inside your styles and tokens. -->\n\t<DialogOverlay as-child>\n\t\t<div class=\"overlay\"></div>\n\t</DialogOverlay>\n\t<DialogContent v-bind=\"forwarded\" as-child>\n\t\t<div v-bind=\"$attrs\" class=\"content\" :data-side=\"side\">\n\t\t\t<slot />\n\t\t\t<DialogClose v-if=\"showCloseButton\" as-child>\n\t\t\t\t<button type=\"button\" class=\"close\">\n\t\t\t\t\t<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n\t\t\t\t\t\t<path d=\"M18 6 6 18\" />\n\t\t\t\t\t\t<path d=\"m6 6 12 12\" />\n\t\t\t\t\t</svg>\n\t\t\t\t\t<span class=\"sr-only\">Close</span>\n\t\t\t\t</button>\n\t\t\t</DialogClose>\n\t\t</div>\n\t</DialogContent>\n</template>\n\n<!--\n\tOptions you can set from a parent or on the sheet content itself:\n\t--dui-sheet-overlay-bg, --dui-sheet-padding, --dui-sheet-bg, --dui-sheet-fg, --dui-sheet-size\n-->\n\n<style scoped>\n/* Reka waits for animationend before removing the sheet, so it animates with\n   keyframes on [data-state] rather than transitions. */\n.overlay {\n\tposition: fixed;\n\tinset: 0;\n\tz-index: var(--dui-z-overlay);\n\tbackground: var(--dui-sheet-overlay-bg, var(--dui-color-overlay));\n\tbackdrop-filter: blur(4px);\n\n\t&[data-state='open'] {\n\t\tanimation: distill-fade-in var(--dui-duration-slow) var(--dui-ease-in-out);\n\t}\n\n\t&[data-state='closed'] {\n\t\tanimation: distill-fade-out var(--dui-duration-slow) var(--dui-ease-in-out);\n\t}\n}\n\n.content {\n\tposition: fixed;\n\tz-index: var(--dui-z-modal);\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: var(--dui-space-4);\n\tpadding: var(--dui-sheet-padding, var(--dui-space-6));\n\tbackground: var(--dui-sheet-bg, var(--dui-color-background));\n\tcolor: var(--dui-sheet-fg, var(--dui-color-foreground));\n\tbox-shadow:\n\t\t0 0 0 1px color-mix(in oklch, var(--dui-color-foreground) 10%, transparent),\n\t\tvar(--dui-shadow-lg);\n\tfont-size: var(--dui-text-sm);\n\tline-height: var(--dui-text-sm-line-height);\n\toutline: none;\n\n\t&[data-state='open'] {\n\t\tanimation: sheet-in var(--dui-duration-slow) var(--dui-ease-in-out);\n\t}\n\n\t&[data-state='closed'] {\n\t\tanimation: sheet-out var(--dui-duration-slow) var(--dui-ease-in-out);\n\t}\n}\n\n/* Each side pins the sheet to that edge; --from is where it slides in from. */\n.content[data-side='right'] {\n\t--from: 100% 0;\n\n\tinset: 0 0 0 auto;\n\twidth: min(var(--dui-sheet-size, 24rem), 75%);\n}\n\n.content[data-side='left'] {\n\t--from: -100% 0;\n\n\tinset: 0 auto 0 0;\n\twidth: min(var(--dui-sheet-size, 24rem), 75%);\n}\n\n.content[data-side='top'] {\n\t--from: 0 -100%;\n\n\tinset: 0 0 auto 0;\n}\n\n.content[data-side='bottom'] {\n\t--from: 0 100%;\n\n\tinset: auto 0 0 0;\n}\n\n@keyframes sheet-in {\n\tfrom {\n\t\ttranslate: var(--from);\n\t}\n}\n\n@keyframes sheet-out {\n\tto {\n\t\ttranslate: var(--from);\n\t}\n}\n\n.close {\n\tposition: absolute;\n\ttop: var(--dui-space-4);\n\tright: var(--dui-space-4);\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\twidth: 1.75rem;\n\theight: 1.75rem;\n\tborder: none;\n\tborder-radius: var(--dui-radius-md);\n\tbackground: transparent;\n\tcolor: var(--dui-color-foreground);\n\tcursor: pointer;\n\topacity: 0.7;\n\ttransition: opacity var(--dui-duration-fast) var(--dui-ease-out);\n\n\t&:hover {\n\t\topacity: 1;\n\t\tbackground: var(--dui-color-muted);\n\t}\n\n\t&:focus-visible {\n\t\toutline: none;\n\t\tbox-shadow: 0 0 0 var(--dui-ring-width)\n\t\t\tcolor-mix(in oklch, var(--dui-color-ring) 50%, transparent);\n\t}\n\n\tsvg {\n\t\twidth: 1rem;\n\t\theight: 1rem;\n\t\tfill: none;\n\t\tstroke: currentColor;\n\t\tstroke-width: 2;\n\t\tstroke-linecap: round;\n\t\tstroke-linejoin: round;\n\t}\n}\n\n.sr-only {\n\tposition: absolute;\n\twidth: 1px;\n\theight: 1px;\n\tpadding: 0;\n\tmargin: -1px;\n\toverflow: hidden;\n\tclip-path: inset(50%);\n\twhite-space: nowrap;\n\tborder: 0;\n}\n</style>\n"
+		},
+		{
+			"path": "sheet/SheetDescription.vue",
+			"content": "<script setup lang=\"ts\">\nimport { DialogDescription } from 'reka-ui';\n</script>\n\n<template>\n\t<!-- Reka gives it an id and points the dialog's aria-describedby at it. -->\n\t<DialogDescription as-child>\n\t\t<p class=\"description\"><slot /></p>\n\t</DialogDescription>\n</template>\n\n<style scoped>\n.description {\n\tmargin: 0;\n\tcolor: var(--dui-color-muted-foreground);\n\tfont-size: var(--dui-text-sm);\n\tline-height: var(--dui-text-sm-line-height);\n}\n</style>\n"
+		},
+		{
+			"path": "sheet/SheetFooter.vue",
+			"content": "<template>\n\t<div class=\"footer\"><slot /></div>\n</template>\n\n<style scoped>\n.footer {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: var(--dui-space-2);\n\t/* Sits at the bottom of the sheet. */\n\tmargin-top: auto;\n}\n</style>\n"
+		},
+		{
+			"path": "sheet/SheetHeader.vue",
+			"content": "<template>\n\t<div class=\"header\"><slot /></div>\n</template>\n\n<style scoped>\n.header {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: var(--dui-space-1-5);\n}\n</style>\n"
+		},
+		{
+			"path": "sheet/SheetTitle.vue",
+			"content": "<script setup lang=\"ts\">\nimport { DialogTitle } from 'reka-ui';\n</script>\n\n<template>\n\t<!-- Reka gives it an id and points the dialog's aria-labelledby at it. -->\n\t<DialogTitle as-child>\n\t\t<h2 class=\"title\"><slot /></h2>\n\t</DialogTitle>\n</template>\n\n<style scoped>\n.title {\n\tmargin: 0;\n\tfont-size: var(--dui-text-base);\n\tline-height: 1;\n\tfont-weight: var(--dui-font-weight-medium);\n}\n</style>\n"
+		},
+		{
+			"path": "sheet/SheetTrigger.vue",
+			"content": "<script setup lang=\"ts\">\nimport { DialogTrigger } from 'reka-ui';\nimport { Button, type ButtonSize, type ButtonVariant } from '../button/index.js';\n\n// Renders our Button, so it takes the same variant and size props.\nconst { variant = 'default', size } = defineProps<{ variant?: ButtonVariant; size?: ButtonSize }>();\n</script>\n\n<template>\n\t<DialogTrigger as-child>\n\t\t<Button :variant=\"variant\" :size=\"size\"><slot /></Button>\n\t</DialogTrigger>\n</template>\n"
+		},
+		{
+			"path": "sheet/index.ts",
+			"content": "export { default as Root } from './Sheet.vue';\nexport { default as Trigger } from './SheetTrigger.vue';\nexport { default as Close } from './SheetClose.vue';\nexport { default as Content } from './SheetContent.vue';\nexport { default as Header } from './SheetHeader.vue';\nexport { default as Footer } from './SheetFooter.vue';\nexport { default as Title } from './SheetTitle.vue';\nexport { default as Description } from './SheetDescription.vue';\n"
+		}
+	]
+}

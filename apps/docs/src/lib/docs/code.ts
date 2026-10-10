@@ -1,7 +1,7 @@
 /** A highlighted code sample: the raw code to copy and the HTML to show. */
 export type Code = { code: string; html: string; lang: string; title?: string };
 
-/** Folder names for the names `@distill-ui/svelte` exports, when they differ from kebab-case. */
+/** Folder names for the names the packages export, when they differ from kebab-case. */
 const folders: Record<string, string> = { toast: 'toast', Toaster: 'toast' };
 
 function folderFor(name: string) {
@@ -25,11 +25,12 @@ const namespaces = new Set([
 ]);
 
 /**
- * The demos import from the workspace package. In a real project the files live in
- * src/lib/components/ui, so rewrite the import to what a user would write.
+ * The demos import from the workspace packages. In a real project the files live in the
+ * components folder the CLI sets up, so rewrite the import to what a user would write.
  */
-export function toProjectImports(source: string) {
-	return source.replace(/import \{ ([^}]+) \} from '@distill-ui\/svelte';/, (_, names: string) => {
+export function toProjectImports(source: string, framework: 'svelte' | 'vue' = 'svelte') {
+	const pkg = new RegExp(`import \\{ ([^}]+) \\} from '@distill-ui/${framework}';`);
+	return source.replace(pkg, (_, names: string) => {
 		const byFolder = new Map<string, string[]>();
 		for (const name of names.split(',').map((n) => n.trim())) {
 			const folder = folderFor(name);
@@ -37,11 +38,14 @@ export function toProjectImports(source: string) {
 		}
 		return [...byFolder]
 			.map(([folder, list]) => {
-				const path = `'#lib/components/ui/${folder}/index.js'`;
+				const path =
+					framework === 'vue'
+						? `'@/components/ui/${folder}'`
+						: `'#lib/components/ui/${folder}/index.js'`;
 				return list.length === 1 && namespaces.has(list[0])
 					? `import * as ${list[0]} from ${path};`
 					: `import { ${list.join(', ')} } from ${path};`;
 			})
-			.join('\n\t');
+			.join(framework === 'vue' ? '\n' : '\n\t');
 	});
 }

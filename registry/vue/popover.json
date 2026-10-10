@@ -1,0 +1,36 @@
+{
+	"name": "popover",
+	"type": "component",
+	"dependencies": [
+		"reka-ui@2.11.0"
+	],
+	"registryDependencies": [
+		"button"
+	],
+	"files": [
+		{
+			"path": "popover/Popover.vue",
+			"content": "<script setup lang=\"ts\">\nimport { PopoverRoot } from 'reka-ui';\nimport { toRef } from 'vue';\nimport { providePopoverPlacement } from './context.js';\nimport type { Placement } from './placement.js';\n\n// Use `v-model:open` to control it from outside.\nconst { placement = 'bottom' } = defineProps<{ placement?: Placement }>();\nconst open = defineModel<boolean>('open', { default: false });\nprovidePopoverPlacement(toRef(() => placement));\n</script>\n\n<template>\n\t<PopoverRoot v-model:open=\"open\">\n\t\t<slot />\n\t</PopoverRoot>\n</template>\n"
+		},
+		{
+			"path": "popover/PopoverContent.vue",
+			"content": "<script setup lang=\"ts\">\nimport { PopoverContent } from 'reka-ui';\nimport { computed } from 'vue';\nimport { injectPopoverPlacement } from './context.js';\nimport { toSideAlign } from './placement.js';\n\ndefineOptions({ inheritAttrs: false });\n\nconst position = computed(() => toSideAlign(injectPopoverPlacement().value));\n</script>\n\n<template>\n\t<!-- No portal: Reka positions it with position: fixed, so it stays inside your styles. -->\n\t<PopoverContent :side=\"position.side\" :align=\"position.align\" :side-offset=\"4\" as-child>\n\t\t<div v-bind=\"$attrs\" class=\"content\"><slot /></div>\n\t</PopoverContent>\n</template>\n\n<!--\n\tOptions you can set from a parent or on the popover content itself:\n\t--dui-popover-width, --dui-popover-padding, --dui-popover-radius, --dui-popover-bg, --dui-popover-fg\n-->\n\n<style scoped>\n.content {\n\twidth: var(--dui-popover-width, 18rem);\n\tpadding: var(--dui-popover-padding, var(--dui-space-4));\n\tborder-radius: var(--dui-popover-radius, var(--dui-radius-md));\n\tbackground: var(--dui-popover-bg, var(--dui-color-popover));\n\tcolor: var(--dui-popover-fg, var(--dui-color-popover-foreground));\n\tbox-shadow:\n\t\t0 0 0 1px color-mix(in oklch, var(--dui-color-foreground) 10%, transparent),\n\t\tvar(--dui-shadow-md);\n\tfont-size: var(--dui-text-sm);\n\tline-height: var(--dui-text-sm-line-height);\n\toutline: none;\n\t/* Reka copies this onto the positioning wrapper it puts around the content. */\n\tz-index: var(--dui-z-popover);\n\n\t/* Reka waits for animationend before removing it, so this uses the shared keyframes. */\n\t&[data-state='open'] {\n\t\tanimation: distill-zoom-in var(--dui-duration-fast) var(--dui-ease-out);\n\t}\n\n\t&[data-state='closed'] {\n\t\tanimation: distill-zoom-out var(--dui-duration-fast) var(--dui-ease-out);\n\t}\n}\n</style>\n"
+		},
+		{
+			"path": "popover/PopoverTrigger.vue",
+			"content": "<script setup lang=\"ts\">\nimport { PopoverTrigger } from 'reka-ui';\nimport { Button, type ButtonSize, type ButtonVariant } from '../button/index.js';\n\n// Renders our Button, so it takes the same variant and size props.\nconst { variant = 'outline', size } = defineProps<{ variant?: ButtonVariant; size?: ButtonSize }>();\n</script>\n\n<template>\n\t<PopoverTrigger as-child>\n\t\t<Button :variant=\"variant\" :size=\"size\"><slot /></Button>\n\t</PopoverTrigger>\n</template>\n"
+		},
+		{
+			"path": "popover/context.ts",
+			"content": "import { inject, provide } from 'vue';\nimport type { PlacementRef } from './placement.js';\n\n// The root takes the placement, and the content reads it to position itself.\nconst key = Symbol('distill-popover');\nexport const providePopoverPlacement = (placement: PlacementRef) => provide(key, placement);\nexport const injectPopoverPlacement = () => inject<PlacementRef>(key)!;\n"
+		},
+		{
+			"path": "popover/index.ts",
+			"content": "export { default as Root } from './Popover.vue';\nexport { default as Trigger } from './PopoverTrigger.vue';\nexport { default as Content } from './PopoverContent.vue';\nexport type { Placement } from './placement.js';\n"
+		},
+		{
+			"path": "popover/placement.ts",
+			"content": "import type { Ref } from 'vue';\n\n// Placement is written like Floating UI's ('bottom', 'top-start'…), the same as the\n// Svelte version. Reka takes it as a side and an alignment, so this splits it.\nexport type Placement =\n\t'top' | 'right' | 'bottom' | 'left' | `${'top' | 'right' | 'bottom' | 'left'}-${'start' | 'end'}`;\n\nexport function toSideAlign(placement: Placement) {\n\tconst [side, align = 'center'] = placement.split('-') as [\n\t\t'top' | 'right' | 'bottom' | 'left',\n\t\t('start' | 'end' | 'center')?\n\t];\n\treturn { side, align };\n}\n\nexport type PlacementRef = Readonly<Ref<Placement>>;\n"
+		}
+	]
+}

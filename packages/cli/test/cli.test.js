@@ -67,11 +67,13 @@ describe('init', () => {
 		);
 	});
 
-	test('refuses projects without Svelte 5', () => {
-		project({ dependencies: { vue: '^3.5.0' } });
-		expect(run('init').out).toContain('Vue version of distill-ui is planned');
+	test('refuses projects without Svelte 5 or Vue 3', () => {
 		project({ dependencies: { svelte: '^4.2.0' } });
 		expect(run('init').out).toContain('needs Svelte 5');
+		project({ dependencies: { vue: '^2.7.0' } });
+		expect(run('init').out).toContain('needs Vue 3');
+		project({ dependencies: { react: '^19.0.0' } });
+		expect(run('init').out).toContain("Couldn't find Svelte or Vue");
 	});
 });
 
@@ -109,5 +111,59 @@ describe('add', () => {
 	test('asks for init first', () => {
 		rmSync(join(dir, 'distill-ui.json'));
 		expect(run('add', 'button').out).toContain('Run `npx distill-ui init` first.');
+	});
+});
+
+describe('vue', () => {
+	test('init adds the tokens import to src/main.ts once', () => {
+		project({ dependencies: { vue: '^3.5.0' } });
+		mkdirSync(join(dir, 'src'));
+		writeFileSync(join(dir, 'src/main.ts'), "import { createApp } from 'vue';\n");
+		expect(run('init').code).toBe(0);
+		run('init');
+		expect(existsSync(join(dir, 'src/styles/distill-ui/tokens.css'))).toBe(true);
+		expect(readFileSync(join(dir, 'src/main.ts'), 'utf8')).toBe(
+			"import './styles/distill-ui/tokens.css';\nimport { createApp } from 'vue';\n"
+		);
+		const config = JSON.parse(readFileSync(join(dir, 'distill-ui.json'), 'utf8'));
+		expect(config).toEqual({
+			framework: 'vue',
+			components: 'src/components/ui',
+			styles: 'src/styles/distill-ui',
+			registry
+		});
+	});
+
+	test('add copies Vue files and installs reka-ui', () => {
+		project({ dependencies: { vue: '^3.5.0' } });
+		writeFileSync(
+			join(dir, 'tsconfig.app.json'),
+			'{ "compilerOptions": { "paths": { "@/*": ["./src/*"] } } }'
+		);
+		run('init');
+		const { code, out } = run('add', 'dialog', '--no-install');
+		expect(code).toBe(0);
+		expect(existsSync(join(dir, 'src/components/ui/dialog/DialogContent.vue'))).toBe(true);
+		expect(existsSync(join(dir, 'src/components/ui/button/Button.vue'))).toBe(true);
+		expect(out).toContain('npm install reka-ui@');
+		expect(out).toContain("import * as Dialog from '@/components/ui/dialog'");
+	});
+
+	test('nuxt uses the app folder and prints the nuxt.config line', () => {
+		project({ dependencies: { nuxt: '^4.0.0', vue: '^3.5.0' } });
+		mkdirSync(join(dir, 'app'));
+		const { out } = run('init');
+		expect(out).toContain("css: ['~/assets/styles/distill-ui/tokens.css'],");
+		expect(out).toContain("components: [{ path: '~/components', extensions: ['.vue'] }],");
+		expect(existsSync(join(dir, 'app/assets/styles/distill-ui/tokens.css'))).toBe(true);
+		expect(run('add', 'button', '--no-install').out).toContain(
+			"import { ... } from '~/components/ui/button'"
+		);
+		expect(existsSync(join(dir, 'app/components/ui/button/Button.vue'))).toBe(true);
+	});
+
+	test('list shows the Vue components before init', () => {
+		project({ dependencies: { vue: '^3.5.0' } });
+		expect(run('list').out).toContain('dropdown-menu');
 	});
 });

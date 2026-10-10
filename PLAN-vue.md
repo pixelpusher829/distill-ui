@@ -122,19 +122,19 @@ For each component:
 
 ## Phase 3 — Distribution / CLI
 
-- [ ] Generate `registry/vue/` JSON from `packages/vue` with the same build script approach as Svelte.
-- [ ] If using shadcn-vue's CLI registry support (or the shadcn registry format), confirm our Vue registry works with it.
-- [ ] If we built our own CLI for Svelte, add Vue support: detect Vue/Nuxt from `package.json`, copy into `components/ui`, install `reka-ui` if missing, share the same `init` for tokens and themes.
-- [ ] Test install in a fresh **Vite + Vue** app and a fresh **Nuxt** app, both without Tailwind.
+- [x] Generate `registry/vue/` JSON from `packages/vue` with the same build script approach as Svelte.
+- [x] ~~If using shadcn-vue's CLI registry support (or the shadcn registry format), confirm our Vue registry works with it.~~ We use our own CLI.
+- [x] If we built our own CLI for Svelte, add Vue support: detect Vue/Nuxt from `package.json`, copy into `components/ui`, install `reka-ui` if missing, share the same `init` for tokens and themes.
+- [x] Test install in a fresh **Vite + Vue** app and a fresh **Nuxt** app, both without Tailwind.
 
 **Done when:** both fresh apps can `init` and `add` components and they render correctly, including SSR in Nuxt with no hydration warnings.
 
 ## Phase 4 — Docs
 
-- [ ] Add a Svelte / Vue framework switcher to the existing docs site; the choice persists across pages.
-- [ ] Render Vue examples via `apps/vue-preview` (a small Vite + Vue app) embedded in iframes, keyed by component and example. (Alternative: a separate VitePress site sharing the same content. Decide in this phase; iframes keep one docs site.)
-- [ ] Vue code samples and copy buttons on every component page that has a Vue version; clearly mark components that are Svelte-only so far.
-- [ ] Installation pages for Vue (Vite) and Nuxt.
+- [x] Add a Svelte / Vue framework switcher to the existing docs site; the choice persists across pages.
+- [x] ~~Render Vue examples via `apps/vue-preview` (a small Vite + Vue app) embedded in iframes, keyed by component and example. (Alternative: a separate VitePress site sharing the same content. Decide in this phase; iframes keep one docs site.)~~ The docs mount the Vue demos straight into the page with `createApp`, so no iframes are needed.
+- [x] Vue code samples and copy buttons on every component page that has a Vue version; clearly mark components that are Svelte-only so far.
+- [x] Installation pages for Vue (Vite) and Nuxt.
 
 ## Phase 5 — Launch
 

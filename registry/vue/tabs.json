@@ -1,0 +1,34 @@
+{
+	"name": "tabs",
+	"type": "component",
+	"dependencies": [
+		"reka-ui@2.11.0"
+	],
+	"registryDependencies": [],
+	"files": [
+		{
+			"path": "tabs/Tabs.vue",
+			"content": "<script setup lang=\"ts\">\nimport { TabsRoot, useForwardPropsEmits, type TabsRootEmits, type TabsRootProps } from 'reka-ui';\n\n// Takes Reka UI's TabsRoot props: v-model, default-value, orientation…\nconst props = defineProps<TabsRootProps>();\nconst emits = defineEmits<TabsRootEmits>();\nconst forwarded = useForwardPropsEmits(props, emits);\n</script>\n\n<template>\n\t<TabsRoot v-bind=\"forwarded\" as-child>\n\t\t<div class=\"tabs\">\n\t\t\t<slot />\n\t\t</div>\n\t</TabsRoot>\n</template>\n\n<style scoped>\n.tabs {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: var(--dui-space-2);\n\n\t&[data-orientation='vertical'] {\n\t\tflex-direction: row;\n\t}\n}\n</style>\n"
+		},
+		{
+			"path": "tabs/TabsContent.vue",
+			"content": "<script setup lang=\"ts\">\nimport { TabsContent } from 'reka-ui';\n\nconst { value } = defineProps<{ value: string }>();\n</script>\n\n<template>\n\t<TabsContent :value=\"value\" as-child>\n\t\t<div class=\"content\">\n\t\t\t<slot />\n\t\t</div>\n\t</TabsContent>\n</template>\n\n<style scoped>\n.content {\n\tflex: 1;\n\tfont-size: var(--dui-text-sm);\n\tline-height: var(--dui-text-sm-line-height);\n\toutline: none;\n\n\t&:focus-visible {\n\t\tborder-radius: var(--dui-radius-md);\n\t\tbox-shadow: 0 0 0 var(--dui-ring-width)\n\t\t\tcolor-mix(in oklch, var(--dui-color-ring) 50%, transparent);\n\t}\n}\n</style>\n"
+		},
+		{
+			"path": "tabs/TabsList.vue",
+			"content": "<script setup lang=\"ts\">\nimport { TabsList } from 'reka-ui';\nimport { toRef } from 'vue';\nimport { provideTabsList, type TabsListVariant } from './context.js';\n\nconst props = withDefaults(defineProps<{ variant?: TabsListVariant; loop?: boolean }>(), {\n\tvariant: 'default',\n\tloop: true\n});\nprovideTabsList(toRef(() => props.variant));\n</script>\n\n<template>\n\t<TabsList :loop=\"loop\" as-child>\n\t\t<div class=\"list\" :data-variant=\"variant\">\n\t\t\t<slot />\n\t\t</div>\n\t</TabsList>\n</template>\n\n<!--\n\tOptions you can set from a parent or on the tabs list itself:\n\t--dui-tabs-list-height, --dui-tabs-list-radius, --dui-tabs-list-bg\n-->\n\n<style scoped>\n.list {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\twidth: fit-content;\n\theight: var(--dui-tabs-list-height, 2.25rem);\n\tpadding: 3px;\n\tborder-radius: var(--dui-tabs-list-radius, var(--dui-radius-lg));\n\tbackground: var(--dui-tabs-list-bg, var(--dui-color-muted));\n\tcolor: var(--dui-color-muted-foreground);\n\n\t&[data-variant='line'] {\n\t\tgap: var(--dui-space-1);\n\t\tborder-radius: 0;\n\t\tbackground: var(--dui-tabs-list-bg, transparent);\n\t}\n\n\t&[data-orientation='vertical'] {\n\t\tflex-direction: column;\n\t\theight: fit-content;\n\t}\n}\n</style>\n"
+		},
+		{
+			"path": "tabs/TabsTrigger.vue",
+			"content": "<script setup lang=\"ts\">\nimport { TabsTrigger } from 'reka-ui';\nimport { injectTabsList } from './context.js';\n\nconst { value, disabled = false } = defineProps<{ value: string; disabled?: boolean }>();\nconst listVariant = injectTabsList();\n</script>\n\n<template>\n\t<TabsTrigger :value=\"value\" :disabled=\"disabled\" as-child>\n\t\t<button type=\"button\" class=\"trigger\" :data-list-variant=\"listVariant ?? 'default'\">\n\t\t\t<slot />\n\t\t</button>\n\t</TabsTrigger>\n</template>\n\n<!--\n\tOptions you can set from a parent or on the tabs trigger itself:\n\t--dui-tabs-trigger-active-bg\n-->\n\n<style scoped>\n.trigger {\n\tposition: relative;\n\tdisplay: inline-flex;\n\tflex: 1;\n\talign-items: center;\n\tjustify-content: center;\n\tgap: var(--dui-space-1-5);\n\theight: calc(100% - 1px);\n\tpadding: var(--dui-space-1) var(--dui-space-2);\n\tborder: 1px solid transparent;\n\tborder-radius: var(--dui-radius-md);\n\tbackground: transparent;\n\tcolor: color-mix(in oklch, var(--dui-color-foreground) 60%, transparent);\n\tfont: inherit;\n\tfont-size: var(--dui-text-sm);\n\tline-height: var(--dui-text-sm-line-height);\n\tfont-weight: var(--dui-font-weight-medium);\n\twhite-space: nowrap;\n\tcursor: pointer;\n\ttransition:\n\t\tcolor var(--dui-duration-fast) var(--dui-ease-out),\n\t\tbackground-color var(--dui-duration-fast) var(--dui-ease-out),\n\t\tbox-shadow var(--dui-duration-fast) var(--dui-ease-out);\n\n\t&:hover {\n\t\tcolor: var(--dui-color-foreground);\n\t}\n\n\t&:focus-visible {\n\t\toutline: 1px solid var(--dui-color-ring);\n\t\tborder-color: var(--dui-color-ring);\n\t\tbox-shadow: 0 0 0 var(--dui-ring-width)\n\t\t\tcolor-mix(in oklch, var(--dui-color-ring) 50%, transparent);\n\t}\n\n\t&:disabled {\n\t\tpointer-events: none;\n\t\topacity: 0.5;\n\t}\n\n\t&[data-orientation='vertical'] {\n\t\twidth: 100%;\n\t\tjustify-content: flex-start;\n\t}\n\n\t/* Underline for the \"line\" variant, hidden until active. */\n\t&::after {\n\t\tcontent: '';\n\t\tposition: absolute;\n\t\tbackground: var(--dui-color-foreground);\n\t\topacity: 0;\n\t\ttransition: opacity var(--dui-duration-fast) var(--dui-ease-out);\n\t}\n\n\t&[data-orientation='horizontal']::after {\n\t\tinset-inline: 0;\n\t\tbottom: -5px;\n\t\theight: 2px;\n\t}\n\n\t&[data-orientation='vertical']::after {\n\t\tinset-block: 0;\n\t\tright: -4px;\n\t\twidth: 2px;\n\t}\n}\n\n.trigger[data-state='active'][data-list-variant='default'] {\n\tborder-color: var(--dui-color-tab-active-border);\n\tbackground: var(--dui-tabs-trigger-active-bg, var(--dui-color-tab-active));\n\tcolor: var(--dui-color-foreground);\n\tbox-shadow: var(--dui-shadow-sm);\n}\n\n.trigger[data-state='active'][data-list-variant='line'] {\n\tcolor: var(--dui-color-foreground);\n\n\t&::after {\n\t\topacity: 1;\n\t}\n}\n</style>\n"
+		},
+		{
+			"path": "tabs/context.ts",
+			"content": "import { inject, provide, type Ref } from 'vue';\n\nexport type TabsListVariant = 'default' | 'line';\n\n// The list's variant changes how its triggers look, so the list shares it with them, letting\n// each trigger style itself in its own file.\nconst key = Symbol('distill-tabs-list');\nexport const provideTabsList = (variant: Ref<TabsListVariant>) => provide(key, variant);\nexport const injectTabsList = () => inject<Ref<TabsListVariant> | undefined>(key, undefined);\n"
+		},
+		{
+			"path": "tabs/index.ts",
+			"content": "export { default as Root } from './Tabs.vue';\nexport { default as List } from './TabsList.vue';\nexport { default as Trigger } from './TabsTrigger.vue';\nexport { default as Content } from './TabsContent.vue';\nexport type { TabsListVariant } from './context.js';\n"
+		}
+	]
+}

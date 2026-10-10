@@ -1,0 +1,40 @@
+{
+	"name": "card",
+	"type": "component",
+	"dependencies": [],
+	"registryDependencies": [],
+	"files": [
+		{
+			"path": "card/Card.vue",
+			"content": "<script setup lang=\"ts\">\nconst { size = 'md' } = defineProps<{ size?: 'sm' | 'md' }>();\n</script>\n\n<template>\n\t<div class=\"card\" :data-size=\"size\"><slot /></div>\n</template>\n\n<!--\n\tOptions you can set from a parent or on the card itself:\n\t--dui-card-spacing, --dui-card-radius, --dui-card-bg, --dui-card-fg, --dui-card-border\n-->\n\n<style scoped>\n.card {\n\t/* Inherited by the card's parts (header, content, footer) for their padding. */\n\t--card-spacing: var(--dui-card-spacing, var(--dui-space-6));\n\t--card-title-size: var(--dui-text-base);\n\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: var(--card-spacing);\n\tpadding-block: var(--card-spacing);\n\toverflow: hidden;\n\tborder-radius: var(--dui-card-radius, var(--dui-radius-xl));\n\tbackground: var(--dui-card-bg, var(--dui-color-card));\n\tcolor: var(--dui-card-fg, var(--dui-color-card-foreground));\n\tfont-size: var(--dui-text-sm);\n\tbox-shadow:\n\t\t0 0 0 1px\n\t\t\tvar(--dui-card-border, color-mix(in oklch, var(--dui-color-foreground) 10%, transparent)),\n\t\tvar(--dui-shadow-xs);\n}\n\n.card[data-size='sm'] {\n\t--card-spacing: var(--dui-card-spacing, var(--dui-space-4));\n\t--card-title-size: var(--dui-text-sm);\n}\n</style>\n"
+		},
+		{
+			"path": "card/CardAction.vue",
+			"content": "<template>\n\t<div class=\"action\"><slot /></div>\n</template>\n\n<style scoped>\n.action {\n\tgrid-column: 2;\n\tgrid-row: 1 / span 2;\n\talign-self: start;\n\tjustify-self: end;\n\tmargin-inline-start: var(--dui-space-4);\n}\n</style>\n"
+		},
+		{
+			"path": "card/CardContent.vue",
+			"content": "<template>\n\t<div class=\"content\"><slot /></div>\n</template>\n\n<style scoped>\n.content {\n\tpadding-inline: var(--card-spacing);\n}\n</style>\n"
+		},
+		{
+			"path": "card/CardDescription.vue",
+			"content": "<template>\n\t<p class=\"description\"><slot /></p>\n</template>\n\n<style scoped>\n.description {\n\tgrid-column: 1;\n\tmargin: 0;\n\tcolor: var(--dui-color-muted-foreground);\n\tfont-size: var(--dui-text-sm);\n}\n</style>\n"
+		},
+		{
+			"path": "card/CardFooter.vue",
+			"content": "<template>\n\t<div class=\"footer\"><slot /></div>\n</template>\n\n<style scoped>\n.footer {\n\tdisplay: flex;\n\talign-items: center;\n\tgap: var(--dui-space-2);\n\tpadding-inline: var(--card-spacing);\n}\n</style>\n"
+		},
+		{
+			"path": "card/CardHeader.vue",
+			"content": "<template>\n\t<div class=\"header\"><slot /></div>\n</template>\n\n<style scoped>\n.header {\n\t/* Two columns so Card.Action can sit top-right beside the title and description. */\n\tdisplay: grid;\n\tgrid-template-columns: 1fr auto;\n\talign-items: start;\n\trow-gap: var(--dui-space-1);\n\tpadding-inline: var(--card-spacing);\n}\n</style>\n"
+		},
+		{
+			"path": "card/CardTitle.vue",
+			"content": "<template>\n\t<div class=\"title\"><slot /></div>\n</template>\n\n<style scoped>\n.title {\n\tgrid-column: 1;\n\tfont-size: var(--card-title-size);\n\tline-height: 1.5;\n\tfont-weight: var(--dui-font-weight-medium);\n}\n</style>\n"
+		},
+		{
+			"path": "card/index.ts",
+			"content": "export { default as Root } from './Card.vue';\nexport { default as Header } from './CardHeader.vue';\nexport { default as Title } from './CardTitle.vue';\nexport { default as Description } from './CardDescription.vue';\nexport { default as Action } from './CardAction.vue';\nexport { default as Content } from './CardContent.vue';\nexport { default as Footer } from './CardFooter.vue';\n"
+		}
+	]
+}

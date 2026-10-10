@@ -5,5 +5,10 @@
 		"noEmit": true,
 		"types": ["vite/client"]
 	},
-	"include": ["src/**/*.ts", "src/**/*.vue"]
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.vue",
+		"../docs/src/lib/demos/vue/*.vue",
+		"../docs/src/lib/docs/*.vue"
+	]
 }

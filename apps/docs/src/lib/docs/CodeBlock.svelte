@@ -1,8 +1,11 @@
 <script lang="ts">
 	import CopyButton from './CopyButton.svelte';
 	import type { Code } from './code.js';
+	import { framework, type PerFramework } from './framework.svelte.js';
 
-	let { code }: { code: Code } = $props();
+	// Pass one sample for each framework to follow the Svelte / Vue switch.
+	let { code: codes }: { code: Code | PerFramework<Code> } = $props();
+	const code = $derived('html' in codes ? codes : codes[framework.current]);
 </script>
 
 <figure class="code">

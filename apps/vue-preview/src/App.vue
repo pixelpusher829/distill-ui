@@ -1,32 +1,33 @@
 <script setup lang="ts">
-// Every demo on one page, for development and the browser tests in tests/.
-import AlertDemo from './demos/AlertDemo.vue';
-import AlertDialogDemo from './demos/AlertDialogDemo.vue';
-import AvatarDemo from './demos/AvatarDemo.vue';
-import AvatarGroupDemo from './demos/AvatarGroupDemo.vue';
-import BadgeDemo from './demos/BadgeDemo.vue';
-import ButtonCustomDemo from './demos/ButtonCustomDemo.vue';
-import ButtonDemo from './demos/ButtonDemo.vue';
-import CardDemo from './demos/CardDemo.vue';
-import CheckboxDemo from './demos/CheckboxDemo.vue';
-import DialogDemo from './demos/DialogDemo.vue';
-import DropdownMenuDemo from './demos/DropdownMenuDemo.vue';
-import InputCustomDemo from './demos/InputCustomDemo.vue';
-import InputDemo from './demos/InputDemo.vue';
-import LabelDemo from './demos/LabelDemo.vue';
-import PopoverDemo from './demos/PopoverDemo.vue';
-import RadioGroupDemo from './demos/RadioGroupDemo.vue';
-import SelectDemo from './demos/SelectDemo.vue';
-import SeparatorDemo from './demos/SeparatorDemo.vue';
-import SheetDemo from './demos/SheetDemo.vue';
-import SkeletonDemo from './demos/SkeletonDemo.vue';
-import SwitchCustomDemo from './demos/SwitchCustomDemo.vue';
-import SwitchDemo from './demos/SwitchDemo.vue';
-import TabsDemo from './demos/TabsDemo.vue';
-import TabsLineDemo from './demos/TabsLineDemo.vue';
-import TextareaDemo from './demos/TextareaDemo.vue';
-import ToastDemo from './demos/ToastDemo.vue';
-import TooltipDemo from './demos/TooltipDemo.vue';
+// Every demo on one page, for development and the browser tests in tests/. The demos live
+// in the docs app, next to the Svelte ones, so the docs show the same code.
+import AlertDemo from '../../docs/src/lib/demos/vue/alert.vue';
+import AlertDialogDemo from '../../docs/src/lib/demos/vue/alert-dialog.vue';
+import AvatarDemo from '../../docs/src/lib/demos/vue/avatar.vue';
+import AvatarGroupDemo from '../../docs/src/lib/demos/vue/avatar-group.vue';
+import BadgeDemo from '../../docs/src/lib/demos/vue/badge.vue';
+import ButtonCustomDemo from '../../docs/src/lib/demos/vue/button-custom.vue';
+import ButtonDemo from '../../docs/src/lib/demos/vue/button.vue';
+import CardDemo from '../../docs/src/lib/demos/vue/card.vue';
+import CheckboxDemo from '../../docs/src/lib/demos/vue/checkbox.vue';
+import DialogDemo from '../../docs/src/lib/demos/vue/dialog.vue';
+import DropdownMenuDemo from '../../docs/src/lib/demos/vue/dropdown-menu.vue';
+import InputCustomDemo from '../../docs/src/lib/demos/vue/input-custom.vue';
+import InputDemo from '../../docs/src/lib/demos/vue/input.vue';
+import LabelDemo from '../../docs/src/lib/demos/vue/label.vue';
+import PopoverDemo from '../../docs/src/lib/demos/vue/popover.vue';
+import RadioGroupDemo from '../../docs/src/lib/demos/vue/radio-group.vue';
+import SelectDemo from '../../docs/src/lib/demos/vue/select.vue';
+import SeparatorDemo from '../../docs/src/lib/demos/vue/separator.vue';
+import SheetDemo from '../../docs/src/lib/demos/vue/sheet.vue';
+import SkeletonDemo from '../../docs/src/lib/demos/vue/skeleton.vue';
+import SwitchCustomDemo from '../../docs/src/lib/demos/vue/switch-custom.vue';
+import SwitchDemo from '../../docs/src/lib/demos/vue/switch.vue';
+import TabsDemo from '../../docs/src/lib/demos/vue/tabs.vue';
+import TabsLineDemo from '../../docs/src/lib/demos/vue/tabs-line.vue';
+import TextareaDemo from '../../docs/src/lib/demos/vue/textarea.vue';
+import ToastDemo from '../../docs/src/lib/demos/vue/toast.vue';
+import TooltipDemo from '../../docs/src/lib/demos/vue/tooltip.vue';
 import { Toaster } from '@distill-ui/vue';
 </script>
 

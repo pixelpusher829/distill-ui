@@ -1,13 +1,20 @@
 import { highlightAll } from '#lib/docs/highlight.server.js';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => ({
-	code: await highlightAll({
+export const load: PageServerLoad = async () => {
+	const code = await highlightAll({
 		markup: {
 			lang: 'svelte',
 			title: 'button.svelte (markup, unchanged)',
 			code: `<button {...restProps} class={['button', className]} data-variant={variant} data-size={size}>
 	{@render children?.()}
+</button>`
+		},
+		markupVue: {
+			lang: 'vue',
+			title: 'Button.vue (markup, unchanged)',
+			code: `<button class="button" :data-variant="variant" :data-size="size" :type="type">
+	<slot />
 </button>`
 		},
 		style: {
@@ -40,5 +47,15 @@ export const load: PageServerLoad = async () => ({
 	padding: 0.25rem 0.75rem;
 }`
 		}
-	})
-});
+	});
+
+	return {
+		code: {
+			markup: { svelte: code.markup, vue: code.markupVue },
+			style: {
+				svelte: code.style,
+				vue: { ...code.style, title: 'Button.vue (your new style block)' }
+			}
+		}
+	};
+};
