@@ -62,9 +62,13 @@ html {
 	scroll-padding-top: 5rem;
 }
 
-/* Balances line breaks so headings and paragraphs don't end on a single word. :where() keeps it
-   easy to override. */
-:where(h1, h2, h3, h4, h5, h6, p) {
+/* Keeps a single word from ending up alone on the last line. Headings are short, so they get even
+   lines; paragraphs only fix the last one. :where() keeps it easy to override. */
+:where(h1, h2, h3, h4, h5, h6) {
+	text-wrap: balance;
+}
+
+:where(p) {
 	text-wrap: pretty;
 }
 

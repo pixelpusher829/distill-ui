@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Meta from '#lib/docs/Meta.svelte';
 	import CodeBlock from '#lib/docs/CodeBlock.svelte';
 	import type { PageProps } from './$types';
 
@@ -18,9 +19,10 @@
 	];
 </script>
 
-<svelte:head>
-	<title>Theming · distill-ui</title>
-</svelte:head>
+<Meta
+	title="Theming · distill-ui"
+	description="Every color, corner, space and animation in distill-ui comes from a CSS custom property. Change a token and every component follows, in light and dark."
+/>
 
 <article class="prose">
 	<h1>Theming</h1>

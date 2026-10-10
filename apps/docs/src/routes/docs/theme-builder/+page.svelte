@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Meta from '#lib/docs/Meta.svelte';
 	import {
 		Alert,
 		Badge,
@@ -47,9 +48,10 @@
 	]);
 </script>
 
-<svelte:head>
-	<title>Theme builder · distill-ui</title>
-</svelte:head>
+<Meta
+	title="Theme builder · distill-ui"
+	description="Pick a color, a gray and a corner radius, preview them on real components in light and dark, then copy the theme into your project."
+/>
 
 <article class="prose">
 	<h1>Theme builder</h1>

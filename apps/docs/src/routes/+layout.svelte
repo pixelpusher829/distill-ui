@@ -6,6 +6,8 @@
 	import ThemeToggle from '#lib/docs/ThemeToggle.svelte';
 	import FrameworkSwitch from '#lib/docs/FrameworkSwitch.svelte';
 	import { framework } from '#lib/docs/framework.svelte.js';
+	import { SITE_URL } from '#lib/docs/site.js';
+	import { page } from '$app/state';
 	import { onMount } from 'svelte';
 	import type { LayoutProps } from './$types';
 
@@ -16,6 +18,21 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	<link rel="canonical" href={SITE_URL + page.url.pathname} />
+	<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+	<meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="distill-ui" />
+	<meta property="og:url" content={SITE_URL + page.url.pathname} />
+	<meta property="og:image" content="{SITE_URL}/og.png" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta
+		property="og:image:alt"
+		content="distill-ui: scoped CSS, the way Svelte and Vue intended."
+	/>
+	<meta name="twitter:card" content="summary_large_image" />
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link

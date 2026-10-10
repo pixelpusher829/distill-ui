@@ -1,13 +1,15 @@
 <script lang="ts">
+	import Meta from '#lib/docs/Meta.svelte';
 	import CodeBlock from '#lib/docs/CodeBlock.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
 </script>
 
-<svelte:head>
-	<title>Customizing · distill-ui</title>
-</svelte:head>
+<Meta
+	title="Customizing · distill-ui"
+	description="Change one distill-ui component, or one place it's used, with plain scoped CSS and component options. No :global() or :deep()."
+/>
 
 <article class="prose">
 	<h1>Customizing</h1>

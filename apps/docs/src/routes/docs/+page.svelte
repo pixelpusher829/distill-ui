@@ -1,6 +1,11 @@
-<svelte:head>
-	<title>Introduction · distill-ui</title>
-</svelte:head>
+<script lang="ts">
+	import Meta from '#lib/docs/Meta.svelte';
+</script>
+
+<Meta
+	title="Introduction · distill-ui"
+	description="What distill-ui is: accessible Svelte 5 and Vue 3 components you copy into your project and style with plain CSS, not a package you import."
+/>
 
 <article class="prose">
 	<h1>Introduction</h1>

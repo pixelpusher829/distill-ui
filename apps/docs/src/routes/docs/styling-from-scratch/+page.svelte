@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Meta from '#lib/docs/Meta.svelte';
 	import CodeBlock from '#lib/docs/CodeBlock.svelte';
 	import { framework } from '#lib/docs/framework.svelte.js';
 	import type { PageProps } from './$types';
@@ -22,9 +23,10 @@
 	]);
 </script>
 
-<svelte:head>
-	<title>Styling from scratch · distill-ui</title>
-</svelte:head>
+<Meta
+	title="Styling from scratch · distill-ui"
+	description="Keep distill-ui's behavior and accessibility, delete its styles, and write your own CSS from a clean slate."
+/>
 
 <article class="prose">
 	<h1>Styling from scratch</h1>

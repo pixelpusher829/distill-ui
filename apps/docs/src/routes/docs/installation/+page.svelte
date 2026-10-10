@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Meta from '#lib/docs/Meta.svelte';
 	import CodeBlock from '#lib/docs/CodeBlock.svelte';
 	import { framework } from '#lib/docs/framework.svelte.js';
 	import type { PageProps } from './$types';
@@ -10,9 +11,10 @@
 	const styles = $derived(vue ? 'src/styles/distill-ui' : 'src/lib/styles/distill-ui');
 </script>
 
-<svelte:head>
-	<title>Installation · distill-ui</title>
-</svelte:head>
+<Meta
+	title="Installation · distill-ui"
+	description="Add distill-ui to a Svelte 5, SvelteKit, Vue 3 or Nuxt project with one CLI command. No Tailwind needed."
+/>
 
 <article class="prose">
 	<h1>Installation</h1>

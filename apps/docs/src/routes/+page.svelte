@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Meta from '#lib/docs/Meta.svelte';
 	import { Button } from '@distill-ui/svelte';
 	import CodeBlock from '#lib/docs/CodeBlock.svelte';
 	import ThemePlayground from '#lib/docs/ThemePlayground.svelte';
@@ -55,13 +56,10 @@
 	{/each}
 {/snippet}
 
-<svelte:head>
-	<title>distill-ui: Svelte and Vue components styled with plain CSS</title>
-	<meta
-		name="description"
-		content="Accessible Svelte 5 and Vue 3 components you copy into your project and style with plain scoped CSS. No Tailwind, no :global(), no workarounds."
-	/>
-</svelte:head>
+<Meta
+	title="distill-ui: Svelte and Vue components styled with plain CSS"
+	description="Accessible Svelte 5 and Vue 3 components you copy into your project and style with plain scoped CSS. No Tailwind, no :global(), no workarounds."
+/>
 
 <div class="page">
 	<section class="hero">
@@ -283,7 +281,6 @@
 		font-weight: 700;
 		line-height: 1.02;
 		letter-spacing: -0.04em;
-		text-wrap: balance;
 	}
 
 	.accent {

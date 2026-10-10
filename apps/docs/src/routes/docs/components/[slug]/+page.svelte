@@ -3,11 +3,14 @@
 	import { Badge, Tabs } from '@distill-ui/svelte';
 	import type { Component as VueComponent } from 'vue';
 	import CodeBlock from '#lib/docs/CodeBlock.svelte';
+	import Meta from '#lib/docs/Meta.svelte';
 	import VueDemo from '#lib/docs/VueDemo.svelte';
 	import { framework } from '#lib/docs/framework.svelte.js';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
+	// The description in plain words: the lead and search results show no code formatting.
+	const summary = $derived(data.doc.description.replace(/`/g, ''));
 
 	const demoComponents = import.meta.glob<Component>('/src/lib/demos/svelte/*.svelte', {
 		import: 'default',
@@ -24,14 +27,14 @@
 	const uses = $derived(data.uses[framework.current]);
 </script>
 
-<svelte:head>
-	<title>{data.doc.name} · distill-ui</title>
-	<meta name="description" content={data.doc.description} />
-</svelte:head>
+<Meta
+	title="{data.doc.name} · distill-ui"
+	description="{summary} An accessible Svelte and Vue component you copy into your project and style with plain CSS."
+/>
 
 <article class="prose">
 	<h1>{data.doc.name}</h1>
-	<p class="lead">{data.doc.description.replace(/`/g, '')}</p>
+	<p class="lead">{summary}</p>
 	<p class="built-on"><Badge variant="secondary">{data.builtOn[framework.current]}</Badge></p>
 
 	{#each data.demos as example, i (example.file)}
