@@ -74,6 +74,28 @@ for (const theme of themes) {
 			await expect(trigger).toHaveText('Select a fruit');
 		});
 
+		test('checkbox and switch toggle with Space', async ({ page }) => {
+			const checkbox = page.getByRole('checkbox', { name: 'Accept terms and conditions' });
+			await checkbox.focus();
+			await page.keyboard.press('Space');
+			await expect(checkbox).toBeChecked();
+
+			const toggle = page.getByRole('switch', { name: 'Airplane mode' });
+			await toggle.focus();
+			await page.keyboard.press('Space');
+			await expect(toggle).toBeChecked();
+		});
+
+		test('radio group moves with arrow keys and updates its value', async ({ page }) => {
+			const group = page.getByRole('radiogroup', { name: 'Spacing' });
+			await expect(group.getByRole('radio', { name: 'Comfortable' })).toBeChecked();
+			await group.getByRole('radio', { name: 'Comfortable' }).focus();
+			await page.keyboard.press('ArrowDown');
+			await expect(group.getByRole('radio', { name: 'Compact' })).toBeChecked();
+			await expect(group.getByRole('radio', { name: 'Compact' })).toBeFocused();
+			await expect(page.getByText('Selected: compact')).toBeVisible();
+		});
+
 		test('tabs move with arrow keys and skip disabled tabs', async ({ page }) => {
 			await page.getByRole('tab', { name: 'Account' }).focus();
 			await page.keyboard.press('ArrowRight');

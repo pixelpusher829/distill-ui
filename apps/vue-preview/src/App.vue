@@ -2,6 +2,14 @@
 // Every demo on one page, for development and the browser tests in tests/.
 import ButtonCustomDemo from './demos/ButtonCustomDemo.vue';
 import ButtonDemo from './demos/ButtonDemo.vue';
+import CheckboxDemo from './demos/CheckboxDemo.vue';
+import InputCustomDemo from './demos/InputCustomDemo.vue';
+import InputDemo from './demos/InputDemo.vue';
+import LabelDemo from './demos/LabelDemo.vue';
+import RadioGroupDemo from './demos/RadioGroupDemo.vue';
+import SwitchCustomDemo from './demos/SwitchCustomDemo.vue';
+import SwitchDemo from './demos/SwitchDemo.vue';
+import TextareaDemo from './demos/TextareaDemo.vue';
 import DialogDemo from './demos/DialogDemo.vue';
 import SelectDemo from './demos/SelectDemo.vue';
 import TabsDemo from './demos/TabsDemo.vue';
@@ -14,6 +22,22 @@ import TabsLineDemo from './demos/TabsLineDemo.vue';
 		<section data-testid="button">
 			<h2>Button</h2>
 			<ButtonDemo /><ButtonCustomDemo />
+		</section>
+		<section data-testid="inputs">
+			<h2>Input, Textarea and Label</h2>
+			<InputDemo /><InputCustomDemo /><TextareaDemo /><LabelDemo />
+		</section>
+		<section data-testid="checkbox">
+			<h2>Checkbox</h2>
+			<CheckboxDemo />
+		</section>
+		<section data-testid="radio-group">
+			<h2>Radio Group</h2>
+			<RadioGroupDemo />
+		</section>
+		<section data-testid="switch">
+			<h2>Switch</h2>
+			<SwitchDemo /><SwitchCustomDemo />
 		</section>
 		<section data-testid="dialog">
 			<h2>Dialog</h2>

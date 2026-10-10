@@ -226,7 +226,7 @@ The Vue version is a port of the Svelte one: the same parts, props, CSS and cust
 
 ### Native elements first
 
-Same rule as Svelte: Input, Textarea, Label, Checkbox, Radio Group and Switch stay native elements with the same CSS. Reka is only for what no native element does.
+Same rule as Svelte: Input, Textarea, Label, Checkbox, Radio Group and Switch stay native elements with the same CSS. Reka is only for what no native element does. They use `defineModel`, so the value goes through `v-model` the way it does on a plain input: `<Input v-model="email" />`, `<Checkbox v-model="terms" />`, `<Switch v-model="on" />`, `<RadioGroup.Root v-model="plan">`. Checkbox also takes `v-model:indeterminate`. Other attributes (`id`, `disabled`, `aria-invalid`) fall through to the native element.
 
 ### Scoping strategy: Reka parts with `as-child` on our own elements
 
