@@ -1,0 +1,10 @@
+export { default as Root } from './DropdownMenu.vue';
+export { default as Trigger } from './DropdownMenuTrigger.vue';
+export { default as Content } from './DropdownMenuContent.vue';
+export { default as Item } from './DropdownMenuItem.vue';
+export { default as CheckboxItem } from './DropdownMenuCheckboxItem.vue';
+export { default as Label } from './DropdownMenuLabel.vue';
+export { default as Separator } from './DropdownMenuSeparator.vue';
+export { default as Group } from './DropdownMenuGroup.vue';
+export { default as Shortcut } from './DropdownMenuShortcut.vue';
+export type { Placement } from './placement.js';

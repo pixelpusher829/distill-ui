@@ -1,0 +1,9 @@
+export { default as Root } from './AlertDialog.vue';
+export { default as Trigger } from './AlertDialogTrigger.vue';
+export { default as Content } from './AlertDialogContent.vue';
+export { default as Header } from './AlertDialogHeader.vue';
+export { default as Footer } from './AlertDialogFooter.vue';
+export { default as Title } from './AlertDialogTitle.vue';
+export { default as Description } from './AlertDialogDescription.vue';
+export { default as Action } from './AlertDialogAction.vue';
+export { default as Cancel } from './AlertDialogCancel.vue';
