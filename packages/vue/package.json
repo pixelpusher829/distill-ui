@@ -1,0 +1,32 @@
+{
+	"name": "@distill-ui/vue",
+	"version": "0.0.1",
+	"private": true,
+	"description": "Vue 3 components for distill-ui, styled with scoped CSS and custom properties.",
+	"license": "MIT",
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"scripts": {
+		"check": "vue-tsc --noEmit"
+	},
+	"peerDependencies": {
+		"vue": "^3.5.0"
+	},
+	"dependencies": {
+		"@distill-ui/tokens": "workspace:*",
+		"reka-ui": "2.11.0"
+	},
+	"devDependencies": {
+		"@vue/tsconfig": "^0.9.1",
+		"typescript": "^6.0.3",
+		"vue": "^3.5.43",
+		"vue-tsc": "^3.3.12"
+	},
+	"keywords": [
+		"vue",
+		"components",
+		"ui"
+	]
+}

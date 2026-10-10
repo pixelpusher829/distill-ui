@@ -1,6 +1,6 @@
 # Conventions
 
-How every distill-ui component is built. The **Shared** section applies to every framework and the Vue version will follow it too. The **Svelte** section is specific to `packages/svelte`.
+How every distill-ui component is built. The **Shared** section applies to every framework. The **Svelte** section is specific to `packages/svelte`, and the **Vue** section to `packages/vue`.
 
 Change a documented convention only after discussing it (see "Notes for Claude Code" in PLAN-svelte.md).
 
@@ -217,3 +217,105 @@ So a component can only import Svelte, packages listed in `packages/svelte/packa
 - `bun run check`: svelte-check with no errors or warnings.
 - `bun run lint`: Prettier and ESLint.
 - `bun run test`: checks the registry is up to date, runs the CLI tests, then the Playwright tests for keyboard behavior and axe (WCAG 2.2 AA), in light and dark. Run `bunx playwright install chromium` in `apps/docs` once first.
+
+---
+
+## Vue
+
+The Vue version is a port of the Svelte one: the same parts, props, CSS and custom properties, so a component looks and behaves the same in both. When in doubt, copy what the Svelte file does. Behavior comes from [Reka UI](https://reka-ui.com) instead of Melt, and [shadcn-vue](https://github.com/unovue/shadcn-vue) is the structural reference (`bun run reference:vue`).
+
+### Native elements first
+
+Same rule as Svelte: Input, Textarea, Label, Checkbox, Radio Group and Switch stay native elements with the same CSS. Reka is only for what no native element does.
+
+### Scoping strategy: Reka parts with `as-child` on our own elements
+
+Every Reka part gets `as-child`, and the element inside it is written in our template, so `<style scoped>` reaches it. Reka merges its attributes and handlers onto that element.
+
+```vue
+<template>
+	<DialogContent v-bind="forwarded" as-child>
+		<div v-bind="$attrs" class="content"><slot /></div>
+	</DialogContent>
+</template>
+
+<style scoped>
+.content {
+	background: var(--dui-dialog-bg, var(--dui-color-popover));
+}
+</style>
+```
+
+- Use `:deep()` where Svelte uses `:global()`, for consumer children such as icons in a button: `.button :deep(svg)`. Same limits as the Svelte exception.
+- Triggers and closes wrap our `Button` in the Reka part with `as-child`, so they take `variant` and `size` like in Svelte.
+- No portals. Dialogs and popovers render where they are, with `position: fixed` and a `--dui-z-*` token, so custom properties set on an ancestor still reach open content.
+- Components with a root set `inheritAttrs: false` only when the attributes belong on an inner element (Dialog content, Select content), then bind `$attrs` there.
+
+### State attributes
+
+Reka uses `data-state` instead of separate attributes. Use these in place of the Melt ones in the shared table:
+
+| State                                  | Svelte (Melt)   | Vue (Reka)                                                           |
+| -------------------------------------- | --------------- | -------------------------------------------------------------------- |
+| Open (dialog, popover, select content) | `[data-open]`   | `[data-state="open"]`, `[data-state="closed"]` while it animates out |
+| Active tab                             | `[data-active]` | `[data-state="active"]`                                              |
+
+`[data-highlighted]`, `[data-disabled]`, `[data-placeholder]` and `[data-orientation]` are the same in both.
+
+### Animations
+
+Reka keeps content mounted until its `animationend`, so open and close use the shared keyframes on `[data-state]` rather than transitions:
+
+```css
+.content {
+	&[data-state='open'] {
+		animation: distill-zoom-in var(--dui-duration-fast) var(--dui-ease-out);
+	}
+
+	&[data-state='closed'] {
+		animation: distill-zoom-out var(--dui-duration-fast) var(--dui-ease-out);
+	}
+}
+```
+
+### File layout
+
+```
+components/ui/<component>/
+├── <Component>.vue          # Root: wraps the Reka root and forwards its props and events
+├── <Component><Part>.vue    # One file per part (DialogTrigger.vue, SelectItem.vue…)
+├── context.ts               # provide / inject, only when parts share something Reka doesn't
+└── index.ts                 # export { default as Root } from './Dialog.vue', …
+```
+
+Consumers use the same namespaces as in Svelte: `import { Dialog } from '@/components/ui/dialog'` then `<Dialog.Root>`, `<Dialog.Trigger>`. Components with no parts (Button) export the component under its own name.
+
+### Props pattern
+
+```vue
+<script setup lang="ts">
+import {
+	DialogRoot,
+	useForwardPropsEmits,
+	type DialogRootEmits,
+	type DialogRootProps
+} from 'reka-ui';
+
+const props = defineProps<DialogRootProps>();
+const emits = defineEmits<DialogRootEmits>();
+const forwarded = useForwardPropsEmits(props, emits);
+</script>
+```
+
+- Roots and contents take Reka's props and events and forward them, so `v-model`, `v-model:open` and `default-value` work as Reka documents. Svelte's `bind:value` is `v-model` here.
+- Our own props (`variant`, `size`, `showCloseButton`) are taken out before forwarding.
+- Merge classes with Vue's normal class merging. Never use `cn`, `clsx` or `tailwind-variants`.
+
+### Filling gaps in Reka
+
+- **Select label.** Reka's `SelectLabel` is a group heading (our `Select.GroupHeading`). `Select.Label` is our own `<label>`; the root makes ids so it points at the trigger, and the list points `aria-labelledby` back at it.
+
+### Checks
+
+- `bun run check`: vue-tsc with no errors.
+- `bun run test` also runs `apps/vue-preview/tests`, the same keyboard and axe checks as the Svelte ones, in light and dark. While a Select is open, Reka hides the rest of the page from screen readers, so that one axe run skips `aria-hidden-focus`.
