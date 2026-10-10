@@ -1,0 +1,9 @@
+export { default as Root } from './Select.vue';
+export { default as Label } from './SelectLabel.vue';
+export { default as Trigger } from './SelectTrigger.vue';
+export { default as Value } from './SelectValue.vue';
+export { default as Content } from './SelectContent.vue';
+export { default as Item } from './SelectItem.vue';
+export { default as Group } from './SelectGroup.vue';
+export { default as GroupHeading } from './SelectGroupHeading.vue';
+export { default as Separator } from './SelectSeparator.vue';

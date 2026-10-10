@@ -1,0 +1,28 @@
+{
+	"name": "@distill-ui/vue-preview",
+	"version": "0.0.1",
+	"private": true,
+	"description": "Renders the Vue demos, for development and the browser tests.",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "vue-tsc --noEmit",
+		"test": "playwright test"
+	},
+	"dependencies": {
+		"@distill-ui/tokens": "workspace:*",
+		"@distill-ui/vue": "workspace:*",
+		"vue": "^3.5.43"
+	},
+	"devDependencies": {
+		"@axe-core/playwright": "4",
+		"@playwright/test": "1.64.0",
+		"@vitejs/plugin-vue": "^6.0.9",
+		"@vue/tsconfig": "^0.9.1",
+		"typescript": "^6.0.3",
+		"vite": "^8.3.0",
+		"vue-tsc": "^3.3.12"
+	}
+}

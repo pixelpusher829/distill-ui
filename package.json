@@ -12,19 +12,22 @@
 	},
 	"scripts": {
 		"dev": "bun --filter @distill-ui/docs dev",
-		"build": "bun --filter @distill-ui/svelte build && bun --filter @distill-ui/docs build",
+		"build": "bun --filter @distill-ui/svelte build && bun --filter @distill-ui/docs build && bun --filter @distill-ui/vue-preview build",
 		"check": "bun --filter '@distill-ui/*' check",
-		"test": "node scripts/build-registry.js --check && bun --filter distill-ui test && bun --filter @distill-ui/docs test",
+		"test": "node scripts/build-registry.js --check && bun --filter distill-ui test && bun --filter @distill-ui/docs test && bun --filter @distill-ui/vue-preview test",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"reference": "git clone --depth 1 https://github.com/huntabyte/shadcn-svelte.git reference/shadcn-svelte",
-		"registry": "node scripts/build-registry.js"
+		"registry": "node scripts/build-registry.js",
+		"dev:vue": "bun --filter @distill-ui/vue-preview dev",
+		"reference:vue": "git clone --depth 1 https://github.com/unovue/shadcn-vue.git reference/shadcn-vue"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
 		"eslint": "^10.4.1",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.19.0",
+		"eslint-plugin-vue": "^10.11.1",
 		"globals": "^17.6.0",
 		"prettier": "^3.8.3",
 		"prettier-plugin-svelte": "^4.1.0",
