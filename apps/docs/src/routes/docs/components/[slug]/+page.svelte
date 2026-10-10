@@ -1,7 +1,10 @@
 <script lang="ts">
 	import type { Component } from 'svelte';
 	import { Badge, Tabs } from '@distill-ui/svelte';
+	import type { Component as VueComponent } from 'vue';
 	import CodeBlock from '#lib/docs/CodeBlock.svelte';
+	import VueDemo from '#lib/docs/VueDemo.svelte';
+	import { framework } from '#lib/docs/framework.svelte.js';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -11,6 +14,14 @@
 		eager: true
 	});
 	const demo = (file: string) => demoComponents[`/src/lib/demos/svelte/${file}.svelte`];
+
+	// Vue and the Vue demos only load when someone picks Vue.
+	const vueDemos = import.meta.glob<{ default: VueComponent }>('/src/lib/demos/vue/*.vue');
+	const vueDemo = (file: string) => vueDemos[`/src/lib/demos/vue/${file}.vue`];
+
+	const files = $derived(data.files[framework.current]);
+	const packages = $derived(data.packages[framework.current]);
+	const uses = $derived(data.uses[framework.current]);
 </script>
 
 <svelte:head>
@@ -21,7 +32,7 @@
 <article class="prose">
 	<h1>{data.doc.name}</h1>
 	<p class="lead">{data.doc.description.replace(/`/g, '')}</p>
-	<p class="built-on"><Badge variant="secondary">{data.doc.builtOn}</Badge></p>
+	<p class="built-on"><Badge variant="secondary">{data.builtOn[framework.current]}</Badge></p>
 
 	{#each data.demos as example, i (example.file)}
 		{#if example.title}
@@ -35,7 +46,15 @@
 			</Tabs.List>
 			<Tabs.Content value="preview">
 				<div class="preview" data-testid={i === 0 ? 'preview' : undefined}>
-					<div class="preview-inner"><Demo /></div>
+					<div class="preview-inner">
+						{#if framework.current === 'vue'}
+							{#key example.file}
+								<VueDemo load={vueDemo(example.file)} withToaster={data.doc.slug === 'toast'} />
+							{/key}
+						{:else}
+							<Demo />
+						{/if}
+					</div>
 				</div>
 			</Tabs.Content>
 			<Tabs.Content value="code">
@@ -52,15 +71,19 @@
 		</Tabs.List>
 		<Tabs.Content value="cli">
 			<CodeBlock code={data.install} />
-			{#each data.uses as use (use.slug)}
+			{#each uses as use (use.slug)}
 				<p>
 					It also copies <a href="/docs/components/{use.slug}">{use.name}</a>, which {data.doc.name}
 					uses.
 				</p>
 			{/each}
-			{#if data.packages}
+			{#if packages.code}
 				<p>
-					It installs <code>melt</code> and <code>@floating-ui/dom</code> if you don't have them yet.
+					It installs
+					{#each packages.names as name, i (name)}{#if i > 0}<span> and </span>{/if}<code
+							>{name}</code
+						>{/each}
+					if you don't have {packages.names.length > 1 ? 'them' : 'it'} yet.
 				</p>
 			{/if}
 		</Tabs.Content>
@@ -71,15 +94,15 @@
 						>manual installation</a
 					>.
 				</li>
-				{#if data.packages}
-					<li>Install the packages it needs: <CodeBlock code={data.packages} /></li>
+				{#if packages.code}
+					<li>Install the packages it needs: <CodeBlock code={packages.code} /></li>
 				{/if}
-				{#each data.uses as use (use.slug)}
+				{#each uses as use (use.slug)}
 					<li>Copy <a href="/docs/components/{use.slug}">{use.name}</a> too, which it uses.</li>
 				{/each}
 				<li>Copy these files into your project:</li>
 			</ol>
-			{#each data.files as file (file.title)}
+			{#each files as file (file.title)}
 				<CodeBlock code={file} />
 			{/each}
 		</Tabs.Content>

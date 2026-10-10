@@ -1,0 +1,16 @@
+{
+	"name": "input",
+	"type": "component",
+	"dependencies": [],
+	"registryDependencies": [],
+	"files": [
+		{
+			"path": "input/Input.vue",
+			"content": "<script setup lang=\"ts\">\n// Use `v-model` for the value. A file input has no v-model; read its files from `@change`.\nconst { type } = defineProps<{ type?: string }>();\nconst model = defineModel<string | number>();\n</script>\n\n<template>\n\t<input v-if=\"type === 'file'\" type=\"file\" class=\"input\" />\n\t<input v-else v-model=\"model\" :type=\"type\" class=\"input\" />\n</template>\n\n<!--\n\tOptions you can set from a parent or on the input itself:\n\t--dui-input-height, --dui-input-padding-x, --dui-input-border, --dui-input-radius, --dui-input-bg\n-->\n\n<style scoped>\n.input {\n\twidth: 100%;\n\tmin-width: 0;\n\theight: var(--dui-input-height, 2.25rem);\n\tpadding: var(--dui-space-1) var(--dui-input-padding-x, var(--dui-space-2-5));\n\tborder: 1px solid var(--dui-input-border, var(--dui-color-input));\n\tborder-radius: var(--dui-input-radius, var(--dui-radius-md));\n\tbackground: var(--dui-input-bg, var(--dui-color-control));\n\tcolor: var(--dui-color-foreground);\n\tfont: inherit;\n\tfont-size: var(--dui-text-sm);\n\tline-height: var(--dui-text-sm-line-height);\n\tbox-shadow: var(--dui-shadow-xs);\n\toutline: none;\n\ttransition:\n\t\tborder-color var(--dui-duration-fast) var(--dui-ease-out),\n\t\tbox-shadow var(--dui-duration-fast) var(--dui-ease-out);\n\n\t&::placeholder {\n\t\tcolor: var(--dui-color-muted-foreground);\n\t}\n\n\t&::file-selector-button {\n\t\theight: 1.75rem;\n\t\tmargin-inline-end: var(--dui-space-2);\n\t\tpadding: 0;\n\t\tborder: 0;\n\t\tbackground: transparent;\n\t\tcolor: var(--dui-color-foreground);\n\t\tfont: inherit;\n\t\tfont-size: var(--dui-text-sm);\n\t\tfont-weight: var(--dui-font-weight-medium);\n\t}\n\n\t&:focus-visible {\n\t\tborder-color: var(--dui-color-ring);\n\t\tbox-shadow: 0 0 0 var(--dui-ring-width)\n\t\t\tcolor-mix(in oklch, var(--dui-color-ring) 50%, transparent);\n\t}\n\n\t&[aria-invalid='true'] {\n\t\tborder-color: var(--dui-color-destructive);\n\t\tbox-shadow: 0 0 0 var(--dui-ring-width)\n\t\t\tcolor-mix(in oklch, var(--dui-color-destructive) 20%, transparent);\n\t}\n\n\t&:disabled {\n\t\tcursor: not-allowed;\n\t\topacity: 0.5;\n\t}\n}\n</style>\n"
+		},
+		{
+			"path": "input/index.ts",
+			"content": "export { default as Root, default as Input } from './Input.vue';\n"
+		}
+	]
+}

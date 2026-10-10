@@ -1,8 +1,8 @@
 import { highlightAll } from '#lib/docs/highlight.server.js';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => ({
-	code: await highlightAll({
+export const load: PageServerLoad = async () => {
+	const code = await highlightAll({
 		parent: {
 			lang: 'svelte',
 			code: `<div class="danger-zone">
@@ -14,6 +14,21 @@ export const load: PageServerLoad = async () => ({
 		--dui-button-bg: var(--dui-color-destructive);
 		--dui-button-radius: 9999px;
 	}
+</style>`
+		},
+		parentVue: {
+			lang: 'vue',
+			code: `<template>
+	<div class="danger-zone">
+		<Button>Delete project</Button>
+	</div>
+</template>
+
+<style scoped>
+.danger-zone {
+	--dui-button-bg: var(--dui-color-destructive);
+	--dui-button-radius: 9999px;
+}
 </style>`
 		},
 		inline: {
@@ -40,5 +55,17 @@ export const load: PageServerLoad = async () => ({
 	color: white;
 }`
 		}
-	})
-});
+	});
+
+	/** The same CSS sample, titled with the Vue file name. */
+	const inVue = (sample: typeof code.source) => ({ ...sample, title: 'Button.vue' });
+
+	return {
+		code: {
+			parent: { svelte: code.parent, vue: code.parentVue },
+			inline: code.inline,
+			source: { svelte: code.source, vue: inVue(code.source) },
+			variant: { svelte: code.variant, vue: inVue(code.variant) }
+		}
+	};
+};

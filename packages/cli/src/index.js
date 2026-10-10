@@ -11,14 +11,14 @@
  */
 import { parseArgs } from 'node:util';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join, relative, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 const DEFAULT_REGISTRY =
 	'https://raw.githubusercontent.com/pixelpusher829/distill-ui/main/registry';
 const CONFIG_FILE = 'distill-ui.json';
 
-const HELP = `distill-ui: copy-into-your-project components styled with plain CSS.
+const HELP = `distill-ui: copy-into-your-project Svelte and Vue components styled with plain CSS.
 
 Usage:
   distill-ui init                 Copy the tokens into your project and import them
@@ -79,18 +79,15 @@ async function init({ cwd, overwrite, registry }) {
 	const pkg = readPackageJson(cwd);
 	const framework = detectFramework(pkg);
 	const isKit = hasDependency(pkg, '@sveltejs/kit');
+	const isNuxt = hasDependency(pkg, 'nuxt');
 
 	/** @type {Config} */
 	const config = existsSync(join(cwd, CONFIG_FILE))
 		? readConfig(cwd)
-		: {
-				framework,
-				components: isKit ? 'src/lib/components/ui' : 'src/components/ui',
-				styles: isKit ? 'src/lib/styles/distill-ui' : 'src/styles/distill-ui'
-			};
+		: { framework, ...defaultFolders(cwd, isKit, isNuxt) };
 	if (registry) config.registry = registry;
 
-	const tokens = await fetchItem(registrySource(config, cwd), framework, 'tokens');
+	const tokens = await fetchItem(registrySource(config, cwd), config.framework, 'tokens');
 	const { written, skipped } = writeFiles(join(cwd, config.styles), tokens.files, overwrite);
 	report(written, skipped, cwd);
 
@@ -100,12 +97,46 @@ async function init({ cwd, overwrite, registry }) {
 	if (isKit) {
 		const layout = importTokensInLayout(cwd, config.styles, libAlias(pkg));
 		if (layout) console.log(`Imported the tokens in ${layout}.`);
-	} else {
+	} else if (isNuxt) {
+		// Nuxt auto-imports .ts files in components/ too, so the index.ts files would clash.
 		console.log(
-			`\nImport the tokens once, in your app's entry file:\n  import './${config.styles.replace(/^src\//, '')}/tokens.css';`
+			`\nAdd these to nuxt.config: the tokens, and auto-import only .vue files from components/:\n  css: ['~/${relative(nuxtSrcDir(cwd), config.styles)}/tokens.css'],\n  components: [{ path: '~/components', extensions: ['.vue'] }],`
 		);
+	} else {
+		const entry = importTokensInEntry(cwd, config.styles);
+		if (entry) console.log(`Imported the tokens in ${entry}.`);
+		else if (entry === undefined)
+			console.log(
+				`\nImport the tokens once, in your app's entry file:\n  import './${config.styles.replace(/^src\//, '')}/tokens.css';`
+			);
 	}
 	console.log('\nDone. Add components with: npx distill-ui add button');
+}
+
+/**
+ * Where the files go when there's no distill-ui.json yet.
+ *
+ * @param {string} cwd
+ * @param {boolean} isKit
+ * @param {boolean} isNuxt
+ */
+function defaultFolders(cwd, isKit, isNuxt) {
+	if (isKit) return { components: 'src/lib/components/ui', styles: 'src/lib/styles/distill-ui' };
+	if (isNuxt) {
+		const base = nuxtSrcDir(cwd) ? `${nuxtSrcDir(cwd)}/` : '';
+		return { components: `${base}components/ui`, styles: `${base}assets/styles/distill-ui` };
+	}
+	return { components: 'src/components/ui', styles: 'src/styles/distill-ui' };
+}
+
+/**
+ * Nuxt 4 keeps the app in app/; older projects keep it in the root. `~` in
+ * Nuxt points at this folder.
+ *
+ * @param {string} cwd
+ */
+function nuxtSrcDir(cwd) {
+	return existsSync(join(cwd, 'app')) ? 'app' : '';
 }
 
 /**
@@ -160,23 +191,80 @@ async function add(names, all, { cwd, overwrite, install, registry }) {
 	);
 	if (missing.length) installPackages(cwd, missing, install);
 
+	const first = items.find((item) => item.name === names[0]);
+	const isNamespace = first?.files.some(
+		(file) => /\/index\.[jt]s$/.test(file.path) && /\bRoot\b/.test(file.content)
+	);
+	const binding = isNamespace ? `* as ${pascalCase(names[0])}` : '{ ... }';
+	console.log(
+		`\nDone. Use it like: import ${binding} from '${importPath(cwd, pkg, config, names[0])}';`
+	);
+}
+
+/** @param {string} name  like "alert-dialog" */
+function pascalCase(name) {
+	return name.replace(/(^|-)(\w)/g, (_, __, letter) => letter.toUpperCase());
+}
+
+/**
+ * How a project imports a component folder.
+ *
+ * @param {string} cwd
+ * @param {any} pkg
+ * @param {Config} config
+ * @param {string} name
+ */
+function importPath(cwd, pkg, config, name) {
+	if (config.framework === 'vue') {
+		if (hasDependency(pkg, 'nuxt'))
+			return `~/${relative(nuxtSrcDir(cwd), config.components)}/${name}`;
+		const viaAlias = config.components.startsWith('src/') && hasAtAlias(cwd);
+		return viaAlias
+			? `@/${config.components.slice('src/'.length)}/${name}`
+			: `./${config.components.replace(/^src\//, '')}/${name}`;
+	}
 	// `#lib` follows Node's import rules, so it needs the full file path.
 	const alias = libAlias(pkg);
 	const folder = config.components.startsWith('src/lib/')
 		? `${alias}/${config.components.slice('src/lib/'.length)}`
 		: `./${config.components}`;
-	const importPath = `${folder}/${names[0]}${alias === '#lib' ? '/index.js' : ''}`;
-	console.log(`\nDone. Use it like: import { ... } from '${importPath}';`);
+	return `${folder}/${name}${alias === '#lib' ? '/index.js' : ''}`;
+}
+
+/**
+ * Vue projects made with `npm create vue` point `@` at src/ in their tsconfig.
+ *
+ * @param {string} cwd
+ */
+function hasAtAlias(cwd) {
+	return ['tsconfig.json', 'tsconfig.app.json', 'jsconfig.json'].some((file) => {
+		const path = join(cwd, file);
+		return existsSync(path) && readFileSync(path, 'utf8').includes('"@/*"');
+	});
 }
 
 /** @param {{ cwd: string, registry?: string }} options */
 async function list({ cwd, registry }) {
 	const config = existsSync(join(cwd, CONFIG_FILE))
 		? readConfig(cwd)
-		: { framework: 'svelte', components: '', styles: '' };
+		: { framework: listFramework(cwd), components: '', styles: '' };
 	if (registry) config.registry = registry;
 	const index = await fetchIndex(registrySource(config, cwd), config.framework);
 	console.log(index.components.map((item) => `  ${item.name}`).join('\n'));
+}
+
+/**
+ * Before `init`, list the components for the project's framework when we can
+ * tell what it is, and Svelte's otherwise.
+ *
+ * @param {string} cwd
+ */
+function listFramework(cwd) {
+	try {
+		return detectFramework(readPackageJson(cwd));
+	} catch {
+		return 'svelte';
+	}
 }
 
 // --- Project ----------------------------------------------------------------
@@ -207,10 +295,14 @@ function detectFramework(pkg) {
 		if (major && major < 5) throw new CliError('distill-ui needs Svelte 5 or newer.');
 		return 'svelte';
 	}
-	if (hasDependency(pkg, 'vue'))
-		throw new CliError('The Vue version of distill-ui is planned but not out yet.');
+	if (hasDependency(pkg, 'vue') || hasDependency(pkg, 'nuxt')) {
+		const version = pkg.dependencies?.vue ?? pkg.devDependencies?.vue;
+		const major = Number(String(version ?? '').match(/\d+/)?.[0]);
+		if (major && major < 3) throw new CliError('distill-ui needs Vue 3 or newer.');
+		return 'vue';
+	}
 	throw new CliError(
-		"Couldn't find Svelte in package.json. distill-ui works with Svelte 5 projects."
+		"Couldn't find Svelte or Vue in package.json. distill-ui works with Svelte 5 and Vue 3 projects."
 	);
 }
 
@@ -264,6 +356,26 @@ function importTokensInLayout(cwd, styles, alias) {
 		: `<script${lang}>\n\t${statement}\n</script>\n\n${source}`;
 	writeFileSync(path, updated);
 	return 'src/routes/+layout.svelte';
+}
+
+/**
+ * Adds the tokens import to the top of src/main.ts (or .js) in a Vite + Vue
+ * project. Returns the file's path, `null` when it already imports them, or
+ * nothing when there's no entry file to edit.
+ *
+ * @param {string} cwd
+ * @param {string} styles
+ */
+function importTokensInEntry(cwd, styles) {
+	const entry = ['src/main.ts', 'src/main.js'].find((file) => existsSync(join(cwd, file)));
+	if (!entry) return;
+	const path = join(cwd, entry);
+	const source = readFileSync(path, 'utf8');
+	if (source.includes('/tokens.css')) return null;
+	const from = relative(join(cwd, 'src'), join(cwd, styles)).replaceAll('\\', '/');
+	const spec = from.startsWith('.') ? from : `./${from}`;
+	writeFileSync(path, `import '${spec}/tokens.css';\n${source}`);
+	return entry;
 }
 
 /**

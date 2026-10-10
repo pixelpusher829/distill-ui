@@ -4,9 +4,13 @@
 	import '../app.css';
 	import favicon from '#lib/assets/favicon.svg';
 	import ThemeToggle from '#lib/docs/ThemeToggle.svelte';
+	import { framework } from '#lib/docs/framework.svelte.js';
+	import { onMount } from 'svelte';
 	import type { LayoutProps } from './$types';
 
 	let { children }: LayoutProps = $props();
+
+	onMount(() => framework.load());
 </script>
 
 <svelte:head>

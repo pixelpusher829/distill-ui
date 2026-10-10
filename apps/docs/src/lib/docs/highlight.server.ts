@@ -10,7 +10,7 @@ let highlighter: Promise<Highlighter> | undefined;
 export async function highlight(code: string, lang: string, title?: string): Promise<Code> {
 	highlighter ??= createHighlighter({
 		themes: ['github-light-default', 'github-dark-default'],
-		langs: ['svelte', 'css', 'ts', 'sh', 'json', 'html']
+		langs: ['svelte', 'vue', 'css', 'ts', 'sh', 'json', 'html']
 	});
 	const html = (await highlighter).codeToHtml(code, {
 		lang,

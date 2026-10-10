@@ -1,0 +1,144 @@
+{
+	"components": [
+		{
+			"name": "alert",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "alert-dialog",
+			"dependencies": [
+				"reka-ui@2.11.0"
+			],
+			"registryDependencies": [
+				"button"
+			]
+		},
+		{
+			"name": "avatar",
+			"dependencies": [
+				"reka-ui@2.11.0"
+			],
+			"registryDependencies": []
+		},
+		{
+			"name": "badge",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "button",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "card",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "checkbox",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "dialog",
+			"dependencies": [
+				"reka-ui@2.11.0"
+			],
+			"registryDependencies": [
+				"button"
+			]
+		},
+		{
+			"name": "dropdown-menu",
+			"dependencies": [
+				"reka-ui@2.11.0"
+			],
+			"registryDependencies": [
+				"button"
+			]
+		},
+		{
+			"name": "input",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "label",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "popover",
+			"dependencies": [
+				"reka-ui@2.11.0"
+			],
+			"registryDependencies": [
+				"button"
+			]
+		},
+		{
+			"name": "radio-group",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "select",
+			"dependencies": [
+				"reka-ui@2.11.0"
+			],
+			"registryDependencies": []
+		},
+		{
+			"name": "separator",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "sheet",
+			"dependencies": [
+				"reka-ui@2.11.0"
+			],
+			"registryDependencies": [
+				"button"
+			]
+		},
+		{
+			"name": "skeleton",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "switch",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "tabs",
+			"dependencies": [
+				"reka-ui@2.11.0"
+			],
+			"registryDependencies": []
+		},
+		{
+			"name": "textarea",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "toast",
+			"dependencies": [],
+			"registryDependencies": []
+		},
+		{
+			"name": "tooltip",
+			"dependencies": [
+				"reka-ui@2.11.0"
+			],
+			"registryDependencies": [
+				"button"
+			]
+		}
+	]
+}

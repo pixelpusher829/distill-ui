@@ -1,0 +1,36 @@
+{
+	"name": "tooltip",
+	"type": "component",
+	"dependencies": [
+		"reka-ui@2.11.0"
+	],
+	"registryDependencies": [
+		"button"
+	],
+	"files": [
+		{
+			"path": "tooltip/Tooltip.vue",
+			"content": "<script setup lang=\"ts\">\nimport { TooltipProvider, TooltipRoot } from 'reka-ui';\nimport { toRef } from 'vue';\nimport { provideTooltipPlacement } from './context.js';\nimport type { Placement } from './placement.js';\n\n// Use `v-model:open` to control it from outside.\nconst { placement = 'top', openDelay = 300 } = defineProps<{\n\tplacement?: Placement;\n\topenDelay?: number;\n}>();\nconst open = defineModel<boolean>('open', { default: false });\nprovideTooltipPlacement(toRef(() => placement));\n</script>\n\n<template>\n\t<TooltipProvider :delay-duration=\"openDelay\">\n\t\t<TooltipRoot v-model:open=\"open\">\n\t\t\t<slot />\n\t\t</TooltipRoot>\n\t</TooltipProvider>\n</template>\n"
+		},
+		{
+			"path": "tooltip/TooltipContent.vue",
+			"content": "<script setup lang=\"ts\">\nimport { TooltipArrow, TooltipContent } from 'reka-ui';\nimport { computed } from 'vue';\nimport { injectTooltipPlacement } from './context.js';\nimport { toSideAlign } from './placement.js';\n\ndefineOptions({ inheritAttrs: false });\n\nconst position = computed(() => toSideAlign(injectTooltipPlacement().value));\n</script>\n\n<template>\n\t<!-- No portal: Reka positions it with position: fixed, so it stays inside your styles. -->\n\t<TooltipContent :side=\"position.side\" :align=\"position.align\" :side-offset=\"4\" as-child>\n\t\t<div v-bind=\"$attrs\" class=\"content\">\n\t\t\t<slot />\n\t\t\t<TooltipArrow :width=\"8\" :height=\"4\" as-child>\n\t\t\t\t<span class=\"arrow\"></span>\n\t\t\t</TooltipArrow>\n\t\t</div>\n\t</TooltipContent>\n</template>\n\n<!--\n\tOptions you can set from a parent or on the tooltip content itself:\n\t--dui-tooltip-max-width, --dui-tooltip-radius, --dui-tooltip-bg, --dui-tooltip-fg\n-->\n\n<style scoped>\n.content {\n\twidth: fit-content;\n\tmax-width: var(--dui-tooltip-max-width, 20rem);\n\tpadding: var(--dui-space-1-5) var(--dui-space-3);\n\tborder-radius: var(--dui-tooltip-radius, var(--dui-radius-md));\n\tbackground: var(--dui-tooltip-bg, var(--dui-color-primary));\n\tcolor: var(--dui-tooltip-fg, var(--dui-color-primary-foreground));\n\tfont-size: var(--dui-text-xs);\n\tline-height: var(--dui-text-xs-line-height);\n\ttext-wrap: balance;\n\toverflow: visible;\n\t/* Reka copies this onto the positioning wrapper it puts around the content. */\n\tz-index: var(--dui-z-popover);\n\n\t/* Reka waits for animationend before removing it, so this uses the shared keyframes. */\n\t&[data-state='delayed-open'],\n\t&[data-state='instant-open'] {\n\t\tanimation: distill-zoom-in var(--dui-duration-fast) var(--dui-ease-out);\n\t}\n\n\t&[data-state='closed'] {\n\t\tanimation: distill-zoom-out var(--dui-duration-fast) var(--dui-ease-out);\n\t}\n}\n\n/* Reka positions the arrow at the edge; we draw it as a square turned 45° and\n   pulled halfway under the tooltip, in the tooltip's color. */\n.arrow {\n\tdisplay: block;\n\twidth: 0.5rem;\n\theight: 0.5rem;\n\tborder-radius: 2px;\n\tbackground: var(--dui-tooltip-bg, var(--dui-color-primary));\n\ttranslate: 0 -50%;\n\trotate: 45deg;\n}\n</style>\n"
+		},
+		{
+			"path": "tooltip/TooltipTrigger.vue",
+			"content": "<script setup lang=\"ts\">\nimport { TooltipTrigger } from 'reka-ui';\nimport { Button, type ButtonSize, type ButtonVariant } from '../button/index.js';\n\n// Renders our Button, so it takes the same variant and size props.\nconst { variant = 'outline', size } = defineProps<{ variant?: ButtonVariant; size?: ButtonSize }>();\n</script>\n\n<template>\n\t<TooltipTrigger as-child>\n\t\t<Button :variant=\"variant\" :size=\"size\"><slot /></Button>\n\t</TooltipTrigger>\n</template>\n"
+		},
+		{
+			"path": "tooltip/context.ts",
+			"content": "import { inject, provide } from 'vue';\nimport type { PlacementRef } from './placement.js';\n\n// The root takes the placement, and the content reads it to position itself.\nconst key = Symbol('distill-tooltip');\nexport const provideTooltipPlacement = (placement: PlacementRef) => provide(key, placement);\nexport const injectTooltipPlacement = () => inject<PlacementRef>(key)!;\n"
+		},
+		{
+			"path": "tooltip/index.ts",
+			"content": "export { default as Root } from './Tooltip.vue';\nexport { default as Trigger } from './TooltipTrigger.vue';\nexport { default as Content } from './TooltipContent.vue';\nexport type { Placement } from './placement.js';\n"
+		},
+		{
+			"path": "tooltip/placement.ts",
+			"content": "import type { Ref } from 'vue';\n\n// Placement is written like Floating UI's ('bottom', 'top-start'…), the same as the\n// Svelte version. Reka takes it as a side and an alignment, so this splits it.\nexport type Placement =\n\t'top' | 'right' | 'bottom' | 'left' | `${'top' | 'right' | 'bottom' | 'left'}-${'start' | 'end'}`;\n\nexport function toSideAlign(placement: Placement) {\n\tconst [side, align = 'center'] = placement.split('-') as [\n\t\t'top' | 'right' | 'bottom' | 'left',\n\t\t('start' | 'end' | 'center')?\n\t];\n\treturn { side, align };\n}\n\nexport type PlacementRef = Readonly<Ref<Placement>>;\n"
+		}
+	]
+}

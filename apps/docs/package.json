@@ -19,6 +19,7 @@
 		"@sveltejs/kit": "^3.0.0",
 		"@sveltejs/vite-plugin-svelte": "^7.2.0",
 		"@types/node": "^22",
+		"@vitejs/plugin-vue": "^6.0.9",
 		"shiki": "^4.5.0",
 		"svelte": "^5.57.1",
 		"svelte-check": "^4.6.0",
@@ -31,6 +32,8 @@
 	},
 	"dependencies": {
 		"@distill-ui/svelte": "workspace:*",
-		"@distill-ui/tokens": "workspace:*"
+		"@distill-ui/tokens": "workspace:*",
+		"@distill-ui/vue": "workspace:*",
+		"vue": "^3.5.43"
 	}
 }

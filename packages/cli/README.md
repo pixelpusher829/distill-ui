@@ -1,9 +1,9 @@
 # distill-ui
 
-Copy [distill-ui](https://github.com/pixelpusher829/distill-ui) components into your Svelte 5 project. They're styled with plain scoped CSS, with no Tailwind needed.
+Copy [distill-ui](https://github.com/pixelpusher829/distill-ui) components into your Svelte 5, Vue 3 or Nuxt project. They're styled with plain scoped CSS, with no Tailwind needed.
 
 ```sh
-npx distill-ui init          # copy the tokens and import them in your root layout
+npx distill-ui init          # copy the tokens and import them
 npx distill-ui add button    # copy a component (and any it uses)
 npx distill-ui add --all     # copy every component
 npx distill-ui list          # show what you can add
@@ -21,7 +21,13 @@ npx distill-ui list          # show what you can add
 
 Edit the folders before running `add` if you want the files somewhere else.
 
-`add` never replaces a file you've changed unless you pass `--overwrite`. It installs the npm packages the components need (`melt` and `@floating-ui/dom`) with the package manager your lockfile points to. Pass `--no-install` to just print the command.
+`init` finds your framework in `package.json`:
+
+- **SvelteKit**: files go in `src/lib`, and the tokens are imported in `src/routes/+layout.svelte`.
+- **Vite + Vue**: files go in `src/components/ui` and `src/styles/distill-ui`, and the tokens are imported at the top of `src/main.ts`.
+- **Nuxt**: files go in `app/components/ui` and `app/assets/styles/distill-ui` (without the `app/` in projects that don't have that folder). It prints the lines to add to `nuxt.config.ts`.
+
+`add` never replaces a file you've changed unless you pass `--overwrite`. It installs the npm packages the components need (`melt` and `@floating-ui/dom` for Svelte, `reka-ui` for Vue) with the package manager your lockfile points to. Pass `--no-install` to just print the command.
 
 ## Options
 
@@ -34,7 +40,7 @@ Edit the folders before running `add` if you want the files somewhere else.
 
 ## Working on the CLI
 
-The CLI reads the JSON in the repo's `registry/` folder, which `bun run registry` builds from `packages/svelte` and `packages/tokens`. To try a change without publishing, point it at your checkout:
+The CLI reads the JSON in the repo's `registry/` folder, which `bun run registry` builds from `packages/svelte`, `packages/vue` and `packages/tokens`. To try a change without publishing, point it at your checkout:
 
 ```sh
 node path/to/distill-ui/packages/cli/src/index.js init --registry path/to/distill-ui/registry

@@ -1,0 +1,60 @@
+{
+	"name": "dropdown-menu",
+	"type": "component",
+	"dependencies": [
+		"reka-ui@2.11.0"
+	],
+	"registryDependencies": [
+		"button"
+	],
+	"files": [
+		{
+			"path": "dropdown-menu/DropdownMenu.vue",
+			"content": "<script setup lang=\"ts\">\nimport { DropdownMenuRoot } from 'reka-ui';\nimport { ref, toRef } from 'vue';\nimport { provideDropdownMenu } from './context.js';\nimport type { Placement } from './placement.js';\n\n// Use `v-model:open` to control it from outside.\nconst { placement = 'bottom-start' } = defineProps<{ placement?: Placement }>();\nconst open = defineModel<boolean>('open', { default: false });\nprovideDropdownMenu({ open, placement: toRef(() => placement), focusLast: ref(false) });\n</script>\n\n<template>\n\t<!-- Not modal, like the Svelte version: the page stays usable and readable while it is open. -->\n\t<DropdownMenuRoot v-model:open=\"open\" :modal=\"false\">\n\t\t<slot />\n\t</DropdownMenuRoot>\n</template>\n"
+		},
+		{
+			"path": "dropdown-menu/DropdownMenuCheckboxItem.vue",
+			"content": "<script setup lang=\"ts\">\nimport { DropdownMenuCheckboxItem } from 'reka-ui';\n\n// Use `v-model` for checked. Stays open on select, so several options can be toggled in a row.\nconst { disabled = false } = defineProps<{ disabled?: boolean }>();\nconst checked = defineModel<boolean>({ default: false });\n</script>\n\n<template>\n\t<DropdownMenuCheckboxItem\n\t\tv-model=\"checked\"\n\t\t:disabled=\"disabled\"\n\t\tas-child\n\t\t@select=\"(event: Event) => event.preventDefault()\"\n\t>\n\t\t<div class=\"item\">\n\t\t\t<svg\n\t\t\t\tclass=\"check\"\n\t\t\t\tviewBox=\"0 0 24 24\"\n\t\t\t\taria-hidden=\"true\"\n\t\t\t\t:data-checked=\"checked || undefined\"\n\t\t\t>\n\t\t\t\t<path d=\"M20 6 9 17l-5-5\" />\n\t\t\t</svg>\n\t\t\t<slot />\n\t\t</div>\n\t</DropdownMenuCheckboxItem>\n</template>\n\n<style scoped>\n.item {\n\tposition: relative;\n\tdisplay: flex;\n\talign-items: center;\n\tgap: var(--dui-space-2);\n\tpadding: var(--dui-space-1-5) var(--dui-space-2) var(--dui-space-1-5) var(--dui-space-8);\n\tborder-radius: var(--dui-radius-sm);\n\tfont-size: var(--dui-text-sm);\n\tline-height: var(--dui-text-sm-line-height);\n\tcursor: default;\n\toutline: none;\n\tuser-select: none;\n\n\t&:focus {\n\t\tbackground: var(--dui-color-accent);\n\t\tcolor: var(--dui-color-accent-foreground);\n\t}\n\n\t&[data-disabled] {\n\t\tpointer-events: none;\n\t\topacity: 0.5;\n\t}\n}\n\n.check {\n\tposition: absolute;\n\tleft: var(--dui-space-2);\n\twidth: 1rem;\n\theight: 1rem;\n\tfill: none;\n\tstroke: currentColor;\n\tstroke-width: 2;\n\tstroke-linecap: round;\n\tstroke-linejoin: round;\n\tvisibility: hidden;\n\n\t&[data-checked] {\n\t\tvisibility: visible;\n\t}\n}\n</style>\n"
+		},
+		{
+			"path": "dropdown-menu/DropdownMenuContent.vue",
+			"content": "<script setup lang=\"ts\">\nimport { DropdownMenuContent } from 'reka-ui';\nimport { computed, useTemplateRef } from 'vue';\nimport { injectDropdownMenu } from './context.js';\nimport { toSideAlign } from './placement.js';\n\ndefineOptions({ inheritAttrs: false });\n\nconst menu = injectDropdownMenu();\nconst position = computed(() => toSideAlign(menu.placement.value));\nconst el = useTemplateRef<HTMLElement>('el');\n\n// Opened with ArrowUp on the trigger: start on the last item that can be picked.\nfunction onOpenAutoFocus(event: Event) {\n\tif (!menu.focusLast.value) return;\n\tmenu.focusLast.value = false;\n\tevent.preventDefault();\n\tconst items = el.value?.querySelectorAll<HTMLElement>('[role^=\"menuitem\"]:not([data-disabled])');\n\titems?.[items.length - 1]?.focus();\n}\n</script>\n\n<template>\n\t<!-- No portal: Reka positions it with position: fixed, so it stays inside your styles. -->\n\t<DropdownMenuContent\n\t\t:side=\"position.side\"\n\t\t:align=\"position.align\"\n\t\t:side-offset=\"4\"\n\t\tas-child\n\t\t@open-auto-focus=\"onOpenAutoFocus\"\n\t>\n\t\t<div ref=\"el\" v-bind=\"$attrs\" class=\"content\"><slot /></div>\n\t</DropdownMenuContent>\n</template>\n\n<!--\n\tOptions you can set from a parent or on the dropdown menu content itself:\n\t--dui-dropdown-menu-min-width, --dui-dropdown-menu-radius, --dui-dropdown-menu-bg, --dui-dropdown-menu-fg\n-->\n\n<style scoped>\n.content {\n\tmin-width: var(--dui-dropdown-menu-min-width, 8rem);\n\tmax-height: var(--reka-dropdown-menu-content-available-height);\n\tpadding: var(--dui-space-1);\n\toverflow-x: hidden;\n\toverflow-y: auto;\n\tborder-radius: var(--dui-dropdown-menu-radius, var(--dui-radius-md));\n\tbackground: var(--dui-dropdown-menu-bg, var(--dui-color-popover));\n\tcolor: var(--dui-dropdown-menu-fg, var(--dui-color-popover-foreground));\n\tbox-shadow:\n\t\t0 0 0 1px color-mix(in oklch, var(--dui-color-foreground) 10%, transparent),\n\t\tvar(--dui-shadow-md);\n\toutline: none;\n\t/* Reka copies this onto the positioning wrapper it puts around the menu. */\n\tz-index: var(--dui-z-dropdown);\n\n\t/* Reka waits for animationend before removing it, so this uses the shared keyframes. */\n\t&[data-state='open'] {\n\t\tanimation: distill-zoom-in var(--dui-duration-fast) var(--dui-ease-out);\n\t}\n\n\t&[data-state='closed'] {\n\t\tanimation: distill-zoom-out var(--dui-duration-fast) var(--dui-ease-out);\n\t}\n}\n</style>\n"
+		},
+		{
+			"path": "dropdown-menu/DropdownMenuGroup.vue",
+			"content": "<script setup lang=\"ts\">\nimport { DropdownMenuGroup } from 'reka-ui';\n</script>\n\n<template>\n\t<DropdownMenuGroup as-child>\n\t\t<div class=\"group\"><slot /></div>\n\t</DropdownMenuGroup>\n</template>\n\n<style scoped>\n.group {\n\tdisplay: block;\n}\n</style>\n"
+		},
+		{
+			"path": "dropdown-menu/DropdownMenuItem.vue",
+			"content": "<script setup lang=\"ts\">\nimport { DropdownMenuItem } from 'reka-ui';\n\n// Listen with `@select`. It closes the menu after, unless you call event.preventDefault().\nconst {\n\tdisabled = false,\n\tvariant = 'default',\n\tinset = false\n} = defineProps<{\n\tdisabled?: boolean;\n\tvariant?: 'default' | 'destructive';\n\t/** Indent to line up with items that have a check mark or icon. */\n\tinset?: boolean;\n}>();\n</script>\n\n<template>\n\t<DropdownMenuItem :disabled=\"disabled\" as-child>\n\t\t<div class=\"item\" :data-variant=\"variant\" :data-inset=\"inset || undefined\"><slot /></div>\n\t</DropdownMenuItem>\n</template>\n\n<style scoped>\n.item {\n\tposition: relative;\n\tdisplay: flex;\n\talign-items: center;\n\tgap: var(--dui-space-2);\n\tpadding: var(--dui-space-1-5) var(--dui-space-2);\n\tborder-radius: var(--dui-radius-sm);\n\tfont-size: var(--dui-text-sm);\n\tline-height: var(--dui-text-sm-line-height);\n\tcursor: default;\n\toutline: none;\n\tuser-select: none;\n\n\t&:focus {\n\t\tbackground: var(--dui-color-accent);\n\t\tcolor: var(--dui-color-accent-foreground);\n\t}\n\n\t&[data-disabled] {\n\t\tpointer-events: none;\n\t\topacity: 0.5;\n\t}\n\n\t&[data-inset] {\n\t\tpadding-inline-start: var(--dui-space-8);\n\t}\n\n\t& :deep(svg) {\n\t\tflex-shrink: 0;\n\t\twidth: 1rem;\n\t\theight: 1rem;\n\t\tpointer-events: none;\n\t}\n}\n\n.item[data-variant='destructive'] {\n\tcolor: color-mix(in oklch, var(--dui-color-destructive) 80%, var(--dui-color-foreground));\n\n\t&:focus {\n\t\tbackground: color-mix(in oklch, var(--dui-color-destructive) 10%, transparent);\n\t\tcolor: color-mix(in oklch, var(--dui-color-destructive) 80%, var(--dui-color-foreground));\n\t}\n}\n</style>\n"
+		},
+		{
+			"path": "dropdown-menu/DropdownMenuLabel.vue",
+			"content": "<script setup lang=\"ts\">\nimport { DropdownMenuLabel } from 'reka-ui';\n</script>\n\n<template>\n\t<DropdownMenuLabel as-child>\n\t\t<div class=\"label\"><slot /></div>\n\t</DropdownMenuLabel>\n</template>\n\n<style scoped>\n.label {\n\tpadding: var(--dui-space-1-5) var(--dui-space-2);\n\tcolor: var(--dui-color-muted-foreground);\n\tfont-size: var(--dui-text-xs);\n\tline-height: var(--dui-text-xs-line-height);\n\tfont-weight: var(--dui-font-weight-medium);\n}\n</style>\n"
+		},
+		{
+			"path": "dropdown-menu/DropdownMenuSeparator.vue",
+			"content": "<script setup lang=\"ts\">\nimport { DropdownMenuSeparator } from 'reka-ui';\n</script>\n\n<template>\n\t<DropdownMenuSeparator as-child>\n\t\t<div class=\"separator\"></div>\n\t</DropdownMenuSeparator>\n</template>\n\n<style scoped>\n.separator {\n\theight: 1px;\n\tmargin: var(--dui-space-1) calc(var(--dui-space-1) * -1);\n\tbackground: var(--dui-color-border);\n}\n</style>\n"
+		},
+		{
+			"path": "dropdown-menu/DropdownMenuShortcut.vue",
+			"content": "<template>\n\t<span class=\"shortcut\"><slot /></span>\n</template>\n\n<style scoped>\n.shortcut {\n\tmargin-inline-start: auto;\n\t/* Pulled toward the foreground so it passes AA contrast on the highlighted item. */\n\tcolor: color-mix(in oklch, var(--dui-color-muted-foreground) 70%, var(--dui-color-foreground));\n\tfont-size: var(--dui-text-xs);\n\tletter-spacing: 0.1em;\n}\n</style>\n"
+		},
+		{
+			"path": "dropdown-menu/DropdownMenuTrigger.vue",
+			"content": "<script setup lang=\"ts\">\nimport { DropdownMenuTrigger } from 'reka-ui';\nimport { Button, type ButtonSize, type ButtonVariant } from '../button/index.js';\nimport { injectDropdownMenu } from './context.js';\n\n// Renders our Button, so it takes the same variant and size props.\nconst { variant = 'outline', size } = defineProps<{ variant?: ButtonVariant; size?: ButtonSize }>();\nconst menu = injectDropdownMenu();\n\n// The menu button pattern also opens on ArrowUp, landing on the last item.\nfunction onKeydown(event: KeyboardEvent) {\n\tif (event.key !== 'ArrowUp' || menu.open.value) return;\n\tevent.preventDefault();\n\tmenu.focusLast.value = true;\n\tmenu.open.value = true;\n}\n</script>\n\n<template>\n\t<DropdownMenuTrigger as-child>\n\t\t<Button :variant=\"variant\" :size=\"size\" @keydown=\"onKeydown\"><slot /></Button>\n\t</DropdownMenuTrigger>\n</template>\n"
+		},
+		{
+			"path": "dropdown-menu/context.ts",
+			"content": "import { inject, provide, type Ref } from 'vue';\nimport type { PlacementRef } from './placement.js';\n\n// The root shares its open state and placement with the parts. `focusLast` lets the trigger\n// open the menu on the last item (ArrowUp), which Reka doesn't do on its own.\ntype DropdownMenuContext = { open: Ref<boolean>; placement: PlacementRef; focusLast: Ref<boolean> };\n\nconst key = Symbol('distill-dropdown-menu');\nexport const provideDropdownMenu = (ctx: DropdownMenuContext) => provide(key, ctx);\nexport const injectDropdownMenu = () => inject<DropdownMenuContext>(key)!;\n"
+		},
+		{
+			"path": "dropdown-menu/index.ts",
+			"content": "export { default as Root } from './DropdownMenu.vue';\nexport { default as Trigger } from './DropdownMenuTrigger.vue';\nexport { default as Content } from './DropdownMenuContent.vue';\nexport { default as Item } from './DropdownMenuItem.vue';\nexport { default as CheckboxItem } from './DropdownMenuCheckboxItem.vue';\nexport { default as Label } from './DropdownMenuLabel.vue';\nexport { default as Separator } from './DropdownMenuSeparator.vue';\nexport { default as Group } from './DropdownMenuGroup.vue';\nexport { default as Shortcut } from './DropdownMenuShortcut.vue';\nexport type { Placement } from './placement.js';\n"
+		},
+		{
+			"path": "dropdown-menu/placement.ts",
+			"content": "import type { Ref } from 'vue';\n\n// Placement is written like Floating UI's ('bottom', 'top-start'…), the same as the\n// Svelte version. Reka takes it as a side and an alignment, so this splits it.\nexport type Placement =\n\t'top' | 'right' | 'bottom' | 'left' | `${'top' | 'right' | 'bottom' | 'left'}-${'start' | 'end'}`;\n\nexport function toSideAlign(placement: Placement) {\n\tconst [side, align = 'center'] = placement.split('-') as [\n\t\t'top' | 'right' | 'bottom' | 'left',\n\t\t('start' | 'end' | 'center')?\n\t];\n\treturn { side, align };\n}\n\nexport type PlacementRef = Readonly<Ref<Placement>>;\n"
+		}
+	]
+}

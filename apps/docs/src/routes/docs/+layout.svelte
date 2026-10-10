@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import { components, guides } from '#lib/docs/components.js';
+	import FrameworkSwitch from '#lib/docs/FrameworkSwitch.svelte';
 	import type { LayoutProps } from './$types';
 
 	let { children }: LayoutProps = $props();
@@ -28,6 +29,7 @@
 
 <div class="docs">
 	<nav aria-label="Docs">
+		<div class="framework"><FrameworkSwitch /></div>
 		<details bind:open>
 			<summary>Menu</summary>
 			<h2>Getting started</h2>
@@ -61,6 +63,10 @@
 		overflow-y: auto;
 		padding-block: var(--dui-space-8);
 		font-size: var(--dui-text-sm);
+	}
+
+	.framework {
+		margin-bottom: var(--dui-space-6);
 	}
 
 	summary {
@@ -137,6 +143,10 @@
 			position: static;
 			max-height: none;
 			padding-block: var(--dui-space-4) 0;
+		}
+
+		.framework {
+			margin-bottom: var(--dui-space-3);
 		}
 
 		summary {

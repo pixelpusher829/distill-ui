@@ -1,6 +1,6 @@
 # distill-ui
 
-A copy-into-your-project component library for Svelte 5 and Vue 3, in the spirit of shadcn/ui, styled with scoped `<style>` blocks and CSS custom properties instead of Tailwind. The Vue version has every component; adding it to the CLI and docs site is next.
+A copy-into-your-project component library for Svelte 5 and Vue 3, in the spirit of shadcn/ui, styled with scoped `<style>` blocks and CSS custom properties instead of Tailwind.
 
 Status: early setup. See [PLAN-svelte.md](./PLAN-svelte.md) for the roadmap and [PLAN-vue.md](./PLAN-vue.md) for what comes after.
 

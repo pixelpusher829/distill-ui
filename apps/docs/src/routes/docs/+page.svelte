@@ -5,14 +5,16 @@
 <article class="prose">
 	<h1>Introduction</h1>
 	<p class="lead">
-		Accessible Svelte 5 components that you copy into your project and style with plain CSS.
+		Accessible Svelte 5 and Vue 3 components that you copy into your project and style with plain
+		CSS.
 	</p>
 
 	<p>
 		distill-ui isn't a package you install and import. Each component is a few
-		<code>.svelte</code> files that live in your own project, so you can read them and change them
-		like any other code you wrote. The styles are a normal <code>&lt;style&gt;</code> block in each file.
-		There's no Tailwind, no class strings and no build plugin.
+		<code>.svelte</code> or <code>.vue</code> files that live in your own project, so you can read
+		them and change them like any other code you wrote. The styles are a normal
+		<code>&lt;style&gt;</code> block in each file. There's no Tailwind, no class strings and no build
+		plugin.
 	</p>
 
 	<h2>Why this exists</h2>
@@ -81,8 +83,9 @@
 	<h2>Credits</h2>
 	<p>
 		The component structure follows <a href="https://ui.shadcn.com">shadcn/ui</a> and
-		<a href="https://shadcn-svelte.com">shadcn-svelte</a>, and the behavior comes from Melt UI. All
-		are MIT licensed.
+		<a href="https://shadcn-svelte.com">shadcn-svelte</a> and
+		<a href="https://www.shadcn-vue.com">shadcn-vue</a>, and the behavior comes from Melt UI in
+		Svelte and Reka UI in Vue. All are MIT licensed.
 	</p>
 
 	<p><a href="/docs/installation">Next: Installation →</a></p>

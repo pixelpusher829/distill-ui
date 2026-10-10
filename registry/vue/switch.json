@@ -1,0 +1,16 @@
+{
+	"name": "switch",
+	"type": "component",
+	"dependencies": [],
+	"registryDependencies": [],
+	"files": [
+		{
+			"path": "switch/Switch.vue",
+			"content": "<script setup lang=\"ts\">\nconst { size = 'md' } = defineProps<{ size?: 'sm' | 'md' }>();\nconst checked = defineModel<boolean>({ default: false });\n</script>\n\n<template>\n\t<!-- A native checkbox with role=\"switch\": screen readers announce it as on/off. -->\n\t<input v-model=\"checked\" type=\"checkbox\" role=\"switch\" class=\"switch\" :data-size=\"size\" />\n</template>\n\n<!--\n\tOptions you can set from a parent or on the switch itself:\n\t--dui-switch-width, --dui-switch-height, --dui-switch-thumb, --dui-switch-thumb-size, --dui-switch-track, --dui-switch-checked-track, --dui-switch-checked-thumb\n-->\n\n<style scoped>\n.switch {\n\t/* Reused below to work out how far the thumb slides, so they are set once here. */\n\t--width: var(--dui-switch-width, 2rem);\n\t--height: var(--dui-switch-height, 1.15rem);\n\t--thumb-size: var(--dui-switch-thumb-size, 1rem);\n\n\tappearance: none;\n\tdisplay: inline-flex;\n\talign-items: center;\n\tflex-shrink: 0;\n\twidth: var(--width);\n\theight: var(--height);\n\tmargin: 0;\n\tborder: 1px solid transparent;\n\tborder-radius: var(--dui-radius-full);\n\tbackground: var(--dui-switch-track, var(--dui-color-switch-track));\n\tbox-shadow: var(--dui-shadow-xs);\n\tcursor: pointer;\n\toutline: none;\n\ttransition:\n\t\tbackground-color var(--dui-duration-fast) var(--dui-ease-out),\n\t\tbox-shadow var(--dui-duration-fast) var(--dui-ease-out);\n\n\t/* The thumb. */\n\t&::before {\n\t\tcontent: '';\n\t\twidth: var(--thumb-size);\n\t\theight: var(--thumb-size);\n\t\tborder-radius: var(--dui-radius-full);\n\t\tbackground: var(--dui-switch-thumb, var(--dui-color-switch-thumb));\n\t\tpointer-events: none;\n\t\ttransition: translate var(--dui-duration-fast) var(--dui-ease-out);\n\t}\n\n\t&:checked {\n\t\tbackground: var(--dui-switch-checked-track, var(--dui-color-primary));\n\n\t\t&::before {\n\t\t\tbackground: var(--dui-switch-checked-thumb, var(--dui-color-switch-thumb-checked));\n\t\t\ttranslate: calc(var(--width) - var(--thumb-size) - 2px) 0;\n\t\t}\n\t}\n\n\t&:dir(rtl):checked::before {\n\t\ttranslate: calc((var(--width) - var(--thumb-size) - 2px) * -1) 0;\n\t}\n\n\t&:focus-visible {\n\t\tborder-color: var(--dui-color-ring);\n\t\tbox-shadow: 0 0 0 var(--dui-ring-width)\n\t\t\tcolor-mix(in oklch, var(--dui-color-ring) 50%, transparent);\n\t}\n\n\t&:disabled {\n\t\tcursor: not-allowed;\n\t\topacity: 0.5;\n\t}\n}\n\n.switch[data-size='sm'] {\n\t--width: var(--dui-switch-width, 1.5rem);\n\t--height: var(--dui-switch-height, 0.875rem);\n\t--thumb-size: var(--dui-switch-thumb-size, 0.75rem);\n}\n</style>\n"
+		},
+		{
+			"path": "switch/index.ts",
+			"content": "export { default as Root, default as Switch } from './Switch.vue';\n"
+		}
+	]
+}

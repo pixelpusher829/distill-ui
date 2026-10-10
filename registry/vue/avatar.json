@@ -1,0 +1,30 @@
+{
+	"name": "avatar",
+	"type": "component",
+	"dependencies": [
+		"reka-ui@2.11.0"
+	],
+	"registryDependencies": [],
+	"files": [
+		{
+			"path": "avatar/Avatar.vue",
+			"content": "<script setup lang=\"ts\">\nimport { AvatarRoot } from 'reka-ui';\n\nconst { size = 'md' } = defineProps<{ size?: 'sm' | 'md' | 'lg' }>();\n</script>\n\n<template>\n\t<AvatarRoot as-child>\n\t\t<span class=\"avatar\" :data-size=\"size\"><slot /></span>\n\t</AvatarRoot>\n</template>\n\n<!--\n\tOptions you can set from a parent or on the avatar itself:\n\t--dui-avatar-size, --dui-avatar-radius\n-->\n\n<style scoped>\n.avatar {\n\tposition: relative;\n\tdisplay: flex;\n\tflex-shrink: 0;\n\twidth: var(--dui-avatar-size, 2rem);\n\theight: var(--dui-avatar-size, 2rem);\n\t/* Set by Avatar.Group so stacked avatars overlap with a gap ring. */\n\tmargin-inline-start: var(--avatar-overlap, 0);\n\tborder-radius: var(--dui-avatar-radius, var(--dui-radius-full));\n\tbox-shadow: 0 0 0 var(--avatar-ring-width, 0) var(--dui-color-background);\n\tfont-size: var(--dui-text-sm);\n\tuser-select: none;\n\n\t&:first-child {\n\t\tmargin-inline-start: 0;\n\t}\n\n\t/* A faint edge so light images don't blend into the page. */\n\t&::after {\n\t\tcontent: '';\n\t\tposition: absolute;\n\t\tinset: 0;\n\t\tborder: 1px solid color-mix(in oklch, var(--dui-color-foreground) 10%, transparent);\n\t\tborder-radius: inherit;\n\t\tpointer-events: none;\n\t}\n}\n\n.avatar[data-size='sm'] {\n\twidth: var(--dui-avatar-size, 1.5rem);\n\theight: var(--dui-avatar-size, 1.5rem);\n\tfont-size: var(--dui-text-xs);\n}\n\n.avatar[data-size='lg'] {\n\twidth: var(--dui-avatar-size, 2.5rem);\n\theight: var(--dui-avatar-size, 2.5rem);\n}\n</style>\n"
+		},
+		{
+			"path": "avatar/AvatarFallback.vue",
+			"content": "<script setup lang=\"ts\">\nimport { AvatarFallback } from 'reka-ui';\n\n// Shown until the image loads, and for good if it fails.\nconst { delayMs } = defineProps<{ delayMs?: number }>();\n</script>\n\n<template>\n\t<AvatarFallback :delay-ms=\"delayMs\" as-child>\n\t\t<span class=\"fallback\"><slot /></span>\n\t</AvatarFallback>\n</template>\n\n<!--\n\tOptions you can set from a parent or on the avatar fallback itself:\n\t--dui-avatar-fallback-bg\n-->\n\n<style scoped>\n.fallback {\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: center;\n\twidth: 100%;\n\theight: 100%;\n\tborder-radius: inherit;\n\tbackground: var(--dui-avatar-fallback-bg, var(--dui-color-muted));\n\t/* Pulled toward the foreground so initials pass AA contrast on the muted fill. */\n\tcolor: var(\n\t\t--dui-avatar-fallback-fg,\n\t\tcolor-mix(in oklch, var(--dui-color-muted-foreground) 70%, var(--dui-color-foreground))\n\t);\n}\n</style>\n"
+		},
+		{
+			"path": "avatar/AvatarGroup.vue",
+			"content": "<template>\n\t<div class=\"group\"><slot /></div>\n</template>\n\n<style scoped>\n.group {\n\t/* Read by each Avatar inside: overlap them and ring each one in the page color. */\n\t--avatar-overlap: calc(var(--dui-space-2) * -1);\n\t--avatar-ring-width: 2px;\n\n\tdisplay: flex;\n}\n</style>\n"
+		},
+		{
+			"path": "avatar/AvatarImage.vue",
+			"content": "<script setup lang=\"ts\">\nimport { AvatarImage } from 'reka-ui';\n\n// Reka only shows the image once it has loaded.\nconst { src, alt } = defineProps<{ src: string; alt: string }>();\n</script>\n\n<template>\n\t<AvatarImage :src=\"src\" as-child>\n\t\t<img class=\"image\" :src=\"src\" :alt=\"alt\" />\n\t</AvatarImage>\n</template>\n\n<style scoped>\n.image {\n\twidth: 100%;\n\theight: 100%;\n\taspect-ratio: 1;\n\tborder-radius: inherit;\n\tobject-fit: cover;\n}\n</style>\n"
+		},
+		{
+			"path": "avatar/index.ts",
+			"content": "export { default as Root } from './Avatar.vue';\nexport { default as Image } from './AvatarImage.vue';\nexport { default as Fallback } from './AvatarFallback.vue';\nexport { default as Group } from './AvatarGroup.vue';\n"
+		}
+	]
+}

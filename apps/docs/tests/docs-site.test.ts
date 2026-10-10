@@ -88,3 +88,46 @@ test('the theme builder recolors the previews and the theme files', async ({ pag
 		.getByRole('button', { name: 'Save' });
 	await expect(save).toHaveCSS('background-color', /oklch\(0\.55 0\.2 285\)/);
 });
+
+test('the framework switch shows Vue code and demos, and remembers the choice', async ({
+	page
+}) => {
+	await page.goto('/docs/components/dialog');
+	await page.waitForLoadState('networkidle');
+	await page.getByRole('button', { name: 'Vue', exact: true }).click();
+	await expect(page.getByText('Reka UI Dialog')).toBeVisible();
+	await page.getByRole('tab', { name: 'Code' }).first().click();
+	await expect(page.getByText("import * as Dialog from '@/components/ui/dialog';")).toBeVisible();
+
+	// The Vue demo mounts in the preview and works.
+	await page.getByRole('tab', { name: 'Preview' }).first().click();
+	await page.getByTestId('preview').getByRole('button', { name: 'Edit profile' }).click();
+	await expect(page.getByRole('dialog', { name: 'Edit profile' })).toBeVisible();
+	await page.keyboard.press('Escape');
+
+	await page.goto('/docs/installation');
+	await expect(page.getByText('Add distill-ui to a Vue 3 or Nuxt project.')).toBeVisible();
+	await expect(page.getByRole('button', { name: 'Vue', exact: true })).toHaveAttribute(
+		'aria-pressed',
+		'true'
+	);
+});
+
+test('every component page passes axe with the Vue demos', async ({ page }) => {
+	test.slow();
+	await page.addInitScript(() => localStorage.setItem('framework', 'vue'));
+	for (const { slug, name } of components) {
+		await page.goto(`/docs/components/${slug}`);
+		await expect(
+			page.getByText(name === 'Toast' ? 'Our own toast store' : /Reka UI|Native|Plain HTML/).first()
+		).toBeVisible();
+		await expect(page.getByTestId('preview').locator('.vue-demo > *').first()).toBeAttached();
+		const results = await new AxeBuilder({ page })
+			.withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+			.analyze();
+		expect(
+			results.violations.map((v) => `${slug} ${v.id}: ${v.nodes[0]?.target}`),
+			slug
+		).toEqual([]);
+	}
+});

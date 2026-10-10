@@ -5,10 +5,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="text-scale" content="scale" />
 		<script>
-			// Apply the saved theme before the page paints, so it doesn't flash.
+			// Apply the saved theme and framework before the page paints, so they don't flash.
 			try {
 				const theme = localStorage.getItem('theme');
 				if (theme) document.documentElement.dataset.theme = theme;
+				const framework = localStorage.getItem('framework');
+				if (framework) document.documentElement.dataset.framework = framework;
 			} catch {}
 		</script>
 		%sveltekit.head%

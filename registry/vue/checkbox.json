@@ -1,0 +1,16 @@
+{
+	"name": "checkbox",
+	"type": "component",
+	"dependencies": [],
+	"registryDependencies": [],
+	"files": [
+		{
+			"path": "checkbox/Checkbox.vue",
+			"content": "<script setup lang=\"ts\">\n// Use `v-model` for checked and `v-model:indeterminate` for the mixed state.\nconst checked = defineModel<boolean>({ default: false });\nconst indeterminate = defineModel<boolean>('indeterminate', { default: false });\n</script>\n\n<template>\n\t<!-- A native checkbox: keyboard, forms and screen readers work without extra code. -->\n\t<input\n\t\tv-model=\"checked\"\n\t\ttype=\"checkbox\"\n\t\tclass=\"checkbox\"\n\t\t:indeterminate=\"indeterminate\"\n\t\t@change=\"indeterminate = false\"\n\t/>\n</template>\n\n<!--\n\tOptions you can set from a parent or on the checkbox itself:\n\t--dui-checkbox-size, --dui-checkbox-border, --dui-checkbox-radius, --dui-checkbox-bg, --dui-checkbox-checked-fg, --dui-checkbox-checked-bg\n-->\n\n<style scoped>\n.checkbox {\n\t/* The size is reused below for the mark, so it is set once here. */\n\t--size: var(--dui-checkbox-size, 1rem);\n\n\tappearance: none;\n\tdisplay: inline-grid;\n\tplace-content: center;\n\tflex-shrink: 0;\n\twidth: var(--size);\n\theight: var(--size);\n\tmargin: 0;\n\tborder: 1px solid var(--dui-checkbox-border, var(--dui-color-input));\n\tborder-radius: var(--dui-checkbox-radius, 4px);\n\tbackground: var(--dui-checkbox-bg, var(--dui-color-control));\n\tcolor: var(--dui-checkbox-checked-fg, var(--dui-color-primary-foreground));\n\tbox-shadow: var(--dui-shadow-xs);\n\tcursor: pointer;\n\toutline: none;\n\ttransition: box-shadow var(--dui-duration-fast) var(--dui-ease-out);\n\n\t/* The check mark: an SVG used as a mask, so it takes the text color. */\n\t&::before {\n\t\tcontent: '';\n\t\twidth: calc(var(--size) * 0.875);\n\t\theight: calc(var(--size) * 0.875);\n\t\tbackground: currentColor;\n\t\tmask: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E\")\n\t\t\tcenter / contain no-repeat;\n\t\tscale: 0;\n\t}\n\n\t&:checked,\n\t&:indeterminate {\n\t\tborder-color: var(--dui-checkbox-checked-bg, var(--dui-color-primary));\n\t\tbackground: var(--dui-checkbox-checked-bg, var(--dui-color-primary));\n\n\t\t&::before {\n\t\t\tscale: 1;\n\t\t}\n\t}\n\n\t&:indeterminate::before {\n\t\tmask-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M5 12h14'/%3E%3C/svg%3E\");\n\t}\n\n\t&:focus-visible {\n\t\tborder-color: var(--dui-color-ring);\n\t\tbox-shadow: 0 0 0 var(--dui-ring-width)\n\t\t\tcolor-mix(in oklch, var(--dui-color-ring) 50%, transparent);\n\t}\n\n\t&[aria-invalid='true'] {\n\t\tborder-color: var(--dui-color-destructive);\n\t\tbox-shadow: 0 0 0 var(--dui-ring-width)\n\t\t\tcolor-mix(in oklch, var(--dui-color-destructive) 20%, transparent);\n\t}\n\n\t&:disabled {\n\t\tcursor: not-allowed;\n\t\topacity: 0.5;\n\t}\n}\n</style>\n"
+		},
+		{
+			"path": "checkbox/index.ts",
+			"content": "export { default as Root, default as Checkbox } from './Checkbox.vue';\n"
+		}
+	]
+}

@@ -1,19 +1,25 @@
 <script lang="ts">
 	import CodeBlock from '#lib/docs/CodeBlock.svelte';
+	import { framework } from '#lib/docs/framework.svelte.js';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
 
-	const states = [
-		['Open (dialog, popover, menu, select)', '[data-open]'],
-		['Active tab', '[data-active]'],
+	const vue = $derived(framework.current === 'vue');
+	const file = $derived(vue ? 'Button.vue' : 'button.svelte');
+	const open = $derived(vue ? '[data-state="open"]' : '[data-open]');
+
+	// The behavior libraries name a few states differently: Melt for Svelte, Reka for Vue.
+	const states = $derived([
+		['Open (dialog, popover, menu, select)', open],
+		['Active tab', vue ? '[data-state="active"]' : '[data-active]'],
 		['Highlighted option or menu item', '[data-highlighted]'],
 		['Orientation', '[data-orientation="horizontal"] / "vertical"'],
 		['Disabled items and tabs', '[data-disabled]'],
 		['Select showing its placeholder', '[data-placeholder]'],
 		['Invalid form control', '[aria-invalid="true"]'],
 		['Checkbox, radio and switch', ':checked, :indeterminate, :disabled']
-	];
+	]);
 </script>
 
 <svelte:head>
@@ -52,8 +58,8 @@
 
 	<h2>An example</h2>
 	<p>
-		Delete everything inside <code>button.svelte</code>'s <code>&lt;style&gt;</code> block and write your
-		own. Because the classes are in the same file, Svelte scopes them for you:
+		Delete everything inside <code>{file}</code>'s <code>&lt;style&gt;</code> block and write your
+		own. Because the classes are in the same file, {vue ? 'Vue' : 'Svelte'} scopes them for you:
 	</p>
 	<CodeBlock code={data.code.style} />
 	<p>
@@ -69,7 +75,7 @@
 		</li>
 		<li>
 			<strong>Hidden states.</strong> Dialogs, popovers and menus are hidden until
-			<code>[data-open]</code> is set. Keep the rules that show and hide them, or copy them from the original
+			<code>{open}</code> is set. Keep the rules that show and hide them, or copy them from the original
 			file.
 		</li>
 		<li>
