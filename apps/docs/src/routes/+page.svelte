@@ -283,7 +283,7 @@
 		font-weight: 700;
 		line-height: 1.02;
 		letter-spacing: -0.04em;
-		text-wrap: pretty;
+		text-wrap: balance;
 	}
 
 	.accent {
