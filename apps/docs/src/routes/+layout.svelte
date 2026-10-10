@@ -4,6 +4,7 @@
 	import '../app.css';
 	import favicon from '#lib/assets/favicon.svg';
 	import ThemeToggle from '#lib/docs/ThemeToggle.svelte';
+	import FrameworkSwitch from '#lib/docs/FrameworkSwitch.svelte';
 	import { framework } from '#lib/docs/framework.svelte.js';
 	import { onMount } from 'svelte';
 	import type { LayoutProps } from './$types';
@@ -34,7 +35,7 @@
 	</a>
 	<nav aria-label="Main">
 		<a href="/docs">Docs</a>
-		<a href="/docs/components/button">Components</a>
+		<a class="components" href="/docs/components/button">Components</a>
 		<a href="https://github.com/pixelpusher829/distill-ui">GitHub</a>
 	</nav>
 	<span class="coffee">
@@ -55,6 +56,7 @@
 			<span class="label">Buy me a coffee</span>
 		</Button>
 	</span>
+	<FrameworkSwitch />
 	<ThemeToggle />
 </header>
 
@@ -129,12 +131,17 @@
 
 	@media (max-width: 40rem) {
 		header {
-			gap: var(--dui-space-4);
+			gap: var(--dui-space-3);
 			padding-inline: var(--dui-space-4);
 		}
 
 		nav {
 			gap: var(--dui-space-3);
+		}
+
+		/* Room for the framework switch. The docs menu lists every component anyway. */
+		.components {
+			display: none;
 		}
 
 		/* Only the cup on phones; the label is still read out by screen readers. */
@@ -154,6 +161,10 @@
 		header {
 			gap: var(--dui-space-2);
 			padding-inline: var(--dui-space-3);
+		}
+
+		nav {
+			gap: var(--dui-space-2);
 		}
 	}
 
