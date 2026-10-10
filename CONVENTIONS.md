@@ -314,6 +314,11 @@ const forwarded = useForwardPropsEmits(props, emits);
 ### Filling gaps in Reka
 
 - **Select label.** Reka's `SelectLabel` is a group heading (our `Select.GroupHeading`). `Select.Label` is our own `<label>`; the root makes ids so it points at the trigger, and the list points `aria-labelledby` back at it.
+- **Placement.** Popover, Tooltip and Dropdown Menu take Svelte's `placement` prop (`'bottom'`, `'top-start'`…) on the root. Each folder's `placement.ts` splits it into Reka's `side` and `align` for the content.
+- **Dropdown Menu.** It is not modal, like the Svelte one, so the page stays usable while it is open. The trigger also opens on ArrowUp and lands on the last item, which the menu button pattern allows and Reka doesn't do. Items use `@select` (Svelte's `onSelect`), and a checkbox item stays open when toggled.
+- **Tooltip.** The root wraps Reka's `TooltipProvider`, so a tooltip works on its own and `openDelay` sets its delay. Reka closes a tooltip when the page scrolls. Its open state is `[data-state="delayed-open"]` or `[data-state="instant-open"]`.
+- **Toast.** Reka's toast is built from components, not a `toast()` call, so `toast/toaster.ts` is a small store of our own with the same API as Svelte: `toast()`, `toast.success()`, `toast.error()`, `toast.dismiss()`, five-second timers that pause while the pointer is over the toasts, and one `<Toaster />` placed in `App.vue`.
+- **Avatar.** Reka only renders the image once it has loaded, and shows the fallback until then.
 
 ### Checks
 
