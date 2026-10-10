@@ -95,7 +95,7 @@
 	.logo svg {
 		width: 1.25rem;
 		height: 1.25rem;
-		fill: var(--site-accent);
+		fill: var(--site-logo);
 	}
 
 	nav {

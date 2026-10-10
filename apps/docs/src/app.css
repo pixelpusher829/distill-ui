@@ -20,6 +20,21 @@
 	--site-accent-foreground: #213547;
 }
 
+/* The logo keeps the favicon's cyan whatever the framework. */
+:root {
+	--site-logo: #1679a3;
+}
+
+:root[data-theme='dark'] {
+	--site-logo: #5fcde8;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) {
+		--site-logo: #5fcde8;
+	}
+}
+
 /*
  * Content written for one framework: <span data-only="vue">. Both versions are in the page, and
  * this hides the other one before the page paints, so switching never flashes.
