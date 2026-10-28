@@ -28,7 +28,7 @@
 		},
 		{
 			"path": "select/SelectLabel.vue",
-			"content": "<script setup lang=\"ts\">\nimport { injectSelect } from './context.js';\n\nconst ctx = injectSelect();\nctx.hasLabel.value = true;\n</script>\n\n<template>\n\t<label :id=\"ctx.labelId\" :for=\"ctx.triggerId\" class=\"label\"><slot /></label>\n</template>\n\n<style scoped>\n.label {\n\tdisplay: block;\n\tmargin-bottom: var(--dui-space-2);\n\tfont-size: var(--dui-text-sm);\n\tline-height: var(--dui-text-sm-line-height);\n\tfont-weight: var(--dui-font-weight-medium);\n}\n</style>\n"
+			"content": "<script setup lang=\"ts\">\nimport { injectSelect } from './context.js';\n\nconst ctx = injectSelect();\nctx.hasLabel.value = true;\n</script>\n\n<template>\n\t<label :id=\"ctx.labelId\" :for=\"ctx.triggerId\" class=\"label\"><slot /></label>\n</template>\n\n<style scoped>\n.label {\n\tdisplay: block;\n\tmargin-bottom: var(--dui-space-2);\n\tfont-size: var(--dui-text-sm);\n\tline-height: var(--dui-text-sm-line-height);\n\tfont-weight: var(--dui-weight-medium);\n}\n</style>\n"
 		},
 		{
 			"path": "select/SelectSeparator.vue",

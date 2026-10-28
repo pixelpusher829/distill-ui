@@ -78,7 +78,7 @@
 		margin: var(--dui-space-6) 0 var(--dui-space-2);
 		padding-inline: var(--dui-space-2);
 		font-size: var(--dui-text-sm);
-		font-weight: var(--dui-font-weight-semibold);
+		font-weight: var(--dui-weight-semibold);
 
 		&:first-of-type {
 			margin-top: 0;
@@ -116,7 +116,7 @@
 			border-left-color: var(--site-accent);
 			background: color-mix(in oklch, var(--dui-color-foreground) 6%, transparent);
 			color: var(--dui-color-foreground);
-			font-weight: var(--dui-font-weight-semibold);
+			font-weight: var(--dui-weight-semibold);
 		}
 	}
 
@@ -142,7 +142,7 @@
 		summary {
 			display: list-item;
 			cursor: pointer;
-			font-weight: var(--dui-font-weight-medium);
+			font-weight: var(--dui-weight-medium);
 		}
 
 		details {

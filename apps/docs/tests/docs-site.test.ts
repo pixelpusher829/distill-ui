@@ -72,21 +72,25 @@ test('the docs menu folds on phones', async ({ page }) => {
 	await expect(menu.getByRole('link', { name: 'Installation' })).toBeVisible();
 });
 
-test('the theme builder recolors the previews and the theme files', async ({ page }) => {
+test('the theme builder recolors the previews and the seeds', async ({ page }) => {
 	await page.goto('/docs/theme-builder');
 	await page.waitForLoadState('networkidle');
-	const lightFile = page.locator('figure', { hasText: 'themes/light.css' });
-	await expect(lightFile).toContainText('--dui-color-primary: oklch(0.205 0 0);');
-
-	await page.getByRole('button', { name: 'Violet' }).click();
-	await page.getByRole('radio', { name: 'Slate' }).click();
-	await expect(lightFile).toContainText('--dui-color-primary: oklch(0.55 0.2 285);');
-	await expect(lightFile).toContainText('--dui-color-muted-foreground: oklch(0.556 0.02 255);');
-
+	const file = page.locator('figure', { hasText: 'tokens.css' });
+	await expect(file).toContainText('--dui-primary: oklch(0.556 0.2 260);');
 	const save = page
 		.getByRole('region', { name: 'Light preview' })
 		.getByRole('button', { name: 'Save' });
-	await expect(save).toHaveCSS('background-color', /oklch\(0\.55 0\.2 285\)/);
+	const before = await save.evaluate((el) => getComputedStyle(el).backgroundColor);
+
+	await page.getByRole('button', { name: 'Violet' }).click();
+	await page.getByRole('radio', { name: 'Stone' }).click();
+	await expect(file).toContainText('--dui-primary: oklch(0.556 0.2 285);');
+	await expect(file).toContainText('--dui-neutral: oklch(0.556 0.013 58);');
+
+	// Colors worked out with relative color syntax may be serialized as oklab(), so check the
+	// lightness (primary-500) and that the color changed rather than an exact string.
+	await expect(save).toHaveCSS('background-color', /^okl(ab|ch)\(0\.556 /);
+	await expect(save).not.toHaveCSS('background-color', before);
 });
 
 test('the framework switch shows Vue code and demos, and remembers the choice', async ({

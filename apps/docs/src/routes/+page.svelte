@@ -114,10 +114,10 @@
 	<section aria-labelledby="readable-title">
 		<header class="section-head">
 			<p class="kicker">Readable</p>
-			<h2 id="readable-title">More lines, less to decode.</h2>
+			<h2 id="readable-title">No more class soup.</h2>
 			<p>
-				A style block is longer than a class string. It's also something you can read top to bottom,
-				search, and change one line of without breaking the rest.
+				Plain CSS you can read at a glance: one property per line, one rule per state, and nothing
+				extra in your markup. No wall of classes to decode.
 			</p>
 		</header>
 		<div class="compare">
@@ -270,7 +270,7 @@
 		background: var(--dui-color-background);
 		color: var(--dui-color-muted-foreground);
 		font-size: var(--dui-text-xs);
-		font-weight: var(--dui-font-weight-medium);
+		font-weight: var(--dui-weight-medium);
 		letter-spacing: 0.02em;
 	}
 
@@ -322,7 +322,7 @@
 		color: var(--site-accent);
 		font-family: var(--dui-font-mono);
 		font-size: var(--dui-text-xs);
-		font-weight: var(--dui-font-weight-semibold);
+		font-weight: var(--dui-weight-semibold);
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 	}
@@ -366,7 +366,7 @@
 			color: var(--site-accent);
 			font-family: var(--dui-font-mono);
 			font-size: var(--dui-text-sm);
-			font-weight: var(--dui-font-weight-semibold);
+			font-weight: var(--dui-weight-semibold);
 		}
 
 		& h3 {
@@ -403,7 +403,7 @@
 		margin: 0 0 var(--dui-space-3);
 		color: var(--dui-color-muted-foreground);
 		font-size: var(--dui-text-sm);
-		font-weight: var(--dui-font-weight-medium);
+		font-weight: var(--dui-weight-medium);
 
 		&::before {
 			content: '';

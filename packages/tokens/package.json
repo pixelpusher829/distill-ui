@@ -1,19 +1,17 @@
 {
 	"name": "@distill-ui/tokens",
 	"version": "0.0.1",
-	"description": "Framework-agnostic design tokens, themes and keyframes for distill-ui.",
+	"description": "Framework-agnostic design tokens and keyframes for distill-ui.",
 	"license": "MIT",
 	"type": "module",
 	"sideEffects": [
 		"**/*.css"
 	],
 	"files": [
-		"*.css",
-		"themes"
+		"*.css"
 	],
 	"exports": {
 		"./tokens.css": "./tokens.css",
-		"./motion.css": "./motion.css",
-		"./themes/*": "./themes/*"
+		"./keyframes.css": "./keyframes.css"
 	}
 }

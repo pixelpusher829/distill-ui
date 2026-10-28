@@ -30,7 +30,7 @@
 		},
 		{
 			"path": "card/CardTitle.vue",
-			"content": "<template>\n\t<div class=\"title\"><slot /></div>\n</template>\n\n<style scoped>\n.title {\n\tgrid-column: 1;\n\tfont-size: var(--card-title-size);\n\tline-height: 1.5;\n\tfont-weight: var(--dui-font-weight-medium);\n}\n</style>\n"
+			"content": "<template>\n\t<div class=\"title\"><slot /></div>\n</template>\n\n<style scoped>\n.title {\n\tgrid-column: 1;\n\tfont-size: var(--card-title-size);\n\tline-height: 1.5;\n\tfont-weight: var(--dui-weight-medium);\n}\n</style>\n"
 		},
 		{
 			"path": "card/index.ts",

@@ -152,6 +152,6 @@ main > section {
 main > section > h2 {
 	margin: 0;
 	font-size: var(--dui-text-base);
-	font-weight: var(--dui-font-weight-medium);
+	font-weight: var(--dui-weight-medium);
 }
 </style>

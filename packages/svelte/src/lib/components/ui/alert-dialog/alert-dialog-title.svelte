@@ -13,6 +13,6 @@
 		margin: 0;
 		font-size: var(--dui-text-base);
 		line-height: 1;
-		font-weight: var(--dui-font-weight-medium);
+		font-weight: var(--dui-weight-medium);
 	}
 </style>

@@ -57,11 +57,11 @@ const {
 }
 
 .item[data-variant='destructive'] {
-	color: color-mix(in oklch, var(--dui-color-destructive) 80%, var(--dui-color-foreground));
+	color: var(--dui-color-destructive-text);
 
 	&:focus {
 		background: color-mix(in oklch, var(--dui-color-destructive) 10%, transparent);
-		color: color-mix(in oklch, var(--dui-color-destructive) 80%, var(--dui-color-foreground));
+		color: var(--dui-color-destructive-text);
 	}
 }
 </style>

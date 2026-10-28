@@ -38,7 +38,7 @@
 		},
 		{
 			"path": "alert-dialog/AlertDialogTitle.vue",
-			"content": "<script setup lang=\"ts\">\nimport { AlertDialogTitle } from 'reka-ui';\n</script>\n\n<template>\n\t<!-- Reka gives it an id and points the dialog's aria-labelledby at it. -->\n\t<AlertDialogTitle as-child>\n\t\t<h2 class=\"title\"><slot /></h2>\n\t</AlertDialogTitle>\n</template>\n\n<style scoped>\n.title {\n\tmargin: 0;\n\tfont-size: var(--dui-text-base);\n\tline-height: 1;\n\tfont-weight: var(--dui-font-weight-medium);\n}\n</style>\n"
+			"content": "<script setup lang=\"ts\">\nimport { AlertDialogTitle } from 'reka-ui';\n</script>\n\n<template>\n\t<!-- Reka gives it an id and points the dialog's aria-labelledby at it. -->\n\t<AlertDialogTitle as-child>\n\t\t<h2 class=\"title\"><slot /></h2>\n\t</AlertDialogTitle>\n</template>\n\n<style scoped>\n.title {\n\tmargin: 0;\n\tfont-size: var(--dui-text-base);\n\tline-height: 1;\n\tfont-weight: var(--dui-weight-medium);\n}\n</style>\n"
 		},
 		{
 			"path": "alert-dialog/AlertDialogTrigger.vue",

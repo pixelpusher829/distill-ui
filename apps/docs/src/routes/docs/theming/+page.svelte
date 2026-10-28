@@ -6,16 +6,14 @@
 	let { data }: PageProps = $props();
 
 	const groups = [
-		[
-			'Colors',
-			'--dui-color-background, --dui-color-primary, --dui-color-muted-foreground…',
-			'themes/light.css and themes/dark.css'
-		],
-		['Corners', '--dui-radius (scales --dui-radius-sm to -xl)', 'tokens.css'],
-		['Spacing', '--dui-space-1 (0.25rem) to --dui-space-12 (3rem)', 'tokens.css'],
-		['Text', '--dui-font-sans, --dui-font-mono, --dui-text-xs to -lg', 'tokens.css'],
-		['Shadows', '--dui-shadow-xs to -lg', 'tokens.css'],
-		['Motion', '--dui-duration-fast|normal|slow, --dui-ease-*', 'motion.css']
+		['Seeds', '--dui-neutral, --dui-primary, --dui-destructive, --dui-success'],
+		['Neutral scale', '--dui-neutral-50 to --dui-neutral-950'],
+		['Colors', '--dui-color-background, --dui-color-primary, --dui-color-muted-foreground…'],
+		['Corners', '--dui-radius (scales --dui-radius-sm to -xl)'],
+		['Spacing', '--dui-space-1 (0.25rem) to --dui-space-12 (3rem)'],
+		['Text', '--dui-font-sans, --dui-font-mono, --dui-text-xs to -lg, --dui-weight-*'],
+		['Shadows', '--dui-shadow-xs to -lg'],
+		['Motion', '--dui-duration-fast|normal|slow, --dui-ease-*']
 	];
 </script>
 
@@ -34,25 +32,40 @@
 	<h2>The tokens</h2>
 	<p>
 		Tokens are CSS custom properties that start with <code>--dui-</code>. After
-		<a href="/docs/installation">installing</a>, they live in your own project, in
-		<code>src/lib/styles/distill-ui</code>.
+		<a href="/docs/installation">installing</a>, they live in your own project, all in one file:
+		<code>src/lib/styles/distill-ui/tokens.css</code>.
 	</p>
 	<table>
 		<thead>
-			<tr><th scope="col">Group</th><th scope="col">Examples</th><th scope="col">File</th></tr>
+			<tr><th scope="col">Group</th><th scope="col">Examples</th></tr>
 		</thead>
 		<tbody>
-			{#each groups as [group, examples, file] (group)}
-				<tr><td>{group}</td><td><code>{examples}</code></td><td><code>{file}</code></td></tr>
+			{#each groups as [group, examples] (group)}
+				<tr><td>{group}</td><td><code>{examples}</code></td></tr>
 			{/each}
 		</tbody>
 	</table>
-	<p>
-		The color names follow shadcn/ui: <code>background</code> and <code>foreground</code> for the
-		page,
-		<code>primary</code> for the main action, <code>muted</code> for quiet surfaces and text,
-		<code>destructive</code> for danger, and so on.
-	</p>
+
+	<h2>Colors</h2>
+	<p>Colors work in three layers. You only ever change the first.</p>
+	<ol>
+		<li>
+			<strong>Seeds:</strong> <code>--dui-neutral</code>, <code>--dui-primary</code>,
+			<code>--dui-destructive</code> and <code>--dui-success</code>.
+		</li>
+		<li>
+			<strong>Scales:</strong> neutral and primary each get steps from <code>50</code> to
+			<code>950</code>. Every step has a fixed lightness, so the seed only sets the hue and how
+			colorful it is, and contrast holds whatever you pick.
+		</li>
+		<li>
+			<strong>Semantic colors:</strong> what components read, named after shadcn/ui:
+			<code>background</code> and <code>foreground</code> for the page, <code>primary</code> for the
+			main action, <code>muted</code> for quiet surfaces and text, <code>destructive</code> for
+			danger, and so on. Each points at a light and a dark step, like
+			<code>light-dark(var(--dui-primary-500), var(--dui-primary-400))</code>.
+		</li>
+	</ol>
 
 	<h2>Dark mode</h2>
 	<p>
@@ -62,25 +75,21 @@
 	</p>
 	<CodeBlock code={data.code.html} />
 	<p>
-		Components never check the theme themselves. They only read tokens, so a theme is just a
-		different set of values.
+		Every color has a light and a dark value, and <code>data-theme</code> works on any element, not
+		just <code>&lt;html&gt;</code>. Components never check the theme themselves.
 	</p>
 
 	<h2>Make it yours</h2>
 	<p>
-		The token files are yours to edit, the same as the components. To change the brand color, change
-		it in both theme files, or let the <a href="/docs/theme-builder">theme builder</a> write them for
-		you:
+		<code>tokens.css</code> is yours to edit, the same as the components. To rebrand, change the
+		seeds, or let the <a href="/docs/theme-builder">theme builder</a> pick them for you:
 	</p>
 	<CodeBlock code={data.code.edit} />
-	<p>Corners and fonts are in <code>tokens.css</code>:</p>
-	<CodeBlock code={data.code.radius} />
 
-	<h3>Adding another theme</h3>
+	<h3>Theming part of a page</h3>
 	<p>
-		A theme is one selector with every color in it. Copy the colors from <code>dark.css</code> into
-		a new file, change them, import the file after <code>tokens.css</code>, and set
-		<code>data-theme="ocean"</code>:
+		Set seeds on any element with <code>class="dui-theme"</code> and the colors are worked out again for
+		everything inside it:
 	</p>
 	<CodeBlock code={data.code.extra} />
 

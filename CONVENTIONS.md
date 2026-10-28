@@ -2,7 +2,7 @@
 
 How every distill-ui component is built. The **Shared** section applies to every framework. The **Svelte** section is specific to `packages/svelte`, and the **Vue** section to `packages/vue`.
 
-Change a documented convention only after discussing it (see "Notes for Claude Code" in PLAN-svelte.md).
+Change a documented convention only after discussing it.
 
 ---
 
@@ -12,19 +12,20 @@ Change a documented convention only after discussing it (see "Notes for Claude C
 
 All values come from CSS custom properties in `packages/tokens`. Importing `tokens.css` brings in everything. Every public variable starts with `--dui-` so it can't clash with an app's own variables or with Tailwind's (which also uses names like `--color-primary`):
 
-- `tokens.css`: spacing (`--dui-space-*`), radius (`--dui-radius`, `--dui-radius-sm|md|lg|xl|full`), shadows (`--dui-shadow-xs|sm|md|lg`), fonts (`--dui-font-sans|mono`, `--dui-text-*`, `--dui-font-weight-*`), focus ring width (`--dui-ring-width`) and z-index layers (`--dui-z-*`).
-- `themes/light.css` and `themes/dark.css`: colors, named after shadcn's semantic names with a `--dui-color-` prefix (`--dui-color-background`, `--dui-color-primary`, `--dui-color-muted-foreground`, `--dui-color-ring` and so on).
-- `motion.css`: durations (`--dui-duration-fast|normal|slow`), easings (`--dui-ease-*`), shared keyframes, and the reduced-motion override.
+- `tokens.css`: every token. Colors, spacing (`--dui-space-*`), radius (`--dui-radius`, `--dui-radius-sm|md|lg|xl|full`), shadows (`--dui-shadow-xs|sm|md|lg`), fonts (`--dui-font-sans|mono`, `--dui-text-*`, `--dui-weight-*`), focus ring width (`--dui-ring-width`), durations (`--dui-duration-fast|normal|slow`), easings (`--dui-ease-*`) and z-index layers (`--dui-z-*`).
+- `keyframes.css`: the shared keyframes, imported by `tokens.css`.
+
+Colors have three layers. **Seeds** are what a theme sets: `--dui-neutral`, `--dui-primary`, `--dui-destructive`, `--dui-success`. **Scales** (`--dui-neutral-50` to `-950`, `--dui-primary-50` to `-950`) are worked out from the neutral and primary seeds with relative color syntax, at a fixed lightness per step, so a seed only contributes hue and chroma. Destructive and success have no scale. **Semantic colors** are what components read, named after shadcn's semantic names with a `--dui-color-` prefix (`--dui-color-background`, `--dui-color-primary`, `--dui-color-muted-foreground` and so on), each a `light-dark()` pair of scale steps. Components read semantic colors only, never seeds or scale steps.
 
 Rules:
 
 - Never hardcode a color, size, radius, shadow or duration in a component. If a value has no token, add one and note it here.
 - Don't add fallbacks for missing tokens (`var(--dui-color-primary, #111)`). Components require `tokens.css`.
-- When a theme needs more than a color swap (for example, dark mode giving outline controls a translucent fill), add a semantic token to both themes instead of writing a dark-mode selector in the component. Status colors beyond shadcn's set live in the themes too (`--dui-color-success`). Examples: `--dui-color-control`, `--dui-color-control-hover`, `--dui-color-tab-active`, `--dui-color-tab-active-border`, `--dui-color-switch-track`, `--dui-color-switch-thumb`, `--dui-color-switch-thumb-checked`.
+- When a theme needs more than a color swap (for example, dark mode giving outline controls a translucent fill), add a semantic color with a `light-dark()` value instead of writing a dark-mode selector in the component. Status colors beyond shadcn's set are semantic colors too (`--dui-color-success`). Examples: `--dui-color-control`, `--dui-color-control-hover`, `--dui-color-tab-active`, `--dui-color-tab-active-border`, `--dui-color-switch-track`, `--dui-color-switch-thumb`, `--dui-color-switch-thumb-checked`.
 
 ### Dark mode
 
-Dark applies when `<html>` has `class="dark"` or `data-theme="dark"`, or when the OS prefers dark and the page hasn't opted into light (`class="light"` or `data-theme="light"`). Components never check the theme themselves; they read tokens.
+`color-scheme` picks each semantic color's light or dark value. The page follows the OS; `class="dark"`/`data-theme="dark"` or `class="light"`/`data-theme="light"`, on `<html>` or any element, forces one. Components never check the theme themselves; they read tokens.
 
 ### Component custom properties
 
@@ -92,7 +93,7 @@ Component styles are **unlayered** and kept at **one class plus attribute select
 ### Animations
 
 - Entrance and exit use transitions on the open state where the behavior layer closes on `transitionend` (Melt's Dialog does this), and `@starting-style` for elements that appear from `display: none` (popovers).
-- Keyframes for anything else live in `motion.css` (`distill-fade-in`, `distill-zoom-in`, `distill-slide-in-from-*`, the matching outs, and `distill-pulse` for Skeleton) so both frameworks share them.
+- Keyframes for anything else live in `keyframes.css` (`distill-fade-in`, `distill-zoom-in`, `distill-slide-in-from-*`, the matching outs, and `distill-pulse` for Skeleton) so both frameworks share them.
 - Always use the duration and easing tokens. Under `prefers-reduced-motion: reduce` every duration becomes `0ms`, which also makes Melt close dialogs immediately.
 
 ```css
@@ -135,7 +136,7 @@ Reach for Melt (or a builder of our own) only when no native element does the jo
 
 ### Scoping strategy: Melt UI builders on our own elements
 
-Decided in Phase 1a (see PLAN-svelte.md). Every element a component styles is written in that component's own markup, with Melt's attributes spread onto it, so a plain scoped `<style>` block reaches it:
+Every element a component styles is written in that component's own markup, with Melt's attributes spread onto it, so a plain scoped `<style>` block reaches it:
 
 ```svelte
 <script lang="ts">

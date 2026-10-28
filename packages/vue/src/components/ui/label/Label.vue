@@ -15,7 +15,7 @@
 	color: var(--dui-label-fg, var(--dui-color-foreground));
 	font-size: var(--dui-text-sm);
 	line-height: 1;
-	font-weight: var(--dui-font-weight-medium);
+	font-weight: var(--dui-weight-medium);
 	user-select: none;
 }
 </style>

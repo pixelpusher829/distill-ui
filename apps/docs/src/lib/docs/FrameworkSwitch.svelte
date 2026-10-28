@@ -32,7 +32,7 @@
 		background: transparent;
 		color: var(--dui-color-muted-foreground);
 		font: inherit;
-		font-weight: var(--dui-font-weight-medium);
+		font-weight: var(--dui-weight-medium);
 		cursor: pointer;
 		transition:
 			color 120ms,

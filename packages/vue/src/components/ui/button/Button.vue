@@ -51,7 +51,7 @@ const {
 	font: inherit;
 	font-size: var(--dui-text-sm);
 	line-height: var(--dui-text-sm-line-height);
-	font-weight: var(--dui-font-weight-medium);
+	font-weight: var(--dui-weight-medium);
 	white-space: nowrap;
 	text-decoration: none;
 	cursor: pointer;

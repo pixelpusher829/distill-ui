@@ -44,7 +44,7 @@ describe('init', () => {
 		const { code } = run('init');
 		expect(code).toBe(0);
 		expect(existsSync(join(dir, 'src/lib/styles/distill-ui/tokens.css'))).toBe(true);
-		expect(existsSync(join(dir, 'src/lib/styles/distill-ui/themes/dark.css'))).toBe(true);
+		expect(existsSync(join(dir, 'src/lib/styles/distill-ui/keyframes.css'))).toBe(true);
 		const layout = readFileSync(join(dir, 'src/routes/+layout.svelte'), 'utf8');
 		expect(layout).toContain('<script lang="ts">');
 		expect(layout).toContain("import '#lib/styles/distill-ui/tokens.css';");

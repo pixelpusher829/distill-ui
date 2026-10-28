@@ -42,10 +42,7 @@ const { variant = 'default' } = defineProps<{ variant?: 'default' | 'destructive
 }
 
 .alert[data-variant='destructive'] {
-	/* Pulled toward the foreground so the text passes AA contrast, as in Button. */
-	color: var(
-		--dui-alert-fg,
-		color-mix(in oklch, var(--dui-color-destructive) 80%, var(--dui-color-foreground))
-	);
+	/* The destructive text token passes AA contrast in both themes. */
+	color: var(--dui-alert-fg, var(--dui-color-destructive-text));
 }
 </style>

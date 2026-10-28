@@ -12,10 +12,8 @@
 		{ name: 'Ember', hue: 35, radius: 0, chroma: 0.19 }
 	];
 
-	const primary = $derived(`oklch(0.55 ${chroma} ${hue})`);
-	const css = $derived(
-		`:root {\n\t--dui-color-primary: ${primary};\n\t--dui-color-primary-foreground: white;\n\t--dui-color-ring: ${primary};\n\t--dui-radius: ${radius}rem;\n}`
-	);
+	const primary = $derived(`oklch(0.556 ${chroma} ${hue})`);
+	const css = $derived(`:root {\n\t--dui-primary: ${primary};\n\t--dui-radius: ${radius}rem;\n}`);
 </script>
 
 <div class="playground">
@@ -26,7 +24,7 @@
 					type="button"
 					class="swatch"
 					aria-pressed={hue === preset.hue && radius === preset.radius && chroma === preset.chroma}
-					style="--swatch: oklch(0.55 {preset.chroma} {preset.hue})"
+					style="--swatch: oklch(0.556 {preset.chroma} {preset.hue})"
 					onclick={() => ({ hue, radius, chroma } = preset)}
 				>
 					<span aria-hidden="true"></span>{preset.name}
@@ -44,11 +42,8 @@
 		<pre class="css" aria-label="The CSS for this theme"><code>{css}</code></pre>
 	</div>
 
-	<!-- Everything below reads the same tokens, so changing three of them restyles it all. -->
-	<div
-		class="stage"
-		style="--dui-color-primary: {primary}; --dui-color-ring: {primary}; --dui-radius: {radius}rem"
-	>
+	<!-- Everything below reads the same tokens, so changing two of them restyles it all. -->
+	<div class="stage dui-theme" style="--dui-primary: {primary}; --dui-radius: {radius}rem">
 		<Card.Root>
 			<Card.Header>
 				<Card.Title>Create an account</Card.Title>
@@ -124,7 +119,7 @@
 		}
 
 		&[aria-pressed='true'] {
-			border-color: var(--dui-color-foreground);
+			border-color: var(--dui-color-muted-foreground);
 		}
 
 		&:focus-visible {
@@ -137,7 +132,7 @@
 		display: grid;
 		gap: var(--dui-space-2);
 		font-size: var(--dui-text-sm);
-		font-weight: var(--dui-font-weight-medium);
+		font-weight: var(--dui-weight-medium);
 
 		& span {
 			display: flex;
@@ -170,15 +165,12 @@
 		tab-size: 2;
 	}
 
-	/* The radius scale and hover colors are worked out from these tokens in tokens.css, on :root.
-	   Setting the tokens lower down means working them out again here. */
+	/* The radius scale is worked out on :root only, so it's redone here. */
 	.stage {
 		--dui-radius-sm: calc(var(--dui-radius) * 0.6);
 		--dui-radius-md: calc(var(--dui-radius) * 0.8);
 		--dui-radius-lg: var(--dui-radius);
 		--dui-radius-xl: calc(var(--dui-radius) * 1.4);
-		--dui-color-primary-hover: color-mix(in oklch, var(--dui-color-primary) 80%, transparent);
-		--dui-color-primary-foreground: white;
 
 		display: grid;
 		justify-items: center;

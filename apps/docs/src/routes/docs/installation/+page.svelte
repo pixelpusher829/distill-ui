@@ -88,8 +88,7 @@
 		<li>
 			Copy the <code>packages/tokens</code> folder from
 			<a href="https://github.com/pixelpusher829/distill-ui">the GitHub repo</a> into
-			<code>{styles}</code>: <code>tokens.css</code>, <code>motion.css</code> and the
-			<code>themes</code> folder.
+			<code>{styles}</code>: <code>tokens.css</code> and <code>keyframes.css</code>.
 		</li>
 		<li>
 			{#if vue}

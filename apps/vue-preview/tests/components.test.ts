@@ -18,10 +18,7 @@ for (const theme of themes) {
 		test.beforeEach(async ({ page }) => {
 			await page.goto('/');
 			await page.evaluate((t) => (document.documentElement.dataset.theme = t), theme);
-			await expect(page.locator('body')).toHaveCSS(
-				'background-color',
-				theme === 'dark' ? 'oklch(0.145 0 0)' : 'oklch(1 0 0)'
-			);
+			await expect(page.locator('html')).toHaveCSS('color-scheme', theme);
 		});
 
 		test('page passes axe', async ({ page }) => {

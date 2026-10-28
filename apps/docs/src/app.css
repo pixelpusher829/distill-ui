@@ -186,6 +186,6 @@ a {
 	}
 
 	& th {
-		font-weight: var(--dui-font-weight-medium);
+		font-weight: var(--dui-weight-medium);
 	}
 }

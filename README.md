@@ -2,11 +2,9 @@
 
 A copy-into-your-project component library for Svelte 5 and Vue 3, in the spirit of shadcn/ui, styled with scoped `<style>` blocks and CSS custom properties instead of Tailwind.
 
-Status: early setup. See [PLAN-svelte.md](./PLAN-svelte.md) for the roadmap and [PLAN-vue.md](./PLAN-vue.md) for what comes after.
-
 ## Repo layout
 
-- `packages/tokens` – framework-agnostic CSS tokens, themes and keyframes
+- `packages/tokens` – framework-agnostic CSS tokens and keyframes
 - `packages/svelte` – the Svelte components (SvelteKit library mode, Melt UI)
 - `packages/vue` – the Vue components (Reka UI), ported from the Svelte ones
 - `apps/docs` – SvelteKit docs and playground site

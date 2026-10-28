@@ -14,6 +14,6 @@ import { DropdownMenuLabel } from 'reka-ui';
 	color: var(--dui-color-muted-foreground);
 	font-size: var(--dui-text-xs);
 	line-height: var(--dui-text-xs-line-height);
-	font-weight: var(--dui-font-weight-medium);
+	font-weight: var(--dui-weight-medium);
 }
 </style>

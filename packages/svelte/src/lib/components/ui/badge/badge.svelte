@@ -53,7 +53,7 @@
 		color: var(--dui-badge-fg, var(--dui-color-primary-foreground));
 		font-size: var(--dui-text-xs);
 		line-height: var(--dui-text-xs-line-height);
-		font-weight: var(--dui-font-weight-medium);
+		font-weight: var(--dui-weight-medium);
 		white-space: nowrap;
 		text-decoration: none;
 		outline: none;

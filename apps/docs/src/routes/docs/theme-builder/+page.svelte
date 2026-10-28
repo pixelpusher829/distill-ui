@@ -13,39 +13,25 @@
 		Tabs
 	} from '@distill-ui/svelte';
 	import CopyButton from '#lib/docs/CopyButton.svelte';
-	import {
-		applyColors,
-		defaults,
-		grays,
-		themeColors,
-		toStyle,
-		type ThemeSettings
-	} from '#lib/docs/theme.js';
-	import type { PageProps } from './$types';
-
-	let { data }: PageProps = $props();
+	import { defaults, grays, themeSeeds, toStyle, type ThemeSettings } from '#lib/docs/theme.js';
 
 	let settings: ThemeSettings = $state({ ...defaults });
 
 	const presets: { name: string; hue: number; chroma: number }[] = [
-		{ name: 'Default', hue: 225, chroma: 0 },
+		{ name: 'Default', hue: 260, chroma: 0.2 },
 		{ name: 'Cyan', hue: 225, chroma: 0.12 },
 		{ name: 'Violet', hue: 285, chroma: 0.2 },
 		{ name: 'Forest', hue: 150, chroma: 0.15 },
 		{ name: 'Ember', hue: 35, chroma: 0.19 }
 	];
 
-	const light = $derived(themeColors(settings, 'light'));
-	const dark = $derived(themeColors(settings, 'dark'));
+	const seeds = $derived(themeSeeds(settings));
 
-	const files = $derived([
-		{ name: 'themes/light.css', code: applyColors(data.files.light, light) },
-		{ name: 'themes/dark.css', code: applyColors(data.files.dark, dark) },
-		{
-			name: 'tokens.css',
-			code: `/* In tokens.css, change this one line. */\n--dui-radius: ${settings.radius}rem;`
-		}
-	]);
+	const code = $derived(
+		`:root {\n${Object.entries(seeds)
+			.map(([name, value]) => `\t${name}: ${value};`)
+			.join('\n')}\n\t--dui-radius: ${settings.radius}rem;\n}`
+	);
 </script>
 
 <Meta
@@ -56,8 +42,8 @@
 <article class="prose">
 	<h1>Theme builder</h1>
 	<p class="lead">
-		Pick a color, a gray and a corner radius, check them in light and dark, then copy the theme
-		files into your project.
+		Pick a color, a gray and a corner radius, check them in light and dark, then copy a few lines
+		into your project.
 	</p>
 </article>
 
@@ -71,7 +57,7 @@
 						type="button"
 						class="swatch"
 						aria-pressed={settings.hue === preset.hue && settings.chroma === preset.chroma}
-						style="--swatch: oklch({preset.chroma ? 0.55 : 0.205} {preset.chroma} {preset.hue})"
+						style="--swatch: oklch(0.556 {preset.chroma} {preset.hue})"
 						onclick={() => {
 							settings.hue = preset.hue;
 							settings.chroma = preset.chroma;
@@ -112,17 +98,17 @@
 	</section>
 
 	<div class="previews">
-		{@render preview('light', light)}
-		{@render preview('dark', dark)}
+		{@render preview('light')}
+		{@render preview('dark')}
 	</div>
 </div>
 
-<!-- Each preview sets its theme with data-theme, then the builder's colors on top. -->
-{#snippet preview(mode: 'light' | 'dark', colors: Record<string, string>)}
+<!-- data-theme makes tokens.css work the colors out again from the seeds set here. -->
+{#snippet preview(mode: 'light' | 'dark')}
 	<section
 		class="preview"
 		data-theme={mode}
-		style="{toStyle(colors)}; --dui-radius: {settings.radius}rem"
+		style="{toStyle(seeds)}; --dui-radius: {settings.radius}rem"
 		aria-label="{mode === 'light' ? 'Light' : 'Dark'} preview"
 	>
 		<Card.Root>
@@ -171,22 +157,20 @@
 <article class="prose">
 	<h2>Copy your theme</h2>
 	<p>
-		Replace the files in <code>src/lib/styles/distill-ui</code> with these. They're the files you already
-		have, with only the colors changed.
+		Replace the matching lines in <code>src/lib/styles/distill-ui/tokens.css</code>. Every other
+		color is worked out from these.
 	</p>
 </article>
 
-{#each files as file (file.name)}
-	<figure class="file">
-		<figcaption>
-			<code>{file.name}</code>
-			<CopyButton text={file.code} label="Copy {file.name}" />
-		</figcaption>
-		<!-- Focusable so keyboard users can scroll it, like the Shiki code blocks. -->
-		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-		<pre tabindex="0"><code>{file.code}</code></pre>
-	</figure>
-{/each}
+<figure class="file">
+	<figcaption>
+		<code>tokens.css</code>
+		<CopyButton text={code} label="Copy tokens.css" />
+	</figcaption>
+	<!-- Focusable so keyboard users can scroll it, like the Shiki code blocks. -->
+	<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+	<pre tabindex="0"><code>{code}</code></pre>
+</figure>
 
 <p class="next"><a href="/docs/customizing">Next: Customizing →</a></p>
 
@@ -218,7 +202,7 @@
 		margin-bottom: var(--dui-space-3);
 		padding: 0;
 		font-size: var(--dui-text-sm);
-		font-weight: var(--dui-font-weight-semibold);
+		font-weight: var(--dui-weight-semibold);
 	}
 
 	.presets {
@@ -248,7 +232,7 @@
 		}
 
 		&[aria-pressed='true'] {
-			border-color: var(--dui-color-foreground);
+			border-color: var(--dui-color-muted-foreground);
 		}
 
 		&:focus-visible {
@@ -285,8 +269,7 @@
 		gap: var(--dui-space-4);
 	}
 
-	/* The radius scale and hover colors are worked out from the tokens on :root and on
-	   [data-theme] in tokens.css. The radius scale is only on :root, so it's redone here. */
+	/* The radius scale is worked out on :root only, so it's redone here. */
 	.preview {
 		--dui-radius-sm: calc(var(--dui-radius) * 0.6);
 		--dui-radius-md: calc(var(--dui-radius) * 0.8);

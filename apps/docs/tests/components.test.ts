@@ -1,8 +1,8 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 
-// Quality bar from PLAN-svelte.md: keyboard behavior follows the WAI-ARIA patterns, axe passes, and it
-// holds in both themes. Each test runs once per theme.
+// Quality bar: keyboard behavior follows the WAI-ARIA patterns, axe passes, and it holds in both
+// themes. Each test runs once per theme.
 const themes = ['light', 'dark'] as const;
 
 async function expectNoAxeViolations(page: Page) {
@@ -20,10 +20,7 @@ for (const theme of themes) {
 			await page.waitForLoadState('networkidle');
 			await page.evaluate((t) => (document.documentElement.dataset.theme = t), theme);
 			await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
-			await expect(page.locator('body')).toHaveCSS(
-				'background-color',
-				theme === 'dark' ? 'oklch(0.145 0 0)' : 'oklch(1 0 0)'
-			);
+			await expect(page.locator('html')).toHaveCSS('color-scheme', theme);
 		});
 
 		test('page passes axe', async ({ page }) => {

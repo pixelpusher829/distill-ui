@@ -99,7 +99,7 @@ import { toaster } from './toaster.js';
 }
 
 .title {
-	font-weight: var(--dui-font-weight-medium);
+	font-weight: var(--dui-weight-medium);
 }
 
 .description {
@@ -116,7 +116,7 @@ import { toaster } from './toaster.js';
 	color: var(--dui-color-primary-foreground);
 	font: inherit;
 	font-size: var(--dui-text-xs);
-	font-weight: var(--dui-font-weight-medium);
+	font-weight: var(--dui-weight-medium);
 	cursor: pointer;
 }
 

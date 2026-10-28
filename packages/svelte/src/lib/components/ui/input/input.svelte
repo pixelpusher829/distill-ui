@@ -54,7 +54,7 @@
 			color: var(--dui-color-foreground);
 			font: inherit;
 			font-size: var(--dui-text-sm);
-			font-weight: var(--dui-font-weight-medium);
+			font-weight: var(--dui-weight-medium);
 		}
 
 		&:focus-visible {
