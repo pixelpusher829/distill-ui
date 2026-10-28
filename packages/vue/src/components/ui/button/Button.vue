@@ -136,7 +136,7 @@ const {
 
 .button[data-variant='link'] {
 	background: var(--dui-button-bg, transparent);
-	color: var(--dui-button-fg, var(--dui-color-primary));
+	color: var(--dui-button-fg, var(--dui-color-primary-text));
 	text-underline-offset: 4px;
 
 	&:hover {

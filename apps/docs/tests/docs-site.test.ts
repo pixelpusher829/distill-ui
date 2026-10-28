@@ -89,7 +89,7 @@ test('the theme builder recolors the previews and the seeds', async ({ page }) =
 
 	// Colors worked out with relative color syntax may be serialized as oklab(), so check the
 	// lightness (primary-500) and that the color changed rather than an exact string.
-	await expect(save).toHaveCSS('background-color', /^okl(ab|ch)\(0\.556 /);
+	await expect(save).toHaveCSS('background-color', /^okl(ab|ch)\(0\.53 /);
 	await expect(save).not.toHaveCSS('background-color', before);
 });
 

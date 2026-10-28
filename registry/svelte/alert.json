@@ -6,7 +6,7 @@
 	"files": [
 		{
 			"path": "alert/alert-description.svelte",
-			"content": "<script lang=\"ts\">\r\n\timport type { HTMLAttributes } from 'svelte/elements';\r\n\r\n\tlet { class: className, children, ...restProps }: HTMLAttributes<HTMLDivElement> = $props();\r\n</script>\r\n\r\n<div {...restProps} class={['description', className]}>\r\n\t{@render children?.()}\r\n</div>\r\n\r\n<style>\r\n\t.description {\r\n\t\tgrid-column: -2;\r\n\t\t/* Slightly softer than the title; inherits the destructive color in that variant. */\r\n\t\tcolor: color-mix(in oklch, currentColor 85%, transparent);\r\n\t\ttext-wrap: pretty;\r\n\t}\r\n</style>\r\n"
+			"content": "<script lang=\"ts\">\r\n\timport type { HTMLAttributes } from 'svelte/elements';\r\n\r\n\tlet { class: className, children, ...restProps }: HTMLAttributes<HTMLDivElement> = $props();\r\n</script>\r\n\r\n<div {...restProps} class={['description', className]}>\r\n\t{@render children?.()}\r\n</div>\r\n\r\n<style>\r\n\t.description {\r\n\t\tgrid-column: -2;\r\n\t\ttext-wrap: pretty;\r\n\t}\r\n</style>\r\n"
 		},
 		{
 			"path": "alert/alert-title.svelte",

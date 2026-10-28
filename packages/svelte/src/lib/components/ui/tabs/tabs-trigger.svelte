@@ -50,7 +50,7 @@
 		border: 1px solid transparent;
 		border-radius: var(--dui-radius-md);
 		background: transparent;
-		color: color-mix(in oklch, var(--dui-color-foreground) 60%, transparent);
+		color: var(--dui-color-muted-foreground);
 		font: inherit;
 		font-size: var(--dui-text-sm);
 		line-height: var(--dui-text-sm-line-height);

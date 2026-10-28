@@ -10,7 +10,7 @@
 		},
 		{
 			"path": "alert/AlertDescription.vue",
-			"content": "<template>\n\t<div class=\"description\"><slot /></div>\n</template>\n\n<style scoped>\n.description {\n\tgrid-column: -2;\n\t/* Slightly softer than the title; inherits the destructive color in that variant. */\n\tcolor: color-mix(in oklch, currentColor 85%, transparent);\n\ttext-wrap: pretty;\n}\n</style>\n"
+			"content": "<template>\n\t<div class=\"description\"><slot /></div>\n</template>\n\n<style scoped>\n.description {\n\tgrid-column: -2;\n\ttext-wrap: pretty;\n}\n</style>\n"
 		},
 		{
 			"path": "alert/AlertTitle.vue",

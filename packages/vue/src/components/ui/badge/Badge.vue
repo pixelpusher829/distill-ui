@@ -100,7 +100,7 @@ const { variant = 'default', href } = defineProps<{ variant?: BadgeVariant; href
 
 .badge[data-variant='link'] {
 	background: var(--dui-badge-bg, transparent);
-	color: var(--dui-badge-fg, var(--dui-color-primary));
+	color: var(--dui-badge-fg, var(--dui-color-primary-text));
 	text-underline-offset: 4px;
 
 	&[href]:hover {

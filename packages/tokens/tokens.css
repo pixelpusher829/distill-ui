@@ -38,11 +38,11 @@
 
 	/* Neutral */
 	--dui-neutral-50: oklch(from var(--dui-neutral) 0.985 calc(c * 0.1) h);
-	--dui-neutral-100: oklch(from var(--dui-neutral) 0.97 calc(c * 0.15) h);
+	--dui-neutral-100: oklch(from var(--dui-neutral) 0.96 calc(c * 0.15) h);
 	--dui-neutral-200: oklch(from var(--dui-neutral) 0.922 calc(c * 0.3) h);
 	--dui-neutral-300: oklch(from var(--dui-neutral) 0.87 calc(c * 0.5) h);
 	--dui-neutral-400: oklch(from var(--dui-neutral) 0.708 calc(c * 0.85) h);
-	--dui-neutral-500: oklch(from var(--dui-neutral) 0.556 c h);
+	--dui-neutral-500: oklch(from var(--dui-neutral) 0.53 c h);
 	--dui-neutral-600: oklch(from var(--dui-neutral) 0.439 calc(c * 0.95) h);
 	--dui-neutral-700: oklch(from var(--dui-neutral) 0.371 calc(c * 0.85) h);
 	--dui-neutral-800: oklch(from var(--dui-neutral) 0.269 calc(c * 0.7) h);
@@ -55,7 +55,7 @@
 	--dui-primary-200: oklch(from var(--dui-primary) 0.922 calc(c * 0.3) h);
 	--dui-primary-300: oklch(from var(--dui-primary) 0.87 calc(c * 0.5) h);
 	--dui-primary-400: oklch(from var(--dui-primary) 0.708 calc(c * 0.85) h);
-	--dui-primary-500: oklch(from var(--dui-primary) 0.556 c h);
+	--dui-primary-500: oklch(from var(--dui-primary) 0.53 c h);
 	--dui-primary-600: oklch(from var(--dui-primary) 0.439 calc(c * 0.95) h);
 	--dui-primary-700: oklch(from var(--dui-primary) 0.371 calc(c * 0.85) h);
 	--dui-primary-800: oklch(from var(--dui-primary) 0.269 calc(c * 0.7) h);
@@ -76,15 +76,16 @@
 	--dui-color-foreground: light-dark(var(--dui-neutral-900), var(--dui-neutral-50));
 
 	/* Card and popover */
-	--dui-color-card: light-dark(var(--dui-white), var(--dui-neutral-900));
+	--dui-color-card: light-dark(var(--dui-neutral-50), var(--dui-neutral-900));
 	--dui-color-card-foreground: var(--dui-color-foreground);
-	--dui-color-popover: var(--dui-color-card);
+	--dui-color-popover: light-dark(var(--dui-white), var(--dui-neutral-900));
 	--dui-color-popover-foreground: var(--dui-color-foreground);
 
 	/* Primary */
-	--dui-color-primary: light-dark(var(--dui-primary-500), var(--dui-primary-400));
-	--dui-color-primary-hover: light-dark(var(--dui-primary-600), var(--dui-primary-300));
-	--dui-color-primary-foreground: light-dark(var(--dui-primary-50), var(--dui-primary-950));
+	--dui-color-primary: var(--dui-primary-500);
+	--dui-color-primary-hover: var(--dui-primary-600);
+	--dui-color-primary-foreground: var(--dui-primary-50);
+	--dui-color-primary-text: light-dark(var(--dui-primary-600), var(--dui-primary-300));
 
 	/* Secondary */
 	--dui-color-secondary: light-dark(var(--dui-neutral-100), var(--dui-neutral-800));
@@ -93,7 +94,7 @@
 
 	/* Muted */
 	--dui-color-muted: light-dark(var(--dui-neutral-100), var(--dui-neutral-800));
-	--dui-color-muted-foreground: light-dark(var(--dui-neutral-500), var(--dui-neutral-400));
+	--dui-color-muted-foreground: light-dark(var(--dui-neutral-600), var(--dui-neutral-300));
 
 	/* Accent */
 	--dui-color-accent: light-dark(var(--dui-neutral-100), var(--dui-neutral-700));
@@ -110,7 +111,7 @@
 	);
 	--dui-color-destructive-text: light-dark(
 		color-mix(in oklab, var(--dui-destructive) 80%, var(--dui-black)),
-		color-mix(in oklab, var(--dui-destructive) 60%, var(--dui-white))
+		color-mix(in oklab, var(--dui-destructive) 40%, var(--dui-white))
 	);
 
 	/* Success */
@@ -119,7 +120,7 @@
 	/* Borders and focus */
 	--dui-color-border: light-dark(var(--dui-neutral-200), var(--dui-neutral-800));
 	--dui-color-input: light-dark(var(--dui-neutral-200), var(--dui-neutral-800));
-	--dui-color-ring: light-dark(var(--dui-primary-400), var(--dui-primary-500));
+	--dui-color-ring: var(--dui-primary-400);
 
 	/* Overlay */
 	--dui-color-overlay: light-dark(
@@ -130,10 +131,10 @@
 	/* Controls */
 	--dui-color-control: light-dark(transparent, var(--dui-neutral-900));
 	--dui-color-control-hover: light-dark(var(--dui-neutral-100), var(--dui-neutral-800));
-	--dui-color-tab-active: light-dark(var(--dui-color-background), var(--dui-color-control));
+	--dui-color-tab-active: light-dark(var(--dui-white), var(--dui-color-control));
 	--dui-color-tab-active-border: light-dark(transparent, var(--dui-color-input));
 	--dui-color-switch-track: light-dark(var(--dui-neutral-200), var(--dui-neutral-800));
-	--dui-color-switch-thumb: light-dark(var(--dui-color-background), var(--dui-color-foreground));
+	--dui-color-switch-thumb: light-dark(var(--dui-white), var(--dui-color-foreground));
 	--dui-color-switch-thumb-checked: var(--dui-color-primary-foreground);
 }
 

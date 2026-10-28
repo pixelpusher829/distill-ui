@@ -68,11 +68,24 @@
 			</div>
 			<label class="slider">
 				<span>Hue <output>{settings.hue}</output></span>
-				<input type="range" min="0" max="360" bind:value={settings.hue} />
+				<input
+					type="range"
+					min="0"
+					max="360"
+					bind:value={settings.hue}
+					style="--fill: {(settings.hue / 360) * 100}%"
+				/>
 			</label>
 			<label class="slider">
 				<span>Colorfulness <output>{settings.chroma}</output></span>
-				<input type="range" min="0" max="0.2" step="0.01" bind:value={settings.chroma} />
+				<input
+					type="range"
+					min="0"
+					max="0.2"
+					step="0.01"
+					bind:value={settings.chroma}
+					style="--fill: {(settings.chroma / 0.2) * 100}%"
+				/>
 			</label>
 		</fieldset>
 
@@ -89,7 +102,14 @@
 			<legend>Corners</legend>
 			<label class="slider">
 				<span>Radius <output>{settings.radius}rem</output></span>
-				<input type="range" min="0" max="1.25" step="0.125" bind:value={settings.radius} />
+				<input
+					type="range"
+					min="0"
+					max="1.25"
+					step="0.125"
+					bind:value={settings.radius}
+					style="--fill: {(settings.radius / 1.25) * 100}%"
+				/>
 			</label>
 		</fieldset>
 
@@ -258,7 +278,6 @@
 
 		& input {
 			width: 100%;
-			accent-color: var(--site-accent);
 		}
 	}
 
@@ -316,7 +335,7 @@
 			margin: 0;
 			padding: var(--dui-space-4);
 			overflow: auto;
-			background: var(--dui-color-muted);
+			background: var(--site-code-bg);
 			font-family: var(--dui-font-mono);
 			font-size: var(--dui-text-xs);
 			line-height: 1.6;

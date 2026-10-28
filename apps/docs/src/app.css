@@ -13,6 +13,8 @@
 	--site-accent: #ff3e00;
 	--site-accent-foreground: white;
 	--site-font-display: 'Bricolage Grotesque', var(--dui-font-sans);
+	/* Every code panel: highlighted blocks, the playground and the theme builder. */
+	--site-code-bg: light-dark(var(--dui-color-card), #0d1117);
 }
 
 :root[data-framework='vue'] {
@@ -81,7 +83,7 @@ a {
 	margin: 0;
 	padding: var(--dui-space-4);
 	overflow-x: auto;
-	background-color: var(--shiki-light-bg);
+	background-color: var(--site-code-bg);
 	font-family: var(--dui-font-mono);
 	font-size: var(--dui-text-sm);
 	line-height: 1.6;
@@ -92,21 +94,13 @@ a {
 	}
 }
 
-[data-theme='dark'] .shiki {
-	background-color: var(--shiki-dark-bg);
-
-	& span {
-		color: var(--shiki-dark);
-	}
+[data-theme='dark'] .shiki span {
+	color: var(--shiki-dark);
 }
 
 @media (prefers-color-scheme: dark) {
-	:root:not([data-theme='light']) .shiki {
-		background-color: var(--shiki-dark-bg);
-
-		& span {
-			color: var(--shiki-dark);
-		}
+	:root:not([data-theme='light']) .shiki span {
+		color: var(--shiki-dark);
 	}
 }
 
@@ -187,5 +181,67 @@ a {
 
 	& th {
 		font-weight: var(--dui-weight-medium);
+	}
+}
+
+/*
+ * Range sliders on the theme pages. Styled here because the browser draws the unfilled track
+ * dark gray next to a bright accent-color. Each slider sets --fill to how far along it is.
+ */
+input[type='range'] {
+	--track: 0.375rem;
+	--thumb: 1rem;
+
+	height: var(--thumb);
+	margin: 0;
+	appearance: none;
+	background: transparent;
+	cursor: pointer;
+
+	&::-webkit-slider-runnable-track {
+		height: var(--track);
+		border-radius: var(--dui-radius-full);
+		background: linear-gradient(
+			to right,
+			var(--site-accent) var(--fill, 0%),
+			var(--dui-color-input) var(--fill, 0%)
+		);
+	}
+
+	&::-moz-range-track {
+		height: var(--track);
+		border-radius: var(--dui-radius-full);
+		background: linear-gradient(
+			to right,
+			var(--site-accent) var(--fill, 0%),
+			var(--dui-color-input) var(--fill, 0%)
+		);
+	}
+
+	&::-webkit-slider-thumb {
+		width: var(--thumb);
+		height: var(--thumb);
+		margin-top: calc((var(--track) - var(--thumb)) / 2);
+		appearance: none;
+		border: 2px solid var(--site-accent);
+		border-radius: var(--dui-radius-full);
+		background: var(--dui-color-background);
+		box-shadow: var(--dui-shadow-sm);
+	}
+
+	&::-moz-range-thumb {
+		box-sizing: border-box;
+		width: var(--thumb);
+		height: var(--thumb);
+		border: 2px solid var(--site-accent);
+		border-radius: var(--dui-radius-full);
+		background: var(--dui-color-background);
+		box-shadow: var(--dui-shadow-sm);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--dui-color-ring);
+		outline-offset: 2px;
+		border-radius: var(--dui-radius-full);
 	}
 }

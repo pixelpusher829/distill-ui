@@ -34,11 +34,18 @@
 		</div>
 		<label class="slider">
 			<span>Hue <output>{hue}</output></span>
-			<input type="range" min="0" max="360" bind:value={hue} />
+			<input type="range" min="0" max="360" bind:value={hue} style="--fill: {(hue / 360) * 100}%" />
 		</label>
 		<label class="slider">
 			<span>Radius <output>{radius}rem</output></span>
-			<input type="range" min="0" max="1.25" step="0.125" bind:value={radius} />
+			<input
+				type="range"
+				min="0"
+				max="1.25"
+				step="0.125"
+				bind:value={radius}
+				style="--fill: {(radius / 1.25) * 100}%"
+			/>
 		</label>
 		<pre class="css" aria-label="The CSS for this theme"><code>{css}</code></pre>
 	</div>
@@ -148,7 +155,6 @@
 
 		& input {
 			width: 100%;
-			accent-color: var(--site-accent);
 		}
 	}
 
@@ -157,7 +163,7 @@
 		padding: var(--dui-space-3) var(--dui-space-4);
 		border: 1px solid var(--dui-color-border);
 		border-radius: var(--dui-radius-lg);
-		background: var(--dui-color-muted);
+		background: var(--site-code-bg);
 		font-family: var(--dui-font-mono);
 		font-size: var(--dui-text-xs);
 		line-height: 1.7;

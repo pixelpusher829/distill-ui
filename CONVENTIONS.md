@@ -27,6 +27,10 @@ Rules:
 
 `color-scheme` picks each semantic color's light or dark value. The page follows the OS; `class="dark"`/`data-theme="dark"` or `class="light"`/`data-theme="light"`, on `<html>` or any element, forces one. Components never check the theme themselves; they read tokens.
 
+### Contrast
+
+Text contrast is measured with APCA (APCA-W3 0.0.98G), not the WCAG 2 ratio, in both themes and for every primary preset. Minimums: **Lc 75** for body text, **Lc 60** for other text (labels, buttons, descriptions), **Lc 45** for large text (24px and up, or 18px and up at semibold). Disabled text is exempt. Text that sits on a colored fill or tint gets its own semantic color (`--dui-color-primary-foreground`, `--dui-color-primary-text`, `--dui-color-destructive-text`) rather than an opacity or `color-mix()` in the component, so the pair can be tuned in one place.
+
 ### Component custom properties
 
 Every component exposes public custom properties (its customization options), falling back to global tokens. Write them straight into real properties, so each rule reads as plain CSS, and give every variant and hover state its own real properties too:
