@@ -13,17 +13,16 @@
 		Tabs
 	} from '@distill-ui/svelte';
 	import CopyButton from '#lib/docs/CopyButton.svelte';
-	import { defaults, grays, themeSeeds, toStyle, type ThemeSettings } from '#lib/docs/theme.js';
+	import {
+		defaults,
+		grays,
+		primaries as presets,
+		themeSeeds,
+		toStyle,
+		type ThemeSettings
+	} from '#lib/docs/theme.js';
 
 	let settings: ThemeSettings = $state({ ...defaults });
-
-	const presets: { name: string; hue: number; chroma: number }[] = [
-		{ name: 'Default', hue: 260, chroma: 0.2 },
-		{ name: 'Cyan', hue: 225, chroma: 0.12 },
-		{ name: 'Violet', hue: 285, chroma: 0.2 },
-		{ name: 'Forest', hue: 150, chroma: 0.15 },
-		{ name: 'Ember', hue: 35, chroma: 0.19 }
-	];
 
 	const seeds = $derived(themeSeeds(settings));
 

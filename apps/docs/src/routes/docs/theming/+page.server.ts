@@ -16,13 +16,10 @@ export const load: PageServerLoad = async () => ({
 			lang: 'css',
 			title: 'src/lib/styles/distill-ui/tokens.css',
 			code: `:root {
-	--dui-neutral: oklch(0.556 0.013 58);
-	--dui-primary: oklch(0.556 0.2 285);
-	--dui-destructive: oklch(0.577 0.245 27.325);
-	--dui-success: oklch(0.6 0.17 150);
-}
+	/* A preset, or any oklch() like oklch(0.6 0.18 330) */
+	--dui-primary: var(--dui-violet);
+	--dui-neutral: var(--dui-gray-stone);
 
-:root {
 	/* One value scales every corner: 0 for square, 1rem for soft. */
 	--dui-radius: 0.375rem;
 	--dui-font-sans: 'Inter', system-ui, sans-serif;

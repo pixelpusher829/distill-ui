@@ -76,7 +76,7 @@ test('the theme builder recolors the previews and the seeds', async ({ page }) =
 	await page.goto('/docs/theme-builder');
 	await page.waitForLoadState('networkidle');
 	const file = page.locator('figure', { hasText: 'tokens.css' });
-	await expect(file).toContainText('--dui-primary: oklch(0.556 0.2 260);');
+	await expect(file).toContainText('--dui-primary: var(--dui-blue);');
 	const save = page
 		.getByRole('region', { name: 'Light preview' })
 		.getByRole('button', { name: 'Save' });
@@ -84,8 +84,8 @@ test('the theme builder recolors the previews and the seeds', async ({ page }) =
 
 	await page.getByRole('button', { name: 'Violet' }).click();
 	await page.getByRole('radio', { name: 'Stone' }).click();
-	await expect(file).toContainText('--dui-primary: oklch(0.556 0.2 285);');
-	await expect(file).toContainText('--dui-neutral: oklch(0.556 0.013 58);');
+	await expect(file).toContainText('--dui-primary: var(--dui-violet);');
+	await expect(file).toContainText('--dui-neutral: var(--dui-gray-stone);');
 
 	// Colors worked out with relative color syntax may be serialized as oklab(), so check the
 	// lightness (primary-500) and that the color changed rather than an exact string.

@@ -6,8 +6,9 @@
 	let { data }: PageProps = $props();
 
 	const groups = [
+		['Presets', '--dui-blue, --dui-violet…, --dui-gray-slate…'],
 		['Seeds', '--dui-neutral, --dui-primary, --dui-destructive, --dui-success'],
-		['Neutral scale', '--dui-neutral-50 to --dui-neutral-950'],
+		['Scales', '--dui-neutral-50 to -950, --dui-primary-50 to -950'],
 		['Colors', '--dui-color-background, --dui-color-primary, --dui-color-muted-foreground…'],
 		['Corners', '--dui-radius (scales --dui-radius-sm to -xl)'],
 		['Spacing', '--dui-space-1 (0.25rem) to --dui-space-12 (3rem)'],
@@ -66,6 +67,33 @@
 			<code>light-dark(var(--dui-primary-500), var(--dui-primary-400))</code>.
 		</li>
 	</ol>
+
+	<h3>Presets</h3>
+	<p>
+		<code>tokens.css</code> comes with ready-made colors to point the seeds at. Switching is one word:
+	</p>
+	<table>
+		<thead>
+			<tr><th scope="col">Seed</th><th scope="col">Presets</th></tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><code>--dui-primary</code></td>
+				<td>
+					<code>--dui-blue</code> (default), <code>--dui-cyan</code>, <code>--dui-violet</code>,
+					<code>--dui-forest</code>, <code>--dui-ember</code>
+				</td>
+			</tr>
+			<tr>
+				<td><code>--dui-neutral</code></td>
+				<td>
+					<code>--dui-gray-slate</code> (default), <code>--dui-gray-neutral</code>,
+					<code>--dui-gray-stone</code>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<p>For a color of your own, set the seed to any <code>oklch()</code> value instead.</p>
 
 	<h2>Dark mode</h2>
 	<p>

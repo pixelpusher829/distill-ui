@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Badge, Button, Card, Input, Label, Switch, Tabs } from '@distill-ui/svelte';
+	import { primaryValue } from '#lib/docs/theme.js';
 
 	let hue = $state(225);
 	let radius = $state(0.625);
@@ -12,7 +13,7 @@
 		{ name: 'Ember', hue: 35, radius: 0, chroma: 0.19 }
 	];
 
-	const primary = $derived(`oklch(0.556 ${chroma} ${hue})`);
+	const primary = $derived(primaryValue(hue, chroma));
 	const css = $derived(`:root {\n\t--dui-primary: ${primary};\n\t--dui-radius: ${radius}rem;\n}`);
 </script>
 

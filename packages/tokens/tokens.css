@@ -6,8 +6,21 @@
 /* ========================================================================== */
 
 :root {
-	--dui-neutral: oklch(0.556 0.02 260);
-	--dui-primary: oklch(0.556 0.2 260);
+	/* Primary presets */
+	--dui-blue: oklch(0.556 0.2 260);
+	--dui-cyan: oklch(0.556 0.12 225);
+	--dui-violet: oklch(0.556 0.2 285);
+	--dui-forest: oklch(0.556 0.15 150);
+	--dui-ember: oklch(0.556 0.19 35);
+
+	/* Gray presets */
+	--dui-gray-neutral: oklch(0.556 0 0);
+	--dui-gray-slate: oklch(0.556 0.02 260);
+	--dui-gray-stone: oklch(0.556 0.013 58);
+
+	/* Seeds: point at a preset, or set any oklch() */
+	--dui-primary: var(--dui-blue);
+	--dui-neutral: var(--dui-gray-slate);
 	--dui-destructive: oklch(0.577 0.245 27.325);
 	--dui-success: oklch(0.6 0.17 150);
 }
