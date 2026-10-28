@@ -6,35 +6,24 @@
 
 /*
  * The docs site's own brand, separate from the library's tokens so the demos keep their default
- * look. The accent follows the framework switch: Svelte orange or Vue green, the brands' own
- * colors in both themes. Vue green is too light for white text, so it takes Vue's navy instead.
+ * look. The accent follows the framework switch: Svelte orange or Vue green. Fills take white
+ * text, so Vue's green is a shade darker than its brand color. Text in the accent gets its own
+ * token, brighter on the dark theme.
  */
 :root {
 	--site-accent: #ff3e00;
 	--site-accent-foreground: white;
+	--site-accent-text: light-dark(#ff3e00, #ff7a4d);
 	--site-font-display: 'Bricolage Grotesque', var(--dui-font-sans);
 	/* Every code panel: highlighted blocks, the playground and the theme builder. */
 	--site-code-bg: light-dark(var(--dui-color-card), #0d1117);
+	/* The logo keeps the favicon's cyan whatever the framework or theme. */
+	--site-logo: #0ea5e9;
 }
 
 :root[data-framework='vue'] {
-	--site-accent: #42b883;
-	--site-accent-foreground: #213547;
-}
-
-/* The logo keeps the favicon's cyan whatever the framework. */
-:root {
-	--site-logo: #1679a3;
-}
-
-:root[data-theme='dark'] {
-	--site-logo: #5fcde8;
-}
-
-@media (prefers-color-scheme: dark) {
-	:root:not([data-theme='light']) {
-		--site-logo: #5fcde8;
-	}
+	--site-accent: #2e9566;
+	--site-accent-text: light-dark(#2e9566, #42b883);
 }
 
 /*

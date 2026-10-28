@@ -284,7 +284,7 @@
 	}
 
 	.accent {
-		color: var(--site-accent);
+		color: var(--site-accent-text);
 	}
 
 	.lead {
@@ -319,7 +319,7 @@
 
 	.kicker {
 		margin: 0 0 var(--dui-space-3);
-		color: var(--site-accent);
+		color: var(--site-accent-text);
 		font-family: var(--dui-font-mono);
 		font-size: var(--dui-text-xs);
 		font-weight: var(--dui-weight-semibold);
@@ -363,7 +363,7 @@
 		}
 
 		& .num {
-			color: var(--site-accent);
+			color: var(--site-accent-text);
 			font-family: var(--dui-font-mono);
 			font-size: var(--dui-text-sm);
 			font-weight: var(--dui-weight-semibold);
