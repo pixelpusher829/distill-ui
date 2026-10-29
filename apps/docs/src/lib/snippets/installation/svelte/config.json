@@ -1,0 +1,5 @@
+{
+	"framework": "svelte",
+	"components": "src/lib/components/ui",
+	"styles": "src/lib/styles/distill-ui"
+}

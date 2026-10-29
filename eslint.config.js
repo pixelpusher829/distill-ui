@@ -11,6 +11,8 @@ const gitignorePath = path.resolve(import.meta.dirname, '.gitignore');
 
 export default defineConfig(
 	includeIgnoreFile(gitignorePath),
+	// Code samples for the docs pages are fragments, not real modules.
+	{ ignores: ['apps/docs/src/lib/snippets/'] },
 	js.configs.recommended,
 	ts.configs.recommended,
 	svelte.configs.recommended,

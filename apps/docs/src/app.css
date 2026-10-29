@@ -7,13 +7,13 @@
 /*
  * The docs site's own brand, separate from the library's tokens so the demos keep their default
  * look. The accent follows the framework switch: Svelte orange or Vue green. Fills take white
- * text, so Vue's green is a shade darker than its brand color. Text in the accent gets its own
- * token, brighter on the dark theme.
+ * text, so both are a shade darker than their brand colors, enough for 4.5:1 (WCAG AA, which the
+ * axe tests check). Text in the accent gets its own token, brighter on the dark theme.
  */
 :root {
-	--site-accent: #ff3e00;
+	--site-accent: #d63400;
 	--site-accent-foreground: white;
-	--site-accent-text: light-dark(#ff3e00, #ff7a4d);
+	--site-accent-text: light-dark(#d63400, #ff7a4d);
 	--site-font-display: 'Bricolage Grotesque', var(--dui-font-sans);
 	/* Every code panel: highlighted blocks, the playground and the theme builder. */
 	--site-code-bg: light-dark(var(--dui-color-card), #0d1117);
@@ -22,8 +22,8 @@
 }
 
 :root[data-framework='vue'] {
-	--site-accent: #2e9566;
-	--site-accent-text: light-dark(#2e9566, #42b883);
+	--site-accent: #278457;
+	--site-accent-text: light-dark(#278457, #42b883);
 }
 
 /*

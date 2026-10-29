@@ -174,13 +174,22 @@ export const components: ComponentDoc[] = [
 	}
 ];
 
-export const guides = [
+export const guides: { href: `/docs${string}`; title: string }[] = [
 	{ href: '/docs', title: 'Introduction' },
 	{ href: '/docs/installation', title: 'Installation' },
 	{ href: '/docs/theming', title: 'Theming' },
 	{ href: '/docs/theme-builder', title: 'Theme builder' },
 	{ href: '/docs/customizing', title: 'Customizing' },
 	{ href: '/docs/styling-from-scratch', title: 'Styling from scratch' }
+];
+
+/**
+ * Every docs page, without its framework: '/docs', '/docs/theming', '/docs/components/button'...
+ * Each one is built at /svelte/docs/... and /vue/docs/... (see vite.config.ts).
+ */
+export const docsPaths: `/docs${string}`[] = [
+	...guides.map((g) => g.href),
+	...components.map((c) => `/docs/components/${c.slug}` as const)
 ];
 
 /** Where a component's behavior comes from, for one framework. */

@@ -1,0 +1,4 @@
+.button[data-variant='brand'] {
+	background: linear-gradient(135deg, oklch(0.6 0.2 300), oklch(0.6 0.2 250));
+	color: white;
+}

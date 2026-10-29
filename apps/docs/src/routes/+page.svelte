@@ -1,8 +1,9 @@
 <script lang="ts">
-	import Meta from '#lib/docs/Meta.svelte';
+	import { framework } from '#lib/docs/framework.svelte.js';
+	import Meta from '#lib/components/Meta.svelte';
 	import { Button } from '@distill-ui/svelte';
-	import CodeBlock from '#lib/docs/CodeBlock.svelte';
-	import ThemePlayground from '#lib/docs/ThemePlayground.svelte';
+	import CodeBlock from '#lib/components/CodeBlock.svelte';
+	import ThemePlayground from '#lib/components/ThemePlayground.svelte';
 	import type { Code } from '#lib/docs/code.js';
 	import type { PageProps } from './$types';
 
@@ -37,7 +38,6 @@
 		}
 	];
 
-	const code = (svelte: Code, vue: Code) => ({ svelte, vue });
 	// Written as \x3C so Svelte doesn't mistake them for the component's own style block.
 	const styleTag = { svelte: '\x3Cstyle>', vue: '\x3Cstyle scoped>' };
 </script>
@@ -78,8 +78,10 @@
 			<code>{@render word(':global()', ':deep()')}</code>, no workarounds.
 		</p>
 		<div class="actions">
-			<Button href="/docs/installation" size="lg">Get started</Button>
-			<Button href="/docs/components/button" variant="outline" size="lg">Browse components</Button>
+			<Button href={framework.link('/docs/installation')} size="lg">Get started</Button>
+			<Button href={framework.link('/docs/components/button')} variant="outline" size="lg"
+				>Browse components</Button
+			>
 		</div>
 	</section>
 
@@ -127,7 +129,7 @@
 			</div>
 			<div class="side">
 				<p class="tag good">distill-ui</p>
-				{@render codeFor(code(data.code.plain, data.code.plainVue))}
+				{@render codeFor(data.code.plain)}
 			</div>
 		</div>
 	</section>
@@ -155,11 +157,11 @@
 		<div class="compare">
 			<div class="side">
 				<p class="tag">Headless library</p>
-				{@render codeFor(code(data.code.before, data.code.beforeVue))}
+				{@render codeFor(data.code.before)}
 			</div>
 			<div class="side">
 				<p class="tag good">distill-ui</p>
-				{@render codeFor(code(data.code.after, data.code.afterVue))}
+				{@render codeFor(data.code.after)}
 			</div>
 		</div>
 	</section>
@@ -204,8 +206,8 @@
 		<h2 id="start-title">Start in two commands</h2>
 		<CodeBlock code={data.code.start} />
 		<p>
-			<a href="/docs/installation">Read the installation guide</a> or
-			<a href="/docs/installation#manual">copy the files by hand</a>.
+			<a href={framework.link('/docs/installation')}>Read the installation guide</a> or
+			<a href={framework.link('/docs/installation#manual')}>copy the files by hand</a>.
 		</p>
 	</section>
 

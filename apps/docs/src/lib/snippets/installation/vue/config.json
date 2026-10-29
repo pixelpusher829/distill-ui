@@ -1,0 +1,5 @@
+{
+	"framework": "vue",
+	"components": "src/components/ui",
+	"styles": "src/styles/distill-ui"
+}

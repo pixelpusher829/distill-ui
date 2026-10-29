@@ -1,0 +1,1 @@
+npx distill-ui init

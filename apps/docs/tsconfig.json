@@ -4,5 +4,7 @@
 		"strict": true,
 		"types": ["$app/types", "node"]
 	},
-	"include": ["src", "vite.config.ts"]
+	"include": ["src", "vite.config.ts"],
+	// Code samples for the docs pages are fragments, not real modules (src/lib/server/snippets.ts).
+	"exclude": ["src/service-worker", "src/lib/snippets"]
 }

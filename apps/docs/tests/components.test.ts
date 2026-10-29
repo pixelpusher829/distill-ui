@@ -183,6 +183,8 @@ for (const theme of themes) {
 			await page.getByRole('button', { name: 'Show toast' }).click();
 			const t = page.getByRole('alert').filter({ hasText: 'Event has been created' });
 			await expect(t).toBeVisible();
+			// Let it finish fading in, or axe measures the text while it's still see-through.
+			await expect(t).toHaveCSS('opacity', '1');
 			await expectNoAxeViolations(page);
 			await t.getByRole('button', { name: 'Undo' }).click();
 			await expect(t).toBeHidden();

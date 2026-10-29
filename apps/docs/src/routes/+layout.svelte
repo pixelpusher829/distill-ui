@@ -3,9 +3,9 @@
 	import { Button, Toaster } from '@distill-ui/svelte';
 	import '../app.css';
 	import favicon from '#lib/assets/favicon.svg';
-	import ThemeToggle from '#lib/docs/ThemeToggle.svelte';
-	import FrameworkSwitch from '#lib/docs/FrameworkSwitch.svelte';
-	import { framework } from '#lib/docs/framework.svelte.js';
+	import ThemeToggle from '#lib/components/ThemeToggle.svelte';
+	import FrameworkSwitch from '#lib/components/FrameworkSwitch.svelte';
+	import { framework, isFramework } from '#lib/docs/framework.svelte.js';
 	import { SITE_URL } from '#lib/docs/site.js';
 	import { page } from '$app/state';
 	import { onMount } from 'svelte';
@@ -14,6 +14,13 @@
 	let { children }: LayoutProps = $props();
 
 	onMount(() => framework.load());
+
+	// A docs page's URL says which framework it's for. Save it, so the home page and the header
+	// links follow it, and so the page's colors match after moving between frameworks in-app.
+	$effect(() => {
+		const fromUrl = page.params.framework;
+		if (isFramework(fromUrl)) framework.set(fromUrl);
+	});
 </script>
 
 <svelte:head>
@@ -51,8 +58,8 @@
 		<span class="name">distill-ui</span>
 	</a>
 	<nav aria-label="Main">
-		<a href="/docs">Docs</a>
-		<a class="components" href="/docs/components/button">Components</a>
+		<a href={framework.link('/docs')}>Docs</a>
+		<a class="components" href={framework.link('/docs/components/button')}>Components</a>
 		<a href="https://github.com/pixelpusher829/distill-ui">GitHub</a>
 	</nav>
 	<span class="coffee">

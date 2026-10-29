@@ -1,0 +1,8 @@
+.button[data-variant='secondary'] {
+	background: var(--dui-button-bg, var(--dui-color-secondary));
+	color: var(--dui-button-fg, var(--dui-color-secondary-foreground));
+
+	&:hover {
+		background: var(--dui-button-hover-bg, var(--dui-color-secondary-hover));
+	}
+}

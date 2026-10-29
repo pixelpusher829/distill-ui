@@ -19,12 +19,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="text-scale" content="scale" />
 		<script>
-			// Apply the saved theme and framework before the page paints, so they don't flash.
+			// Apply the saved theme and framework before the page paints, so they don't flash. A docs
+			// page's URL (/svelte/docs/..., /vue/docs/...) says its framework, and that wins.
+			const fromUrl = location.pathname.match(/^\/(svelte|vue)(\/|$)/)?.[1];
+			if (fromUrl) document.documentElement.dataset.framework = fromUrl;
 			try {
 				const theme = localStorage.getItem('theme');
 				if (theme) document.documentElement.dataset.theme = theme;
 				const framework = localStorage.getItem('framework');
-				if (framework) document.documentElement.dataset.framework = framework;
+				if (framework && !fromUrl) document.documentElement.dataset.framework = framework;
 			} catch {}
 		</script>
 		%sveltekit.head%
